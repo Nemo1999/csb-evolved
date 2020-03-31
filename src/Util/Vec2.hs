@@ -46,6 +46,10 @@ dist v1 v2 = norm $ v1 - v2
 arg :: Vec2 -> Double
 arg (Vec2 !x !y) = atan2 y x
 
+-- | project v1 onto v2
+proj :: Vec2 -> Vec2 -> Vec2
+proj v1 v2 = ((v1 `dot` v2)/(v2 `dot` v2)) `scalarMul` v2
+
 angleBetween :: Vec2 -> Vec2 -> Double
 angleBetween from to = signum (rotate90 from `dot` to)
     * acos ((from `dot` to) / (norm from * norm to))
