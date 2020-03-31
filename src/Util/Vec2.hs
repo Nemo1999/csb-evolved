@@ -12,7 +12,8 @@ module Data.Vec2
     , rotate90
     , reflect
     , isZero
-    ,unitVec
+    , unitVec
+    ,proj
     )
 where
 

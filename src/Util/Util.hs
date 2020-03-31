@@ -6,6 +6,7 @@ module Util
     , boostAccel
     , podForceFieldRadius
     , checkpointRadius
+    , podMinCollisionImpact
     , distinctPairs
     )
 where
@@ -23,6 +24,9 @@ podForceFieldRadius = 400
 
 checkpointRadius :: Double
 checkpointRadius = 600
+
+podMinCollisionImpact :: Double
+podMinCollisionImpact = 120
 
 
 --Utility Funcitons ------------------------------------

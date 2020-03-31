@@ -2,10 +2,11 @@
 {-# LANGUAGE BangPatterns#-}
 module Game.Simulation
   (
-    runGame
-  , runGameIO
-  , recordGame
-  , recordGameIO
+    PodState(..)
+  , PodMovement(..)
+  , Angle(..)
+  , Thrust(..)
+  , gameSimTurn
   )
 where
 
@@ -26,7 +27,7 @@ data PodState = PodState { podPosition          :: Vec2
                          } deriving (Show, Read)
 
 
-data Movement = Movement { podTarget :: Vec2
+data PodMovement = PodMovement { podTarget :: Vec2
                          , podThrust :: Thrust
                          } deriving (Show, Read)
 
@@ -52,7 +53,7 @@ gameSimTurn pss = map speedDecay $ movePods $ map (thrustPod.rotatePod) pss
 
 -- | Rotate Pods (change angle)
 rotatePod :: PodState -> PodState
-rotatePod ps@(PodState position _ angle _ _ (Movement target thrust))
+rotatePod ps@(PodState position _ angle _ _ (PodMovement target thrust))
   = let deltaAngle = normalize (V.arg (target - position) - angle)
         normalize !th
           | th > pi  = th - 2*pi
@@ -65,7 +66,7 @@ rotatePod ps@(PodState position _ angle _ _ (Movement target thrust))
 
 -- | Update the PodState ( speed , boost , shield ) according to current PodMovement 
 thrustPod :: PodState -> PodState 
-thrustPod ps@(PodState position speed angle boostAvail shieldState (Movement target thrust))
+thrustPod ps@(PodState position speed angle boostAvail shieldState (PodMovement target thrust))
    = let
          shieldState' = shieldNextState (thrust == Shield) shieldState
          idle = isJust shieldState'         
