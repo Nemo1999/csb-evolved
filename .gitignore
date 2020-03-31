@@ -1,0 +1,10 @@
+# VS Code.
+
+.vscode
+
+# Haskell.
+
+*.hi
+*.o
+
+Main

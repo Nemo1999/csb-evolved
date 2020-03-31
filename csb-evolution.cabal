@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 4e95316949f890bec9348f4045ccf0b5200e5812bce885f4db647bf4a0889d8c
+
+name:           csb-evolution
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/csb-evolution#readme>
+homepage:       https://github.com/githubuser/csb-evolution#readme
+bug-reports:    https://github.com/githubuser/csb-evolution/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/csb-evolution
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_csb_evolution
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable csb-evolution-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_csb_evolution
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , csb-evolution
+  default-language: Haskell2010
+
+test-suite csb-evolution-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_csb_evolution
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , csb-evolution
+  default-language: Haskell2010
