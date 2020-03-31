@@ -6,6 +6,7 @@ module Util
     , boostAccel
     , podForceFieldRadius
     , checkpointRadius
+    , distinctPairs
     )
 where
 
@@ -25,6 +26,10 @@ checkpointRadius = 600
 
 
 --Utility Funcitons ------------------------------------
+
+-- | enumerate distinct list  of unordered pair  
+distinctPairs :: [a] -> [(a,a)]
+distinctPairs xs = concat $ map (\n-> zip (repeat (xs!!n)) (drop (n+1) xs)) [0..(length xs-1)]
 
 degToRad :: Double -> Double
 degToRad = (* (pi / 180))
