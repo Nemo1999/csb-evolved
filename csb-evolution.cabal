@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4e95316949f890bec9348f4045ccf0b5200e5812bce885f4db647bf4a0889d8c
+-- hash: baa96672449a309de9c9faf765eb1211e8701e821c8874eec055c6acbd85185e
 
 name:           csb-evolution
 version:        0.1.0.0
@@ -27,7 +27,13 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Data.Vec2
+      GameRule.GameRule
+      GameRule.Player
+      GameRule.PlayerIO
+      GameSim
+      Player.Instances
+      Util
   other-modules:
       Paths_csb_evolution
   hs-source-dirs:
