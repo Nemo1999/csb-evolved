@@ -36,20 +36,20 @@ scalarDiv :: Vec2 -> Double -> Vec2
 scalarDiv (Vec2 !x !y) c = Vec2 (x / c) (y / c)
 
 dot :: Vec2 -> Vec2 -> Double
-Vec2 !x1 !y1 `dot` Vec2 !x2 !y2 = x1 * x2 + y1 * y2
+(Vec2 !x1 !y1) `dot` (Vec2 !x2 !y2) = x1 * x2 + y1 * y2
 
 norm :: Vec2 -> Double
 norm v = sqrt $ dot v v
 
 dist :: Vec2 -> Vec2 -> Double
-dist v1 v2 = norm $ v1 - v2
+dist v1@(Vec2 !x1 !y1) v2@(Vec2 !x2 !y2) = norm $ v1 - v2
 
 arg :: Vec2 -> Double
 arg (Vec2 !x !y) = atan2 y x
 
 -- | project v1 onto v2
 proj :: Vec2 -> Vec2 -> Vec2
-proj v1 v2 = ((v1 `dot` v2)/(v2 `dot` v2)) `scalarMul` v2
+proj v1@(Vec2 !x1 !y1) v2@(Vec2 !x2 !y2) = ((v1 `dot` v2)/(v2 `dot` v2)) `scalarMul` v2
 
 angleBetween :: Vec2 -> Vec2 -> Double
 angleBetween from to = signum (rotate90 from `dot` to)
@@ -59,8 +59,8 @@ rotate :: Double -> Vec2 -> Vec2
 rotate theta (Vec2 !x !y) =
     Vec2 (cos theta * x - sin theta * y) (sin theta * x + cos theta * y)
 
-unitVect :: Double -> Vec2
-unitVect theta  = Vec2 (cos theta) (sin theta) 
+unitVec :: Double -> Vec2
+unitVec theta  = Vec2 (cos theta) (sin theta) 
 
 rotate90 :: Vec2 -> Vec2
 rotate90 (Vec2 x y) = Vec2 (-y) x

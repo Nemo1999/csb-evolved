@@ -12,33 +12,33 @@ where
 
 import Data.Maybe
 import Data.List
-import Data.Vec2(Vec2)
+import Data.Vec2(Vec2(..))
 import qualified Data.Vec2 as V
 import qualified Util as U
 
 type Angle = Double
 
-data PodState = PodState { podPosition          :: Vec2
-                         , podSpeed             :: Vec2
-                         , podAngle             :: Angle
-                         , podBoostAvail        :: Bool
-                         , podShieldState        :: ShieldState
-                         , podMovement          :: PodMovement
-                         } deriving (Show, Read)
+data PodState = PodState { podPosition          :: !Vec2
+                         , podSpeed             :: !Vec2
+                         , podAngle             :: !Angle
+                         , podBoostAvail        :: !Bool
+                         , podShieldState       :: !ShieldState
+                         , podMovement          :: !PodMovement
+                         } deriving (Show)
 
 
 data PodMovement = PodMovement { podTarget :: Vec2
-                         , podThrust :: Thrust
-                         } deriving (Show, Read)
+                               , podThrust :: Thrust
+                               } deriving (Show, Eq)
 
 
-data Thrust = Normal Int | Shield | Boost deriving (Show, Read,Eq)
-| Maybe n <- shieldstate , Shield <- thrust = ps{ podShieldState = shieldNextState True shieldState}
+data Thrust = Normal Int | Shield | Boost deriving (Show,Eq)
 
 
-data ShieldState = Maybe Int
+
+type ShieldState = Maybe Int 
 shieldNextState :: Bool -> ShieldState -> ShieldState
-shieldNextState activated ss = if activate then Just 3 else
+shieldNextState activated ss = if activated then Just 3 else
                                           case ss of
                                             Just n -> if n>0 then Just (n-1) else Nothing
                                             Nothing -> Nothing
@@ -59,8 +59,8 @@ rotatePod ps@(PodState position _ angle _ _ (PodMovement target thrust))
           | th > pi  = th - 2*pi
           | th <= pi = th + 2*pi
           | otherwise = th
-        r = U.maxTurnAngle
-        angle' = angle + (U.clamp -r deltaAngle r)
+        r = U.maxTurnAngle -- range of turning angle
+        angle' = angle + (U.clamp (-r) deltaAngle r)
     in  ps{podAngle = angle'}
          
 
@@ -72,11 +72,11 @@ thrustPod ps@(PodState position speed angle boostAvail shieldState (PodMovement 
          idle = isJust shieldState'         
          accMag = if idle then 0 else
            case thrust of
-             Normal n -> n 
+             Normal n -> fromIntegral n 
              Boost    -> if boostAvail then U.boostAccel else 100
-         acc  = accMag V.`scalarMul` (V.unitVec angle)
+         acc  = accMag  `V.scalarMul` (V.unitVec angle)
          speed'= if idle then speed else speed + acc
-         boostAvail' = boostAvail && (thrust \= Boost)
+         boostAvail' = boostAvail && (thrust /= Boost)
       in
          ps{podSpeed=speed',podBoostAvail=boostAvail',podShieldState = shieldState'}
 
@@ -86,10 +86,10 @@ type PodID = Int
 type Time  = Double
 
 -- | Move Pod according to PodState (Including Collision)
-movePods :: [PodState] -> [Podstate]
+movePods :: [PodState] -> [PodState]
 movePods pss = movePods' 0 pss 
   where driftPod ::  Time -> PodState ->  PodState
-        driftPod !dt p@{podSpeed = !vel,podPosition = !pos} = p{podPosition = pos + (dt V.`scalarMul` vel)}
+        driftPod (!dt) p@PodState{podSpeed = vel , podPosition = pos} = p{podPosition = pos + (dt `V.scalarMul` vel)}
 
         movePods' :: Time -> [PodState] -> [PodState]
         movePods' currentT pss 
@@ -98,21 +98,21 @@ movePods pss = movePods' 0 pss
           | Just(i1,i2,collideT)<-firstCollision pss =
               let result1 = map (driftPod collideT) pss
                   result2 = collide2Points i1 i2 result1
-              in  movePods' (collideT+currenT) result2
+              in  movePods' (collideT+currentT) result2
 
 -- |Find the first upcoming collision time and pair of Pods
-firstCollision :: [PodState] -> Time -> Maybe ( PodID , PodID , Time )  
-firstCollision pss duration =
+firstCollision :: [PodState]  -> Maybe ( PodID , PodID , Time )  
+firstCollision pss  =
   let folder prev new
         | Nothing  <- prev    =  new
         | Nothing  <- new     =  prev
         | Just (_,_,t') <- new , Just (_,_,t) <-prev = if t' < t then new else prev
   in
-     foldl' folder Nothing  [ collideDetect i1 i2 | (i1,i2) <- U.distinctPairs [1..(length pss - 1)] ]
+     foldl' folder Nothing  [ collideDetect pss i1 i2 | (i1,i2) <- U.distinctPairs [0..(length pss - 1)] ]
 
 -- Detect the time before collision of 2 Point
 collideDetect :: [PodState] -> PodID -> PodID -> Maybe ( PodID , PodID , Time )
-collideDetect pss i1 i2
+collideDetect pss i1 i2 = 
   let (p1,p2) = (podPosition (pss!!i1),podPosition (pss!!i2))
       (v1,v2) = (podSpeed    (pss!!i1),podSpeed    (pss!!i2))
       -- fix the origin of the coordinate to p1
@@ -121,17 +121,18 @@ collideDetect pss i1 i2
       v1' = Vec2 0 0
       v2' = v2 - v1
       -- nearest point on the orbit of p2'
-      nearest = p2' - (p2' V.`proj` v2')
+      nearest = p2' - (p2' `V.proj` v2')
       -- min distance between p2' and p1'
-      minDistSquare = (nearest) V.`dot` (nearest)
-      podRadiusSquare =  U.podForceFieldRadius *  U.podForceFieldRadius
+      minDistSquare = (nearest) `V.dot` (nearest)
+      podRadiusSquare = (2*U.podForceFieldRadius) *  (2*U.podForceFieldRadius)
       --calculate the contact point
-      distBeforeCollide = (V.norm (p2' V.`proj` v2')) - sqrt (podRadiusSquare - minDistSquare)
+      distBeforeCollide = (V.norm (p2' `V.proj` v2')) - sqrt (podRadiusSquare - minDistSquare)
       timeBeforeCollide = distBeforeCollide / V.norm v2'
   in
-     case () of _
+     case () of
+      _
        -- p2' is moving further away
-       | (p2' V.`dot` v2') > 0 -> Nothing
+       | (p2' `V.dot` v2') > 0 -> Nothing
        -- nearest point  is not close enough
        | minDistSquare > minDistSquare -> Nothing
        -- p1 and p2 will collide
@@ -146,14 +147,14 @@ collide2Points i1 i2 pss =
       (p1',v1') = (Vec2 0 0 , Vec2 0 0)
       (p2',v2') = (p2 - p1 , v2 - v1 )
       --the mass of the pod
-      m1 = if (podThrust $ podMovement p1) == Just 3 then 10 else 1
-      m2 = if (podThrust $ podMovement p2) == Just 3 then 10 else 1
+      m1 = if (podShieldState  pod1) == Just 3 then 10 else 1
+      m2 = if (podShieldState  pod2) == Just 3 then 10 else 1
       -- the impact is the
       impactCoefficiant = ((m1*m2)/(m1+m2))
-      impact = impactCoefficiant v.`scalarMul` (v2' V.`proj` p2')
+      impact = impactCoefficiant `V.scalarMul` (v2' `V.proj` p2')
       -- if the impact vector is shorter than minima , normalize it  
-      impact' = if norm impact < U.podMinCollisionImpact
-        then ( U.podMinCollisionImpact /V.norm impact) V.`scalarMul` impact
+      impact' = if V.norm impact < U.podMinCollisionImpact
+        then ( U.podMinCollisionImpact /V.norm impact) `V.scalarMul` impact
         else impact
       pod1' = pod1{podSpeed = v1 + impact + impact'}
       pod2' = pod2{podSpeed = v2 - impact - impact'}
@@ -162,4 +163,35 @@ collide2Points i1 i2 pss =
       replace i1 pod1' $ replace i2 pod2' pss
 -- | Decay speed of a pod due to friction   
 speedDecay :: PodState -> PodState
-speedDecay ps{podSpeed = speed} = ps{podSpeed = 0.85 V.`scalarMul` speed}
+speedDecay ps@PodState{podSpeed = speed} = ps{podSpeed = 0.85 `V.scalarMul` speed}
+
+
+
+-----------TESTING UTILITY-------------
+
+zeroV = Vec2 0 0 
+
+pos :: PodState -> Vec2
+pos p = podPosition p
+
+zeroPod = PodState zeroV zeroV 0 True Nothing (PodMovement zeroV (Normal 0))
+
+drifter :: Vec2 -> Vec2 -> PodState
+drifter pos speed = zeroPod{podPosition = pos,podSpeed = speed}
+
+mover  :: Vec2 -> Vec2  -> PodState
+mover   pos speed = let ans = (drifter pos speed){podMovement = PodMovement (podPosition ans + podSpeed ans) (Normal 100)}
+  in ans
+
+
+roundn :: [PodState]->Int->[PodState]
+roundn init n =  (!!n) $ iterate gameSimTurn init
+
+rounds :: [PodState]->Int-> IO()
+rounds init n = mapM_ (\x->putStrLn $show x) $ take n $ (map (map pos) $iterate gameSimTurn init)
+
+
+pod1 = drifter (Vec2 1000 0) (Vec2 100 0)
+pod2 = drifter (Vec2 2000 0) (Vec2 (-100) 0)
+
+game = [pod1,pod2]
