@@ -14,10 +14,14 @@ module Data.Vec2
     , isZero
     , unitVec
     ,proj
+    ,zeroVec
+    , randomVec
     )
 where
+import System.Random
 
-data Vec2 = Vec2 Double Double deriving (Show, Read, Eq)
+
+data Vec2 = Vec2 !Double !Double deriving (Show, Read, Eq)
 
 instance Num Vec2 where
     Vec2 x1 y1 + Vec2 x2 y2 = Vec2 (x1 + x2) (y1 + y2)
@@ -73,3 +77,16 @@ reflect mirror v = (2 `scalarMul` projection) - v
 
 isZero :: Vec2 -> Bool
 isZero (Vec2 x y) = x == 0 && y == 0
+
+-- |zero Vector
+zeroVec = Vec2 0 0
+
+-- | random point in the rectangle area defined by p1 and p2
+randomVec :: Vec2 -> Vec2 -> IO Vec2
+randomVec p1@(Vec2 x1 y1) p2@(Vec2 x2 y2)
+ = let (minX,maxX)=(min x1 x2 , max x1 x2)
+       (minY,maxY)=(min y1 y2 , max y1 y2)
+   in  Vec2 <$> (randomRIO (minX,maxX)) <*> (randomRIO (minY,maxY)) 
+  
+
+

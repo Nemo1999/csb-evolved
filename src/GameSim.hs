@@ -1,6 +1,6 @@
 {-# LANGUAGE PatternGuards #-}
 {-# LANGUAGE BangPatterns#-}
-module Game.Simulation
+module GameSim
   (
     PodState(..)
   , PodMovement(..)
@@ -24,6 +24,7 @@ data PodState = PodState { podPosition          :: !Vec2
                          , podBoostAvail        :: !Bool
                          , podShieldState       :: !ShieldState
                          , podMovement          :: !PodMovement
+                         , podNextCheckPoints   :: ![Vec2]
                          } deriving (Show)
 
 
@@ -53,7 +54,7 @@ gameSimTurn pss = map speedDecay $ movePods $ map (thrustPod.rotatePod) pss
 
 -- | Rotate Pods (change angle)
 rotatePod :: PodState -> PodState
-rotatePod ps@(PodState position _ angle _ _ (PodMovement target thrust))
+rotatePod ps@(PodState position _ angle _ _ (PodMovement target thrust) _ )
   = let deltaAngle = normalize (V.arg (target - position) - angle)
         normalize !th
           | th > pi  = th - 2*pi
@@ -66,13 +67,13 @@ rotatePod ps@(PodState position _ angle _ _ (PodMovement target thrust))
 
 -- | Update the PodState ( speed , boost , shield ) according to current PodMovement 
 thrustPod :: PodState -> PodState 
-thrustPod ps@(PodState position speed angle boostAvail shieldState (PodMovement target thrust))
+thrustPod ps@(PodState position speed angle boostAvail shieldState (PodMovement target thrust) _ )
    = let
          shieldState' = shieldNextState (thrust == Shield) shieldState
          idle = isJust shieldState'         
          accMag = if idle then 0 else
            case thrust of
-             Normal n -> fromIntegral n 
+             Normal n -> fromIntegral $ U.clamp 0 n 100 
              Boost    -> if boostAvail then U.boostAccel else 100
          acc  = accMag  `V.scalarMul` (V.unitVec angle)
          speed'= if idle then speed else speed + acc
@@ -88,9 +89,7 @@ type Time  = Double
 -- | Move Pod according to PodState (Including Collision)
 movePods :: [PodState] -> [PodState]
 movePods pss = movePods' 0 pss 
-  where driftPod ::  Time -> PodState ->  PodState
-        driftPod (!dt) p@PodState{podSpeed = vel , podPosition = pos} = p{podPosition = pos + (dt `V.scalarMul` vel)}
-
+  where
         movePods' :: Time -> [PodState] -> [PodState]
         movePods' currentT pss 
           | isNothing $ firstCollision pss = map (driftPod (1-currentT)) pss
@@ -99,8 +98,28 @@ movePods pss = movePods' 0 pss
               let result1 = map (driftPod collideT) pss
                   result2 = collide2Points i1 i2 result1
               in  movePods' (collideT+currentT) result2
+-- | drift a pod for time 'dt' with its speed , update checkpoints if it pass one             
+driftPod ::  Time -> PodState ->  PodState                                                                   
+driftPod (!dt) pod = 
+  let 
+      ckpts = podNextCheckPoints pod
+      ckpt = head ckpts
+      position  = podPosition pod
+      reletivePos  = position - ckpt
+      speed = podSpeed pod
+      position' =  position + (dt `V.scalarMul` speed)
+      radius = U.podForceFieldRadius + U.checkPointRadius
+      reachTime = collideTime reletivePos speed radius
+      ckpts'
+        | ckpts == []  = []
+        | Just t <-reachTime , t  < dt =  tail ckpts
+        | otherwise = ckpts
+  in
+      pod{podPosition =position',podNextCheckPoints = ckpts'}
+      
 
--- |Find the first upcoming collision time and pair of Pods
+
+-- | Find the first upcoming collision time and pair of Pods
 firstCollision :: [PodState]  -> Maybe ( PodID , PodID , Time )  
 firstCollision pss  =
   let folder prev new
@@ -108,35 +127,42 @@ firstCollision pss  =
         | Nothing  <- new     =  prev
         | Just (_,_,t') <- new , Just (_,_,t) <-prev = if t' < t then new else prev
   in
-     foldl' folder Nothing  [ collideDetect pss i1 i2 | (i1,i2) <- U.distinctPairs [0..(length pss - 1)] ]
+     foldl' folder Nothing  [ collideDetect pss i1 i2 | (i1,i2) <- U.distinctPairs [0..(length pss -1)] ]
 
--- Detect the time before collision of 2 Point
+  
+-- | Detect the time before collision of 2 Pod
 collideDetect :: [PodState] -> PodID -> PodID -> Maybe ( PodID , PodID , Time )
 collideDetect pss i1 i2 = 
   let (p1,p2) = (podPosition (pss!!i1),podPosition (pss!!i2))
       (v1,v2) = (podSpeed    (pss!!i1),podSpeed    (pss!!i2))
+
       -- fix the origin of the coordinate to p1
-      p1' = Vec2 0 0
       p2' = p2 - p1
-      v1' = Vec2 0 0
       v2' = v2 - v1
-      -- nearest point on the orbit of p2'
-      nearest = p2' - (p2' `V.proj` v2')
-      -- min distance between p2' and p1'
-      minDistSquare = (nearest) `V.dot` (nearest)
-      podRadiusSquare = (2*U.podForceFieldRadius) *  (2*U.podForceFieldRadius)
-      --calculate the contact point
-      distBeforeCollide = (V.norm (p2' `V.proj` v2')) - sqrt (podRadiusSquare - minDistSquare)
-      timeBeforeCollide = distBeforeCollide / V.norm v2'
+      radius = U.podForceFieldRadius * 2
+      boomTime = collideTime p2' v2' radius
   in
-     case () of
-      _
-       -- p2' is moving further away
-       | (p2' `V.dot` v2') > 0 -> Nothing
-       -- nearest point  is not close enough
-       | minDistSquare > minDistSquare -> Nothing
-       -- p1 and p2 will collide
-       | otherwise -> Just (i1 , i2 , timeBeforeCollide)
+      fmap (\t->(i1,i2,t)) boomTime   
+
+-- | Find the collision time with  origin
+collideTime :: Vec2 -> Vec2 -> Double -> Maybe Time
+collideTime position speed  radius =
+  let nearest = position - (position `V.proj` speed)
+      minDistSquare = nearest `V.dot` nearest
+      radiusSquare =  radius * radius
+      -- below work only if minDist < radius , otherwise "sqrt" return error
+      distBeforeCollide = (V.norm (position `V.proj` speed)) - sqrt (radiusSquare - minDistSquare)
+      timeBeforeCollide = distBeforeCollide / V.norm speed
+  in
+      case () of
+        _
+          -- the point is moving further away
+          | speed `V.dot` position > 0 -> Nothing
+          -- nearest point is not close enough
+          | minDistSquare > radiusSquare -> Nothing
+          -- collision will happen 
+          | otherwise -> Just timeBeforeCollide
+
 
 -- | given two pods p1 p2 touching eachother , update their speed after collision
 collide2Points :: PodID -> PodID -> [PodState] -> [PodState]
@@ -174,7 +200,7 @@ zeroV = Vec2 0 0
 pos :: PodState -> Vec2
 pos p = podPosition p
 
-zeroPod = PodState zeroV zeroV 0 True Nothing (PodMovement zeroV (Normal 0))
+zeroPod = PodState zeroV zeroV 0 True Nothing (PodMovement zeroV (Normal 0)) []
 
 drifter :: Vec2 -> Vec2 -> PodState
 drifter pos speed = zeroPod{podPosition = pos,podSpeed = speed}

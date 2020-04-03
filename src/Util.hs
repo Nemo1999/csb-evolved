@@ -5,13 +5,16 @@ module Util
     , maxTurnAngle
     , boostAccel
     , podForceFieldRadius
-    , checkpointRadius
+    , checkPointRadius
     , podMinCollisionImpact
     , distinctPairs
+    , gameWorldSize
     )
 where
-
+import Data.Vec2
 -- Parameters ------------------------------------------
+
+gameWorldSize = Vec2 16000 9000
 
 maxTurnAngle :: Double
 maxTurnAngle = degToRad 18
@@ -22,8 +25,8 @@ boostAccel = 650
 podForceFieldRadius :: Double
 podForceFieldRadius = 400
 
-checkpointRadius :: Double
-checkpointRadius = 600
+checkPointRadius :: Double
+checkPointRadius = 600
 
 podMinCollisionImpact :: Double
 podMinCollisionImpact = 120

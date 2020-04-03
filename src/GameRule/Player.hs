@@ -1,13 +1,25 @@
-module CSB.Player
-    ( Player(..)
+module GameRule.Player
+    (
+      PlayerIn(..)
+      ,PlayerOut(..)
+      ,Player
+      ,PlayerIO
     )
 where
 
-import           CSB.Player.IO
+import GameSim(PodState,PodMovement)
+
+
+
+
+data PlayerIn = PlayerIn {selfPod ::[PodState]
+                         ,oppoPod ::[PodState]} 
+
+type PlayerOut = [PodMovement]
 
 class Player p where
-    playerInit :: InitInput -> p
-    playerRun   :: TurnInput -> p -> (TurnOutput, p)
+    playerInit :: p
+    playerRun  :: PlayerIn -> p -> (PlayerOut, p)
 class PlayerIO p where
-    playerInitIO :: InitInput -> IO p
-    playerRunIO   :: TurnInput -> p -> IO (TurnOutput , p) 
+    playerInitIO :: IO p
+    playerRunIO   :: PlayerIn -> p -> IO (PlayerOut , p) 

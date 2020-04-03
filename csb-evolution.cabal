@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: baa96672449a309de9c9faf765eb1211e8701e821c8874eec055c6acbd85185e
+-- hash: a764eb68a0cdf19e565a1f2cc2f167d0c778ae81bd94a749385be45218e47520
 
 name:           csb-evolution
 version:        0.1.0.0
@@ -40,6 +40,8 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , gloss >=1.13
+    , random
   default-language: Haskell2010
 
 executable csb-evolution-exe
@@ -52,6 +54,8 @@ executable csb-evolution-exe
   build-depends:
       base >=4.7 && <5
     , csb-evolution
+    , gloss >=1.13
+    , random
   default-language: Haskell2010
 
 test-suite csb-evolution-test
@@ -65,4 +69,6 @@ test-suite csb-evolution-test
   build-depends:
       base >=4.7 && <5
     , csb-evolution
+    , gloss >=1.13
+    , random
   default-language: Haskell2010
