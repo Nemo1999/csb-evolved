@@ -20,7 +20,7 @@ type Angle = Double
 
 data PodState = PodState { podPosition          :: !Vec2
                          , podSpeed             :: !Vec2
-                         , podAngle             :: !Angle
+                         , podAngle             :: !Maybe Angle
                          , podBoostAvail        :: !Bool
                          , podShieldState       :: !ShieldState
                          , podMovement          :: !PodMovement
@@ -54,20 +54,22 @@ gameSimTurn pss = map speedDecay $ movePods $ map (thrustPod.rotatePod) pss
 
 -- | Rotate Pods (change angle)
 rotatePod :: PodState -> PodState
-rotatePod ps@(PodState position _ angle _ _ (PodMovement target thrust) _ )
-  = let deltaAngle = normalize (V.arg (target - position) - angle)
-        normalize !th
-          | th > pi  = th - 2*pi
-          | th <= pi = th + 2*pi
-          | otherwise = th
-        r = U.maxTurnAngle -- range of turning angle
-        angle' = angle + (U.clamp (-r) deltaAngle r)
-    in  ps{podAngle = angle'}
+rotatePod ps@(PodState position _ ang _ _ (PodMovement target thrust) _ )
+  | Nothing           = ps{podAngle = Just  V.arg (target - position)}
+  | Just angle <- ang =
+      let deltaAngle = normalize (V.arg (target - position) - angle)
+          normalize !th
+            | th > pi  = th - 2*pi
+            | th <= pi = th + 2*pi
+            | otherwise = th
+          r = U.maxTurnAngle -- range of turning angle
+          angle' = normalize $ (angle + (U.clamp (-r) deltaAngle r))
+      in  ps{podAngle = Just angle'}
          
 
 -- | Update the PodState ( speed , boost , shield ) according to current PodMovement 
 thrustPod :: PodState -> PodState 
-thrustPod ps@(PodState position speed angle boostAvail shieldState (PodMovement target thrust) _ )
+thrustPod ps@(PodState position speed (Just angle) boostAvail shieldState (PodMovement target thrust) _ )
    = let
          shieldState' = shieldNextState (thrust == Shield) shieldState
          idle = isJust shieldState'         
