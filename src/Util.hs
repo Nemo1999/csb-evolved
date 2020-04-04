@@ -12,6 +12,7 @@ module Util
     )
 where
 import Data.Vec2
+import System.Random
 -- Parameters ------------------------------------------
 
 gameWorldSize = Vec2 16000 9000
@@ -37,6 +38,16 @@ podMinCollisionImpact = 120
 -- | enumerate distinct list  of unordered pair  
 distinctPairs :: [a] -> [(a,a)]
 distinctPairs xs = concat $ map (\n-> zip (repeat (xs!!n)) (drop (n+1) xs)) [0..(length xs-1)]
+
+-- | randomly permute an array
+randomPerm :: [a] -> IO [a]
+randomPerm xs 
+  | []<-xs =return  []
+  | nIO  <- randomRIO (0,length xs - 1) =
+      do
+        n <- nIO
+        rest <- randomPerm (take n xs ++ drop (n+1) xs) 
+        return $ (xs!!n):rest
 
 degToRad :: Double -> Double
 degToRad = (* (pi / 180))
