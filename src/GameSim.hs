@@ -55,6 +55,7 @@ gameSimTurn pss = map speedDecay $ movePods $ map (thrustPod.rotatePod) pss
 -- | Rotate Pods (change angle)
 rotatePod :: PodState -> PodState
 rotatePod ps@(PodState position _ ang _ _ (PodMovement target thrust) _ )
+  -- at fist turn , turn to the target  
   | Nothing           = ps{podAngle = Just  V.arg (target - position)}
   | Just angle <- ang =
       let deltaAngle = normalize (V.arg (target - position) - angle)
