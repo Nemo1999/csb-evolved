@@ -6,6 +6,7 @@ module GameRule
   ,randomGameSpecIO
   ,runGame
   ,maxSimTurn
+  ,GameHistory(..)
   )
 where
 
@@ -66,15 +67,13 @@ randomGameSpecIO = do
 gameEnd :: [PodState] -> Bool
 gameEnd = any (\p->podNextCheckPoints p == []) 
 
+-- Game history , the time goes from right to left in the list 
+type GameHistory = [[PodState]]
 
-runGame ::forall player1  player2. (PlayerIO player1 , PlayerIO player2) => (player1 , player2) -> GameSpec ->IO [[PodState]]
+runGame ::forall player1  player2. (PlayerIO player1 , PlayerIO player2) => (player1 , player2) -> GameSpec-> IO GameHistory
 runGame (p1,p2) gameSpec = do
-    let p1i :: IO player1
-        p1i = playerInitIO
-    let p2i :: IO player2
-        p2i = playerInitIO
-    p1 <-p1i
-    p2 <-p2i 
+    p1 <-playerInitIO :: IO player1
+    p2 <-playerInitIO :: IO player2
     g0 <-  initPodStates gameSpec
     simulate p1 p2 (pure [g0]) 
       where simulate :: player1 -> player2 -> IO [[PodState]] -> IO [[PodState]] 

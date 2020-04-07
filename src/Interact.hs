@@ -40,7 +40,7 @@ makePicture (GameSpec _ ckpts) ps =
               circleSolid   $ (realToFrac U.podForceFieldRadius*scaleFactor)
           
 
-gamePlayIO :: GameSpec -> [[PodState]] -> IO() 
+gamePlayIO :: GameSpec -> GameHistory -> IO() 
 gamePlayIO gameSpec gs =
   let
     window = InWindow "pod-race simulation" (1600, 900) (0,0)
