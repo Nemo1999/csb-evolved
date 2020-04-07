@@ -1,24 +1,22 @@
-module CSB.Player.Instances
+module Player.Instances
     ( ElementaryPlayer(..)
     )
 where
 
-import           CSB.IO
-import           CSB.Player
+import           Data.Vec2
+import           GameSim
+import           Player
 
-newtype ElementaryPlayer = ElementaryPlayer InitInput deriving (Show)
+newtype ElementaryPlayer = ElementaryPlayer () deriving (Show)
 
 instance Player ElementaryPlayer where
-    initState = ElementaryPlayer
-    runTurn TurnInput { selfPod1Info = PodInfo { podNextCheckPointId = i }, selfPod2Info = PodInfo { podNextCheckPointId = j } } (ElementaryPlayer initInput)
-        = ( TurnOutput
-              { selfPod1Movement = PodMovement { podTarget = checkpoints !! i
-                                               , podThrust = Normal 100
-                                               }
-              , selfPod2Movement = PodMovement { podTarget = checkpoints !! j
-                                               , podThrust = Normal 100
-                                               }
-              }
-          , ElementaryPlayer initInput
-          )
-        where checkpoints = gameCheckpoints initInput
+    playerInit = ElementaryPlayer ()
+    playerRun PlayerIn { selfPod = ss } _ =
+        (map straightToTarget ss, ElementaryPlayer ())
+      where
+        straightToTarget PodState { podNextCheckPoints = ckpts } = PodMovement
+            { podTarget = case ckpts of
+                              []         -> Vec2 0 0
+                              target : _ -> target
+            , podThrust = Normal 100
+            }
