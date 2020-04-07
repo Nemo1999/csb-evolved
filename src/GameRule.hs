@@ -14,10 +14,8 @@ import System.Random
 data GameSpec = GameSpec { gameSLaps :: Int
                          , gameSCheckpoints :: [Vec2] } deriving (Show, Read)
 -- | generate random gamespec
-randomGameSpecIO :: IO GameSpec
-randomGameSpecIO = 
-  let ckptIO = replicate <$> (randomRIO (3,8)) <*> (V.randomVec V.zeroVec U.gameWorldSize) 
-  in  GameSpec 3 <$> ckptIO
+
+
 
 emptyMovement = PodMovement V.zeroVec $ Normal 0
 emptyPodState = PodState V.zeroVec V.zeroVec Nothing True emptyMovement []
@@ -34,4 +32,25 @@ initPodStates (GameSpec laps ckpts) =
   in U.randomPerm $ map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=posckpts}) podPos
 
 
+
+
+randomGameSpec :: IO GameSpec
+randomGameSpec = do
+    nCkpts <- randomRIO (3, 8)
+    ckpts  <- genCkpts nCkpts
+
+    return $ GameSpec 3 ckpts
+  where
+    genCkpts 0 = return []
+    genCkpts n = do
+        ckpts <- genCkpts (n - 1)
+        ckpt  <- fix $ \rec -> do
+            ckpt <- V.randomVec V.zeroVec U.gameWorldSize
+
+            if hasOverlap ckpt ckpts then rec else return ckpt
+
+        return $ ckpt : ckpts
+
+    hasOverlap ckpt =
+        any (\ckpt' -> V.dist ckpt ckpt' < 2 * U.checkPointRadius)
 
