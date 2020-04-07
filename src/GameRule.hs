@@ -1,8 +1,9 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 module GameRule
   (
   GameSpec(..)
   ,initPodStates
-  ,randomGameSecIO
+  ,randomGameSpecIO
   ,runGame
   ,maxSimTurn
   )
@@ -66,7 +67,7 @@ gameEnd :: [PodState] -> Bool
 gameEnd = any (\p->podNextCheckPoints p == []) 
 
 
-runGame :: (PlayerIO player1 , PlayerIO player2) => (player1 , player2) -> GameSpec ->IO [[PodState]]
+runGame ::forall player1  player2. (PlayerIO player1 , PlayerIO player2) => (player1 , player2) -> GameSpec ->IO [[PodState]]
 runGame (p1,p2) gameSpec = do
     let p1i :: IO player1
         p1i = playerInitIO

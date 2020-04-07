@@ -26,6 +26,7 @@ class PlayerIO p where
     playerInitIO :: IO p
     playerRunIO   :: PlayerIn -> p -> IO (PlayerOut , p)
 
+
 -- | every Player p can be used as PlayerIO p     
 instance (Player p) => PlayerIO p where  
   playerInitIO = return playerInit
@@ -37,4 +38,7 @@ instance (Player p) => PlayerIO p where
 instance Player Int  where
   playerInit = 0
   playerRun  _ p = ([],p+1)
- 
+
+instance PlayerIO Bool where
+  playerInitIO = pure False
+  playerRunIO _ p = return $ ([],not p )
