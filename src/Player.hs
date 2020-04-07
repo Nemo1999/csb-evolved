@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 module GameRule.Player
     (
       PlayerIn(..)
@@ -22,4 +24,17 @@ class Player p where
     playerRun  :: PlayerIn -> p -> (PlayerOut, p)
 class PlayerIO p where
     playerInitIO :: IO p
-    playerRunIO   :: PlayerIn -> p -> IO (PlayerOut , p) 
+    playerRunIO   :: PlayerIn -> p -> IO (PlayerOut , p)
+
+-- | every Player p can be used as PlayerIO p     
+instance (Player p) => PlayerIO p where  
+  playerInitIO = return playerInit
+  playerRunIO  pin p = return $ playerRun pin p
+    
+-- Testing ------------------
+
+
+instance Player Int  where
+  playerInit = 0
+  playerRun  _ p = ([],p+1)
+ 
