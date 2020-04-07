@@ -1,11 +1,11 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
-module GameRule.Player
+module Player
     (
       PlayerIn(..)
       ,PlayerOut(..)
-      ,Player
-      ,PlayerIO
+      ,Player(playerInit,playerRun)
+      ,PlayerIO(playerInitIO,playerRunIO)
     )
 where
 

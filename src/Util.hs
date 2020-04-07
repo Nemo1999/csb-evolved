@@ -9,6 +9,7 @@ module Util
     , podMinCollisionImpact
     , distinctPairs
     , gameWorldSize
+    ,randomPerm
     )
 where
 import Data.Vec2

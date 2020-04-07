@@ -20,7 +20,7 @@ type Angle = Double
 
 data PodState = PodState { podPosition          :: !Vec2
                          , podSpeed             :: !Vec2
-                         , podAngle             :: !Maybe Angle
+                         , podAngle             :: !(Maybe Angle)
                          , podBoostAvail        :: !Bool
                          , podShieldState       :: !ShieldState
                          , podMovement          :: !PodMovement
@@ -56,7 +56,7 @@ gameSimTurn pss = map speedDecay $ movePods $ map (thrustPod.rotatePod) pss
 rotatePod :: PodState -> PodState
 rotatePod ps@(PodState position _ ang _ _ (PodMovement target thrust) _ )
   -- at fist turn , turn to the target  
-  | Nothing           = ps{podAngle = Just  V.arg (target - position)}
+  | Nothing    <- ang = ps{podAngle = Just $  V.arg (target - position)}
   | Just angle <- ang =
       let deltaAngle = normalize (V.arg (target - position) - angle)
           normalize !th
@@ -203,7 +203,7 @@ zeroV = Vec2 0 0
 pos :: PodState -> Vec2
 pos p = podPosition p
 
-zeroPod = PodState zeroV zeroV 0 True Nothing (PodMovement zeroV (Normal 0)) []
+zeroPod = PodState zeroV zeroV Nothing True Nothing (PodMovement zeroV (Normal 0)) []
 
 drifter :: Vec2 -> Vec2 -> PodState
 drifter pos speed = zeroPod{podPosition = pos,podSpeed = speed}
