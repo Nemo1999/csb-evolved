@@ -28,20 +28,25 @@ vec2Point (Vec2 !x !y) = (realToFrac x  * scaleFactor , realToFrac y * scaleFact
 
 makePicture :: GameSpec -> [PodState] -> Picture
 makePicture (GameSpec _ ckpts) ps =
-  let picture = Pictures $ imap drawCheckPoint (vec2Point<$>ckpts) ++
-                           (zipWith drawPod [blue,blue,red,red] $ map (vec2Point.podPosition) ps)
+  let picture = Pictures $ imap drawCheckPoint ckpts ++
+                           (zipWith drawPod [blue,blue,red,red]  ps)
       (shiftX,shiftY)  = vec2Point ((-0.5) `scalarMul` U.gameWorldSize)
   in Translate shiftX shiftY picture
-    where drawCheckPoint :: Int -> Point -> Picture
-          drawCheckPoint n (x,y) = 
-            Color green $
-               Translate x y  $
-               Pictures [Scale 0.2 0.2 $ Text $ show n , ThickCircle (realToFrac U.checkPointRadius*scaleFactor) 5] 
-          drawPod :: Color -> Point -> Picture
-          drawPod c (x,y) =
-            Color c $
-              Translate x y $
-              circleSolid   $ (realToFrac U.podForceFieldRadius*scaleFactor)
+    where drawCheckPoint :: Int -> Vec2 -> Picture
+          drawCheckPoint n  pos =
+            let (x,y) = vec2Point pos
+            in 
+              Color green $ 
+                 Translate x y  $
+                 Pictures [Scale 0.2 0.2 $ Text $ show n , ThickCircle (realToFrac U.checkPointRadius*scaleFactor) 5]
+          drawPod :: Color -> PodState -> Picture
+          drawPod c pod =
+            let dir@[(x,y),(tX,tY)] = [vec2Point $ podPosition pod , vec2Point $ podTarget  $ podMovement pod ] 
+            
+            in
+              Color c $
+                 Pictures $ (:) (Line dir) $  
+                 [Translate x y $ circleSolid (realToFrac U.podForceFieldRadius*scaleFactor)]
 
 turnPerSec :: Double
 turnPerSec = 2
