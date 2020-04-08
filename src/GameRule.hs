@@ -39,7 +39,7 @@ initPodStates (GameSpec laps ckpts) =
       podPos = [ckpt0+shift,ckpt0-shift,
                 ckpt0 + 3`V.scalarMul`shift,
                 ckpt0 - 3`V.scalarMul`shift]
-  in U.randomPerm $ map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
+  in return $  map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
 
 
 
@@ -76,20 +76,24 @@ runGame (p1,p2) gameSpec = do
     p2 <-playerInitIO :: IO player2
     g0 <-  initPodStates gameSpec
     simulate p1 p2 (pure [g0]) 
-      where simulate :: player1 -> player2 -> IO [[PodState]] -> IO [[PodState]] 
+      where simulate :: player1 -> player2 -> IO GameHistory -> IO GameHistory 
             simulate p1 p2 gssIO = 
               do
                   gss <- gssIO
-                  let gNow:gRest = gss
+                  let g:gRest = gss
+                  (p1Now,p2Now,gNow) <- if length gRest == 0 then playerDrive p1 p2 g else return (p1,p2,g)  
                   if gameEnd gNow then gssIO else
                     if length gss >= maxSimTurn then gssIO else
                       do
-                        let p1In = PlayerIn (take 2 gNow) (drop 2 gNow)
-                        let p2In = PlayerIn (drop 2 gNow) (take 2 gNow)
-                        ( [p1Out1,p1Out2] , p1') <- playerRunIO p1In p1
-                        ( [p2Out1,p2Out2] , p2') <- playerRunIO p2In p2
-                        let g' = [(gNow!!0){podMovement=p1Out1},(gNow!!1){podMovement=p1Out2},
-                              (gNow!!2){podMovement=p2Out1},(gNow!!3){podMovement=p2Out2}]
-                        return $ (g':gss)
-
-
+                        let gNew = gameSimTurn gNow                                                
+                        (p1' ,p2',g') <- playerDrive p1Now p2Now gNew
+                        simulate p1' p2' (pure (g':gss))
+                  where playerDrive :: player1 -> player2 -> [PodState] -> IO (player1 , player2,[PodState])
+                        playerDrive p1 p2 g = do
+                            let p1In = PlayerIn (take 2 g) (drop 2 g)                          
+                            let p2In = PlayerIn (drop 2 g) (take 2 g)                          
+                            ( [p1Out1,p1Out2] , p1') <- playerRunIO p1In p1                          
+                            ( [p2Out1,p2Out2] , p2') <- playerRunIO p2In p2                          
+                            let g' = [(g!!0){podMovement=p1Out1},(g!!1){podMovement=p1Out2},
+                                  (g!!2){podMovement=p2Out1},(g!!3){podMovement=p2Out2}]
+                            return (p1', p2',g')
