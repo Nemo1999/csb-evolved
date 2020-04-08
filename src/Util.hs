@@ -9,11 +9,16 @@ module Util
     , podMinCollisionImpact
     , distinctPairs
     , gameWorldSize
-    ,randomPerm
+    , randomPerm
+    , radToDeg
     )
 where
 import Data.Vec2
 import System.Random
+
+
+
+
 -- Parameters ------------------------------------------
 
 gameWorldSize = Vec2 16000 9000
@@ -52,6 +57,9 @@ randomPerm xs
 
 degToRad :: Double -> Double
 degToRad = (* (pi / 180))
+
+radToDeg :: Double -> Double
+radToDeg = (*(180/pi))
 
 normalizeAngle :: Double -> Double
 normalizeAngle x = ((x + pi) `fmod` (2 * pi)) - pi

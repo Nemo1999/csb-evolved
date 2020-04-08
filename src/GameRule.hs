@@ -81,13 +81,25 @@ runGame (p1,p2) gameSpec = do
               do
                   gss <- gssIO
                   let g:gRest = gss
-                  (p1Now,p2Now,gNow) <- if length gRest == 0 then playerDrive p1 p2 g else return (p1,p2,g)  
+                  
+                  -- if it is first turn , then playerDrive -> rotatePod -> thrustPod  , else do nothing
+                  (p1Now,p2Now,gTurned) <- if length gRest == 0 then playerDrive p1 p2 g else return (p1,p2,g)
+                  let gNow = if length gRest==0 then map (thrustPod.rotatePod) gTurned else gTurned
+
+                  -- if any pod finish laps , simulation ends
                   if gameEnd gNow then gssIO else
+                    -- if simulation turns > maxSimTurn  , simulation ends
                     if length gss >= maxSimTurn then gssIO else
                       do
-                        let gNew = gameSimTurn gNow                                                
+                        -- MovePods , reduceSpeed
+                        let gNew = map speedDecay $ movePods 1 gNow
+                        -- drivePods
                         (p1' ,p2',g') <- playerDrive p1Now p2Now gNew
-                        simulate p1' p2' (pure (g':gss))
+                        -- turnPod , thrustPod
+                        let gResult = map (thrustPod.rotatePod) g'
+                        -- recurse to next turn
+                        simulate p1' p2' (pure (gResult:gss))
+                        
                   where playerDrive :: player1 -> player2 -> [PodState] -> IO (player1 , player2,[PodState])
                         playerDrive p1 p2 g = do
                             let p1In = PlayerIn (take 2 g) (drop 2 g)                          

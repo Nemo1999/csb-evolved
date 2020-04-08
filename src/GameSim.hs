@@ -6,9 +6,11 @@ module GameSim
   , PodState(..)
   , PodMovement(..)
   , Angle(..)
-  , Thrust(..)
-  , gameSimTurn
-  , gameSimTime
+  , Thrust(..) 
+  , rotatePod
+  , thrustPod
+  , movePods
+  , speedDecay
   )
 where
 
@@ -48,7 +50,7 @@ shieldNextState activated ss = if activated then Just 3 else
 
 
 
-
+{-
 -- | simulate Game Phisic for 1 turn
 gameSimTurn :: [PodState] -> [PodState]
 gameSimTurn pss = map speedDecay $ movePods 1 $ map (thrustPod.rotatePod) pss
@@ -56,6 +58,7 @@ gameSimTurn pss = map speedDecay $ movePods 1 $ map (thrustPod.rotatePod) pss
 -- | simulate Game Phisic for less than 1 turn
 gameSimTime :: Time -> [PodState] -> [PodState]
 gameSimTime t pss = movePods t $ map (thrustPod.rotatePod) pss 
+-}
 
 -- | Rotate Pods (change angle)
 rotatePod :: PodState -> PodState
@@ -66,7 +69,7 @@ rotatePod ps@(PodState position _ ang _ _ (PodMovement target thrust) _ )
       let deltaAngle = normalize (V.arg (target - position) - angle)
           normalize !th
             | th > pi  = th - 2*pi
-            | th <= pi = th + 2*pi
+            | th <= (-pi) = th + 2*pi
             | otherwise = th
           r = U.maxTurnAngle -- range of turning angle
           angle' = normalize $ (angle + (U.clamp (-r) deltaAngle r))
@@ -75,8 +78,8 @@ rotatePod ps@(PodState position _ ang _ _ (PodMovement target thrust) _ )
 
 -- | Update the PodState ( speed , boost , shield ) according to current PodMovement 
 thrustPod :: PodState -> PodState 
-thrustPod ps@(PodState position speed (Just angle) boostAvail shieldState (PodMovement target thrust) _ )
-   = let
+thrustPod ps@(PodState position speed (Just angle) boostAvail shieldState (PodMovement target thrust) _ )=
+     let
          shieldState' = shieldNextState (thrust == Shield) shieldState
          idle = isJust shieldState'         
          accMag = if idle then 0 else
@@ -168,7 +171,7 @@ collideTime position speed  radius =
       case () of
         _
           -- the point is moving further away
-          | speed `V.dot` position > 0 -> Nothing
+          | speed `V.dot` position >= 0 -> Nothing
           -- nearest point is not close enough
           | minDistSquare > radiusSquare -> Nothing
           -- collision will happen 
@@ -205,7 +208,7 @@ speedDecay ps@PodState{podSpeed = speed} = ps{podSpeed = 0.85 `V.scalarMul` spee
 
 
 -----------TESTING UTILITY-------------
-
+{-
 zeroV = Vec2 0 0 
 
 pos :: PodState -> Vec2
@@ -218,17 +221,25 @@ drifter pos speed = zeroPod{podPosition = pos,podSpeed = speed}
 
 mover  :: Vec2 -> Vec2  -> PodState
 mover   pos speed = let ans = (drifter pos speed){podMovement = PodMovement (podPosition ans + podSpeed ans) (Normal 100)}
-  in ans
+  in ans 
+
+attracter :: Vec2 -> Vec2 -> PodState
+attracter pos target = (drifter pos V.zeroVec){podMovement = PodMovement target  (Normal 100)}
+
 
 
 roundn :: [PodState]->Int->[PodState]
 roundn init n =  (!!n) $ iterate gameSimTurn init
 
 rounds :: [PodState]->Int-> IO()
-rounds init n = mapM_ (\x->putStrLn $show x) $ take n $ (map (map pos) $iterate gameSimTurn init)
+rounds init n = mapM_ (\x->putStrLn $show x) $ take n $ (map (map podAngle) $iterate gameSimTurn init)
 
 
 pod1 = drifter (Vec2 1000 0) (Vec2 100 0)
 pod2 = drifter (Vec2 2000 0) (Vec2 (-100) 0)
 
-game = [pod1,pod2]
+game = [attracter V.zeroVec (Vec2 500 0)]
+
+roundt :: [Double] -> IO()
+roundt = mapM_ (\t -> putStrLn $ show $ map podAngle $  gameSimTime t game)
+-}

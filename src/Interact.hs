@@ -12,6 +12,7 @@ import Graphics.Gloss.Data.Color
 import Graphics.Gloss.Data.Picture
 import Data.Vec2(Vec2(..),scalarMul)
 import Data.List.Index
+import Data.Maybe
 import qualified Util as U
 
 -- Every thing is scaled by 0.1 times on the screen 
@@ -42,14 +43,17 @@ makePicture (GameSpec _ ckpts) ps =
           drawPod :: Color -> PodState -> Picture
           drawPod c pod =
             let dir@[(x,y),(tX,tY)] = [vec2Point $ podPosition pod , vec2Point $ podTarget  $ podMovement pod ] 
-            
+                ang = fromMaybe 0 $ podAngle pod
+                podR = realToFrac U.podForceFieldRadius * scaleFactor
+                circleBody =  circleSolid podR
+                sqrt05 = sqrt 0.5 
+                dirTriangle=  Rotate (realToFrac $ U.radToDeg (-ang)) $ Polygon [(podR,0),((-sqrt05)*podR ,(sqrt05)*podR),((-sqrt05)*podR,(-sqrt05)*podR)] 
             in
-              Color c $
-                 Pictures $ (:) (Line dir) $  
-                 [Translate x y $ circleSolid (realToFrac U.podForceFieldRadius*scaleFactor)]
+                 Pictures $ [ (Color c $ Line dir)   ,
+                              Translate x y $ Pictures [Color c $ circleBody , Color yellow $ dirTriangle] ]
 
 turnPerSec :: Double
-turnPerSec = 2
+turnPerSec = 3
 
 gameAnimateIO :: GameSpec -> GameHistory -> IO() 
 gameAnimateIO gameSpec gs =
@@ -59,19 +63,19 @@ gameAnimateIO gameSpec gs =
     draw :: World -> IO Picture
     draw time = do
       let ps = gs !! max 0 ((length gs - 1 ) - fromInteger (floor time))
-      let psNow = gameSimTime (time - fromIntegral (floor time)) ps
-      return $ makePicture gameSpec ps --should use psNow instead
+      let psNow = movePods (time - fromIntegral (floor time)) ps
+      return $ makePicture gameSpec psNow --should use psNow instead
     eventHandler _ = pure
     updateWorld :: Float -> World -> IO World
     updateWorld time w = do
       return (w + (realToFrac time) * turnPerSec)
-  in playIO window black 4 initWorld draw eventHandler updateWorld 
+  in playIO window black 10 initWorld draw eventHandler updateWorld 
     
 
 -- Testing
 
-e1 = DefaultPlayer ()
-e2 = DefaultPlayer ()
+e1 = ElementaryPlayer ()
+e2 = ElementaryPlayer ()
 
 testSim :: Int -> IO [Vec2]
 testSim n = sequence $ replicate n testGameSim

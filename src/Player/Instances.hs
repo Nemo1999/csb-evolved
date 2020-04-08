@@ -1,12 +1,17 @@
 module Player.Instances
     ( DefaultPlayer(..)
     , ElementaryPlayer(..)
+    , 
     )
 where
 
 import           Data.Vec2
 import           GameSim
 import           Player
+
+-- newtype IdlePlayer = IdlePlayer () deriving (Show)
+
+
 
 newtype DefaultPlayer = DefaultPlayer () deriving (Show)
 
