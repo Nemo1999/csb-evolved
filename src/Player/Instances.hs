@@ -1,11 +1,21 @@
 module Player.Instances
-    ( ElementaryPlayer(..)
+    ( DefaultPlayer(..)
+    , ElementaryPlayer(..)
     )
 where
 
 import           Data.Vec2
 import           GameSim
 import           Player
+
+newtype DefaultPlayer = DefaultPlayer () deriving (Show)
+
+instance Player DefaultPlayer where
+    playerInit = DefaultPlayer ()
+    playerRun _ _ = (replicate 2 movementPerPod, DefaultPlayer ())
+      where
+        movementPerPod =
+            PodMovement { podTarget = Vec2 8000 4500, podThrust = Normal 100 }
 
 newtype ElementaryPlayer = ElementaryPlayer () deriving (Show)
 
