@@ -65,8 +65,8 @@ gameAnimateIO gameSpec gs =
 
 -- Testing
 
-e1 = ElementaryPlayer ()
-e2 = ElementaryPlayer ()
+e1 = DefaultPlayer ()
+e2 = DefaultPlayer ()
 
 testSim :: Int -> IO [Vec2]
 testSim n = sequence $ replicate n testGameSim
