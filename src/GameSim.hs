@@ -2,11 +2,13 @@
 {-# LANGUAGE BangPatterns#-}
 module GameSim
   (
-    PodState(..)
+    Time
+  , PodState(..)
   , PodMovement(..)
   , Angle(..)
   , Thrust(..)
   , gameSimTurn
+  , gameSimTime
   )
 where
 
@@ -47,10 +49,13 @@ shieldNextState activated ss = if activated then Just 3 else
 
 
 
--- | simulate Game Phisic for one turn
+-- | simulate Game Phisic for 1 turn
 gameSimTurn :: [PodState] -> [PodState]
-gameSimTurn pss = map speedDecay $ movePods $ map (thrustPod.rotatePod) pss
+gameSimTurn pss = map speedDecay $ movePods 1 $ map (thrustPod.rotatePod) pss
 
+-- | simulate Game Phisic for less than 1 turn
+gameSimTime :: Time -> [PodState] -> [PodState]
+gameSimTime t pss = movePods t $ map (thrustPod.rotatePod) pss 
 
 -- | Rotate Pods (change angle)
 rotatePod :: PodState -> PodState
@@ -90,17 +95,20 @@ type PodID = Int
 type Time  = Double
 
 -- | Move Pod according to PodState (Including Collision)
-movePods :: [PodState] -> [PodState]
-movePods pss = movePods' 0 pss 
+movePods :: Time ->  [PodState] -> [PodState]
+movePods duration pss = movePods' 0 pss 
   where
         movePods' :: Time -> [PodState] -> [PodState]
-        movePods' currentT pss 
-          | isNothing $ firstCollision pss = map (driftPod (1-currentT)) pss
-          | Just(_,_,collideT)<-firstCollision pss , (collideT+currentT)>1 = map (driftPod (1-currentT)) pss
+        movePods' currentT pss
+          -- No collision happen
+          | isNothing $ firstCollision pss = map (driftPod (duration-currentT)) pss
+          -- First collision happens after desired duration
+          | Just(_,_,collideT)<-firstCollision pss,(collideT+currentT)>duration = map (driftPod (duration-currentT)) pss        -- Collision happens
           | Just(i1,i2,collideT)<-firstCollision pss =
               let result1 = map (driftPod collideT) pss
                   result2 = collide2Points i1 i2 result1
               in  movePods' (collideT+currentT) result2
+              
 -- | drift a pod for time 'dt' with its speed , update checkpoints if it pass one             
 driftPod ::  Time -> PodState ->  PodState                                                                   
 driftPod (!dt) pod = 
