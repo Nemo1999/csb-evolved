@@ -39,7 +39,7 @@ initPodStates (GameSpec laps ckpts) =
       podPos = [ckpt0+shift,ckpt0-shift,
                 ckpt0 + 3`V.scalarMul`shift,
                 ckpt0 - 3`V.scalarMul`shift]
-  in return $  map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
+  in return $  map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=tail podckpts}) podPos
 
 
 
