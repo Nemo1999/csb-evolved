@@ -6,6 +6,7 @@ module Interact
 where
 import GameRule
 import GameSim
+import Player(WrapIO(..))
 import Player.Instances
 import Graphics.Gloss.Interface.IO.Game
 import Graphics.Gloss.Data.Color
@@ -74,8 +75,8 @@ gameAnimateIO gameSpec gs =
 
 -- Testing
 
-e1 = ElementaryPlayer ()
-e2 = ElementaryPlayer ()
+e1 = WrapIO (ElementaryPlayer ())
+e2 = WrapIO (ElementaryPlayer ())
 
 testSim :: Int -> IO [Vec2]
 testSim n = sequence $ replicate n testGameSim

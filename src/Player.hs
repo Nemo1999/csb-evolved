@@ -1,11 +1,10 @@
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE UndecidableInstances #-}
 module Player
     (
       PlayerIn(..)
       ,PlayerOut(..)
       ,Player(playerInit,playerRun)
       ,PlayerIO(playerInitIO,playerRunIO)
+      ,WrapIO(..)
     )
 where
 
@@ -26,11 +25,13 @@ class PlayerIO p where
     playerInitIO :: IO p
     playerRunIO   :: PlayerIn -> p -> IO (PlayerOut , p)
 
+newtype WrapIO p = WrapIO p
 
 -- | every Player p can be used as PlayerIO p     
-instance (Player p) => PlayerIO p where  
-  playerInitIO = return playerInit
-  playerRunIO  pin p = return $ playerRun pin p
+instance (Player p) => PlayerIO (WrapIO p) where  
+  playerInitIO = return $ WrapIO playerInit
+  playerRunIO pin (WrapIO p) =
+    let (pout, p') = playerRun pin p in return (pout, WrapIO p')
     
 -- Testing ------------------
 

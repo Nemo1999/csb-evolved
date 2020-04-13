@@ -41,7 +41,8 @@ initPodStates (GameSpec laps ckpts) =
                 ckpt0-shift,
                 ckpt0 - 3`V.scalarMul`shift]
   --in U.randomPerm $  map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
-  in   return $ map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
+  in   return $ map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=tail podckpts}) podPos
+
 
 
 
