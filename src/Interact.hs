@@ -90,6 +90,6 @@ testGsp = GameSpec {gameSLaps = 3, gameSCheckpoints = [Vec2 13479.867410300898 7
   
 test :: IO()
 test = do
-  let gsp = testGsp
+  gsp <- randomGameSpecIO
   ghis <- runGame (e1,e2) gsp
   gameAnimateIO gsp ghis
