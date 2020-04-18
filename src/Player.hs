@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 module Player
     (
       PlayerIn(..)
@@ -19,27 +20,27 @@ data PlayerIn = PlayerIn {selfPod ::[PodState]
 type PlayerOut = [PodMovement]
 
 class Player p where
-    playerInit :: p
-    playerRun  :: PlayerIn -> p -> (PlayerOut, p)
+    playerInit :: p -> p  
+    playerRun  :: p -> PlayerIn -> (PlayerOut, p)
 class PlayerIO p where
-    playerInitIO :: IO p
-    playerRunIO   :: PlayerIn -> p -> IO (PlayerOut , p)
+    playerInitIO :: p -> IO p
+    playerRunIO  :: p -> PlayerIn -> IO (PlayerOut , p)
 
 newtype WrapIO p = WrapIO p
 
 -- | every Player p can be used as PlayerIO p     
 instance (Player p) => PlayerIO (WrapIO p) where  
-  playerInitIO = return $ WrapIO playerInit
-  playerRunIO pin (WrapIO p) =
-    let (pout, p') = playerRun pin p in return (pout, WrapIO p')
+  playerInitIO (WrapIO !p)  = return  $ WrapIO $ playerInit p
+  playerRunIO  (WrapIO !p)  !pin =
+    let (!pout, !p') = playerRun p pin  in return (pout, WrapIO p')
     
 -- Testing ------------------
 
 
 instance Player Int  where
-  playerInit = 0
-  playerRun  _ p = ([],p+1)
+  playerInit = id
+  playerRun p  _  = ([],p+1)
 
 instance PlayerIO Bool where
-  playerInitIO = pure False
-  playerRunIO _ p = return $ ([],not p )
+  playerInitIO = return 
+  playerRunIO  p _  = return $ ([],not p )
