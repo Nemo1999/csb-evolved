@@ -53,11 +53,11 @@ makePicture (GameSpec _ ckpts) ps =
                  Pictures $ [ (Color c $ Line dir)   ,
                               Translate x y $ Pictures [Color c $ circleBody , Color yellow $ dirTriangle] ]
 
-turnPerSec :: Double
-turnPerSec = 3
 
-gameAnimateIO :: GameSpec -> GameHistory -> IO() 
-gameAnimateIO gameSpec gs =
+
+
+gameAnimateIO :: Double -> GameSpec -> GameHistory -> IO() 
+gameAnimateIO turnPerSec  gameSpec gs =
   let
     window = InWindow "pod-race simulation" (1600, 900) (0,0)
     initWorld = 0 :: World
@@ -78,19 +78,19 @@ gameAnimateIO gameSpec gs =
 e1 = WrapIO (ElementaryPlayer ())
 e2 = WrapIO (ElementaryPlayer ())
 
-testSim :: Int -> IO [Vec2]
+testSim :: Int -> IO [Int]
 testSim n = sequence $ replicate n testGameSim
 
-testGameSim :: IO Vec2
+testGameSim :: IO Int
 testGameSim = do
-  let gsp = testGsp
-  ghis <- runGame (e1,e2) gsp
-  return $ podPosition $ head (ghis!!0)
+  gsp  <- randomGameSpecIO
+  ghis <- runGame (e1,e2) gsp gameEnd
+  return $ length ghis
 
 testGsp = GameSpec {gameSLaps = 3, gameSCheckpoints = [Vec2 13479.867410300898 771.2779802449776,Vec2 13991.177029911074 5957.9577506621745,Vec2 11283.183037190614 4051.7698613074967,Vec2 890.6858795864157 65.26211610815757,Vec2 364.6964748594801 8655.346773911324,Vec2 1687.2787736171979 3407.517451010222,Vec2 2219.1046319873317 1212.3349781580753]}
   
-test :: IO()
-test = do
+test :: Double ->  IO()
+test turnPerSec = do
   gsp <- randomGameSpecIO
-  ghis <- runGame (e1,e2) gsp
-  gameAnimateIO gsp ghis
+  ghis <- runGame (e1,e2) gsp gameEnd
+  gameAnimateIO turnPerSec  gsp ghis

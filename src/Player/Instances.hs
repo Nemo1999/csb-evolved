@@ -16,7 +16,7 @@ import           Player
 newtype DefaultPlayer = DefaultPlayer () deriving (Show)
 
 instance Player DefaultPlayer where
-    playerInit = DefaultPlayer ()
+    playerInit = id
     playerRun _ _ = (replicate 2 movementPerPod, DefaultPlayer ())
       where
         movementPerPod =
@@ -25,8 +25,8 @@ instance Player DefaultPlayer where
 newtype ElementaryPlayer = ElementaryPlayer () deriving (Show)
 
 instance Player ElementaryPlayer where
-    playerInit = ElementaryPlayer ()
-    playerRun PlayerIn { selfPod = ss } _ =
+    playerInit = id
+    playerRun _ PlayerIn { selfPod = ss }  =
         (map straightToTarget ss, ElementaryPlayer ())
       where
         straightToTarget PodState { podNextCheckPoints = ckpts } = PodMovement
