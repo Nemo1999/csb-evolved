@@ -76,7 +76,7 @@ gameAnimateIO turnPerSec  gameSpec gs =
 -- Testing
 
 e1 = WrapIO (ElementaryPlayer ())
-e2 = WrapIO (ElementaryPlayer ())
+e2 = WrapIO (ElementarySearchPlayer ())
 
 testSim :: Int -> IO [Int]
 testSim n = sequence $ replicate n testGameSim
