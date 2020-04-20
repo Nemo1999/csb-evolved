@@ -5,6 +5,7 @@ module Player.Instances
     )
 where
 
+import           Debug.Trace
 import           Data.List
 import           Data.Maybe
 import           Data.Vec2

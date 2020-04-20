@@ -85,6 +85,8 @@ playerDrivePod p1 p2 g = do
 -- Game history , the time goes from right to left in the list 
 type GameHistory = [[PodState]]
 
+
+-- | initialize and runGame
 runGame ::
   forall player1  player2. (PlayerIO player1 , PlayerIO player2) =>
   (player1 , player2)
@@ -103,7 +105,7 @@ runGame (p1,p2) gameSpec stopRule = do
     simulate p1' p2' [g1'] stopRule 
 
 
-
+-- | simulate the game
 simulate ::
   forall player1 player2. (PlayerIO player1 , PlayerIO player2) =>
   player1
@@ -111,6 +113,7 @@ simulate ::
   -> [[PodState]] -- Initial State
   -> (GameHistory -> Bool)  -- stop rule 
   -> IO GameHistory
+
 simulate p1 p2 gss@(g:gs) stopRule = do
   let g0 = map speedDecay $ movePods 1 g
   (p1',p2',g1) <- playerDrivePod p1 p2 g0 

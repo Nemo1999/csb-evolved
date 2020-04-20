@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a57eda77e6f9ac1e5ea0e2b02e6f64d62cb1879f9efbeacbb0833f2fe28796e3
+-- hash: c660c5ed2cfe98d42d9c5d43fe13537502f1febaa0430258e6838f9f4fb91ba0
 
 name:           csb-evolution
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       GameSim
       Interact
       Player
+      Player.CGP
       Player.Instances
       Util
   other-modules:
