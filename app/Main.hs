@@ -1,10 +1,15 @@
-module Main where
+module Main
 
-import           GameSim
-import           Data.Vec2
+where
+
+import qualified  Interact
+import System.TimeIt
 
 main :: IO ()
-main = return ()
+main = do
+  (time,nTurn)<-timeItT Interact.main
+  putStrLn $ show $ (time,nTurn,fromIntegral nTurn / time)     
+
 
 
 

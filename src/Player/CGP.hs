@@ -1,6 +1,6 @@
-module CGP
+module Player.CGP
 (
-  CGP_Player(..)
+--  CGP_Player(..)
 )
 where
 
@@ -9,4 +9,4 @@ import Data.Vector
 
 
 
-data Simple_1x200 = 
+--data Simple_1x200 = 

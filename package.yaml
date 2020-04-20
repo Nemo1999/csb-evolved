@@ -24,6 +24,8 @@ dependencies:
 - gloss >= 1.13
 - random
 - ilist
+- vector
+- timeit
 
 library:
   source-dirs: src

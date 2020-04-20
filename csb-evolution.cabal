@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c660c5ed2cfe98d42d9c5d43fe13537502f1febaa0430258e6838f9f4fb91ba0
+-- hash: 1d7cb615d84ebee3408ef1abbe6376c28e9d6af0249d8916f10014630279774c
 
 name:           csb-evolution
 version:        0.1.0.0
@@ -44,6 +44,8 @@ library
     , gloss >=1.13
     , ilist
     , random
+    , timeit
+    , vector
   default-language: Haskell2010
 
 executable csb-evolution-exe
@@ -59,6 +61,8 @@ executable csb-evolution-exe
     , gloss >=1.13
     , ilist
     , random
+    , timeit
+    , vector
   default-language: Haskell2010
 
 test-suite csb-evolution-test
@@ -75,4 +79,6 @@ test-suite csb-evolution-test
     , gloss >=1.13
     , ilist
     , random
+    , timeit
+    , vector
   default-language: Haskell2010
