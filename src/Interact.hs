@@ -1,4 +1,5 @@
 {-#LANGUAGE BangPatterns#-}
+{-# OPTIONS_GHC -O2  #-}
 module Interact
   (
     gameAnimateIO

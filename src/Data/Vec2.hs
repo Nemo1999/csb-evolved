@@ -1,5 +1,5 @@
 {-# LANGUAGE BangPatterns#-}
-
+{-# OPTIONS_GHC -O2 #-}
 module Data.Vec2
     ( Vec2(..)
     , scalarMul
@@ -16,18 +16,22 @@ module Data.Vec2
     ,proj
     ,zeroVec
     , randomVec
+    ,roundVec
     )
 where
 import System.Random
 
 
-data Vec2 = Vec2 !Double !Double deriving (Show, Read, Eq)
+
+data Vec2 = Vec2 {-# UNPACK #-} !(Double)
+                 {-# UNPACK #-} !(Double)  deriving (Show, Read, Eq)
+
 
 instance Num Vec2 where
-    Vec2 x1 y1 + Vec2 x2 y2 = Vec2 (x1 + x2) (y1 + y2)
-    Vec2 x1 y1 - Vec2 x2 y2 = Vec2 (x1 - x2) (y1 - y2)
+    (Vec2 !x1 !y1) + (Vec2 !x2 !y2) = Vec2 (x1 + x2) (y1 + y2)
+    (Vec2 !x1 !y1) - (Vec2 !x2 !y2) = Vec2 (x1 - x2) (y1 - y2)
     (*) = error "multiplication on Vec2 is not supported"
-    negate (Vec2 x y) = Vec2 (-x) (-y)
+    negate (Vec2 !x !y) = Vec2 (-x) (-y)
     abs    = error "abs on Vec2 is not supported"
     signum = error "signum on Vec2 is not supported"
     fromInteger 0 = Vec2 0 0
@@ -37,13 +41,13 @@ scalarMul :: Double -> Vec2 -> Vec2
 scalarMul !c (Vec2 !x !y) = Vec2 (c * x) (c * y)
 
 scalarDiv :: Vec2 -> Double -> Vec2
-scalarDiv (Vec2 !x !y) c = Vec2 (x / c) (y / c)
+scalarDiv (Vec2 !x !y) !c = Vec2 (x / c) (y / c)
 
 dot :: Vec2 -> Vec2 -> Double
 (Vec2 !x1 !y1) `dot` (Vec2 !x2 !y2) = x1 * x2 + y1 * y2
 
 norm :: Vec2 -> Double
-norm v = sqrt $ dot v v
+norm !v = sqrt $ dot v v
 
 dist :: Vec2 -> Vec2 -> Double
 dist v1@(Vec2 !x1 !y1) v2@(Vec2 !x2 !y2) = norm $ v1 - v2
@@ -67,26 +71,27 @@ unitVec :: Double -> Vec2
 unitVec theta  = Vec2 (cos theta) (sin theta) 
 
 rotate90 :: Vec2 -> Vec2
-rotate90 (Vec2 x y) = Vec2 (-y) x
+rotate90 (Vec2 !x !y) = Vec2 (-y) x
 
 reflect :: Vec2 -> Vec2 -> Vec2
-reflect mirror v = (2 `scalarMul` projection) - v
+reflect mirror !v = (2 `scalarMul` projection) - v
   where
     mirrorUnit = mirror `scalarDiv` norm mirror
     projection = (mirrorUnit `dot` v) `scalarMul` mirrorUnit
 
 isZero :: Vec2 -> Bool
-isZero (Vec2 x y) = x == 0 && y == 0
+isZero (Vec2 !x !y) = x == 0 && y == 0
 
 -- |zero Vector
 zeroVec = Vec2 0 0
 
 -- | random point in the rectangle area defined by p1 and p2
 randomVec :: Vec2 -> Vec2 -> IO Vec2
-randomVec p1@(Vec2 x1 y1) p2@(Vec2 x2 y2)
+randomVec p1@(Vec2 !x1 !y1) p2@(Vec2 !x2 !y2)
  = let (minX,maxX)=(min x1 x2 , max x1 x2)
        (minY,maxY)=(min y1 y2 , max y1 y2)
-   in  Vec2 <$> (randomRIO (minX,maxX)) <*> (randomRIO (minY,maxY)) 
+   in  Vec2 <$> (randomRIO (minX,maxX)) <*> (randomRIO (minY,maxY))
+
+roundVec  :: Vec2 -> Vec2
+roundVec (Vec2 !x !y) = Vec2 (fromIntegral $ round x) (fromIntegral $ round y)  
   
-
-

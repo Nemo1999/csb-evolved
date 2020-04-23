@@ -1,4 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# OPTIONS_GHC -O2  #-}
 module GameRule
   (
   GameSpec(..)

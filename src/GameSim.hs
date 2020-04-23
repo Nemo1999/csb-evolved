@@ -1,5 +1,6 @@
 {-# LANGUAGE PatternGuards #-}
 {-# LANGUAGE BangPatterns#-}
+{-# OPTIONS_GHC -O2  #-}
 module GameSim
   (
     Time
