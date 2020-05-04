@@ -8,9 +8,11 @@ import System.TimeIt
 
 main :: IO ()
 main = do
-  (time,nTurn)<-timeItT Interact.main
-  putStrLn $ show $ (time,nTurn,fromIntegral nTurn / time)     
-
+  -- (time,nTurn)<-timeItT Interact.main
+  --putStrLn $ show $ (time,nTurn,fromIntegral nTurn / time)     
+  Interact.testAnimate 5
+     
+    
 
 
 
