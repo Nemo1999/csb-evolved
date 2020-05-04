@@ -26,6 +26,7 @@ dependencies:
 - ilist
 - vector
 - timeit
+- array
 
 library:
   source-dirs: src
