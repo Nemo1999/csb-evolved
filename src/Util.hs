@@ -15,7 +15,8 @@ module Util
 where
 import Data.Vec2
 import System.Random
-
+import Control.Monad
+import Data.Array.IO
 
 
 
@@ -44,7 +45,7 @@ podMinCollisionImpact = 120
 -- | enumerate distinct list  of unordered pair  
 distinctPairs :: [a] -> [(a,a)]
 distinctPairs xs = concat $ map (\n-> zip (repeat (xs!!n)) (drop (n+1) xs)) [0..(length xs-1)]
-
+{-
 -- | randomly permute an array
 randomPerm :: [a] -> IO [a]
 randomPerm xs 
@@ -54,7 +55,7 @@ randomPerm xs
         n <- nIO
         rest <- randomPerm (take n xs ++ drop (n+1) xs) 
         return $ (xs!!n):rest
-
+-}
 degToRad :: Double -> Double
 degToRad = (* (pi / 180))
 
@@ -69,3 +70,17 @@ clamp mi x ma = max mi (min x ma)
 
 fmod :: Double -> Double -> Double
 fmod x y = x - fromIntegral (floor (x / y))
+
+randomPerm :: [a] -> IO [a]
+randomPerm xs = do
+        ar <- newArray n xs
+        forM [1..n] $ \i -> do
+            j <- randomRIO (i,n)
+            vi <- readArray ar i
+            vj <- readArray ar j
+            writeArray ar j vi
+            return vj
+  where
+    n = length xs
+    newArray :: Int -> [a] -> IO (IOArray Int a)
+    newArray n xs =  newListArray (1,n) xs
