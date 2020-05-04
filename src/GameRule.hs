@@ -115,12 +115,15 @@ simulate ::
   -> (GameHistory -> Bool)  -- stop rule 
   -> IO GameHistory
 
-simulate p1 p2 gss@(g:gs) stopRule = do
-  let g0 = map speedDecay $ movePods 1 g
-  (p1',p2',g1) <- playerDrivePod p1 p2 g0 
-  let g2 = map (thrustPod.rotatePod) g1
+simulate p1 p2 gss@(g:gs) stopRule = 
   if (length gss > maxSimTurn) || stopRule gss
-    then return gss
-    else simulate p1' p2' (g2:gss) stopRule
+    then return gss else do
+    let g0 = map speedDecay $ movePods 1 g
+    --seq g0 $ putStrLn "moved"
+    (p1',p2',g1) <- playerDrivePod p1 p2 g0
+    --putStrLn "Drived"
+    let g2 =  map (thrustPod.rotatePod) g1
+    --seq g2 $ putStrLn "thrusted"
+    simulate p1' p2' (g2:gss) stopRule
       
       

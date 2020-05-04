@@ -28,7 +28,6 @@ import System.Random
 data Vec2 = Vec2 {-# UNPACK #-} !(Double)
                  {-# UNPACK #-} !(Double)  deriving (Show, Read, Eq)
 
-
 instance Num Vec2 where
     (+)    = elementWise2 (+)
     (-)    = elementWise2 (-)

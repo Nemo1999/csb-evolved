@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1d7cb615d84ebee3408ef1abbe6376c28e9d6af0249d8916f10014630279774c
+-- hash: 053ac5e3eb43391f141925ca40ae468aba35b25f6180aff981b450a0f736752a
 
 name:           csb-evolution
 version:        0.1.0.0
@@ -32,15 +32,17 @@ library
       GameSim
       Interact
       Player
-      Player.CGP
+      Player.GA
       Player.Instances
       Util
+      Warrier.Weapons
   other-modules:
       Paths_csb_evolution
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      array
+    , base >=4.7 && <5
     , gloss >=1.13
     , ilist
     , random
@@ -54,9 +56,10 @@ executable csb-evolution-exe
       Paths_csb_evolution
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -threaded -rtsopts -O2 -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      array
+    , base >=4.7 && <5
     , csb-evolution
     , gloss >=1.13
     , ilist
@@ -74,7 +77,8 @@ test-suite csb-evolution-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      array
+    , base >=4.7 && <5
     , csb-evolution
     , gloss >=1.13
     , ilist
