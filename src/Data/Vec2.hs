@@ -2,6 +2,8 @@
 {-# OPTIONS_GHC -O2 #-}
 module Data.Vec2
     ( Vec2(..)
+    , elementWise
+    , elementWise2
     , scalarMul
     , scalarDiv
     , dot
@@ -28,14 +30,19 @@ data Vec2 = Vec2 {-# UNPACK #-} !(Double)
 
 
 instance Num Vec2 where
-    (Vec2 !x1 !y1) + (Vec2 !x2 !y2) = Vec2 (x1 + x2) (y1 + y2)
-    (Vec2 !x1 !y1) - (Vec2 !x2 !y2) = Vec2 (x1 - x2) (y1 - y2)
-    (*) = error "multiplication on Vec2 is not supported"
-    negate (Vec2 !x !y) = Vec2 (-x) (-y)
-    abs    = error "abs on Vec2 is not supported"
-    signum = error "signum on Vec2 is not supported"
-    fromInteger 0 = Vec2 0 0
-    fromInteger _ = error "fromInteger x for x /= 0 on Vec2 is not supported"
+    (+)    = elementWise2 (+)
+    (-)    = elementWise2 (-)
+    (*)    = elementWise2 (*)
+    negate = elementWise negate
+    abs    = elementWise abs
+    signum = elementWise signum
+    fromInteger x = Vec2 (fromInteger x) (fromInteger x)
+
+elementWise :: (Double -> Double) -> Vec2 -> Vec2
+elementWise f (Vec2 x y) = Vec2 (f x) (f y)
+
+elementWise2 :: (Double -> Double -> Double) -> Vec2 -> Vec2 -> Vec2
+elementWise2 f (Vec2 x1 y1) (Vec2 x2 y2) = Vec2 (x1 `f` x2) (y1 `f` y2)
 
 scalarMul :: Double -> Vec2 -> Vec2
 scalarMul !c (Vec2 !x !y) = Vec2 (c * x) (c * y)
