@@ -29,7 +29,6 @@ class PlayerIO p where
     playerRunIO  :: p -> PlayerIn -> IO (PlayerOut , p)
 
 
-
 newtype WrapIO p = WrapIO p
 
 -- | every Player p can be used as PlayerIO p     
