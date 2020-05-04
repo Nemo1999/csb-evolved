@@ -12,6 +12,7 @@ module GameSim
   , thrustPod
   , movePods
   , speedDecay
+  , gameSimTurns
   )
 where
 
@@ -51,12 +52,13 @@ shieldNextState activated ss = if activated then Just 3 else
 
 
 
-{-
--- | simulate Game Phisic for 1 turn
-gameSimTurn :: [PodState] -> [PodState]
-gameSimTurn pss = map speedDecay $ movePods 1 $ map (thrustPod.rotatePod) pss
 
--- | simulate Game Phisic for less than 1 turn
+-- | simulate Game Phisic for n turn
+gameSimTurns ::Int -> [PodState] -> [PodState]
+gameSimTurns 0 !pss = pss
+gameSimTurns n !pss = gameSimTurns (n-1) $ map speedDecay $ movePods 1 $ map (thrustPod.rotatePod) pss
+{-
+-- | simulate Game Physic for less than 1 turn
 gameSimTime :: Time -> [PodState] -> [PodState]
 gameSimTime t pss = movePods t $ map (thrustPod.rotatePod) pss 
 -}
