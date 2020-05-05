@@ -21,12 +21,13 @@ import Debug.Trace
 
 -------- Parameters
 geneLength = 6 :: Int
-popSize = 50 :: Int 
-pCross = 0.6 :: Double
+popSize = 12 :: Int 
+pCross = 0.5 :: Double
 pMutate = 0.8 :: Double
 boostPenalty = 10000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
+maxTime = 600000000000 ::Integer -- maximum time before returning the final answer 
 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
@@ -60,11 +61,14 @@ instance Ord TeamScore where
 crossover ::Int ->  Gene -> Gene -> IO (Gene,Gene)
 crossover geneLength g1 g2 = do
   n <- randomIO :: IO Double
+  k <- randomIO :: IO Double
   if n>pCross then return (g1,g2) else do
     crossPoint <- randomRIO (1,geneLength-1)
     let g1' = take crossPoint g1 ++ drop crossPoint g2
     let g2' = take crossPoint g2 ++ drop crossPoint g1
-    return (g1', g2')
+    return (midValues 0 g1' g2',midValues 0 g2' g1')
+    where
+      midValues k  = zipWith (\(ang1,th1) (ang2,th2)->(ang1*k + ang2*(1-k),th1)) 
 
 ------------- Random Population
 
@@ -117,7 +121,7 @@ makeDriver (g1,g2) n [p1,p2] =
 simTeam :: Int -> (Driver,Driver) -> [PodState] -> [PodState]
 simTeam 0 (player ,opponent) psNow = psNow
 simTeam n (player ,opponent) psNow =
-  let ps' = player (n-1) (take 2 psNow) ++ opponent (n-1) (drop 2 psNow)
+  let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
 
 -- | Calculate the fitness of a (Gene,Gene) for (pod1,pod2)
@@ -160,7 +164,7 @@ instance PlayerIO GASimple where
     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
     return (decodeGene (p1,p2) $ head popFinal , undefined)
     where
-      maxTime = 60000000000 ::Integer -- maximum time before returning the final answer 
+      
       decodeGene :: (PodState,PodState) -> (Gene,Gene) -> [PodMovement]
       decodeGene (ps1,ps2) (g1,g2) = [decodeStep ps1 $ head g1 , decodeStep ps2 $ head g2]
       evolve :: Integer -> [PodState]-> Population -> Int -> IO Population 
@@ -178,7 +182,7 @@ instance PlayerIO GASimple where
 -- | Decode a Gene as PodMovement
 decodeStep :: PodState -> Step -> PodMovement
 decodeStep PodState{podPosition=pos} (ang,thrust) = 
-  PodMovement (pos + roundVec (5000 `scalarMul` unitVec ang )) thrust
+  PodMovement (pos + roundVec (5000 `scalarMul` unitVec (degToRad ang) )) thrust
 
 
   
@@ -188,7 +192,7 @@ nextGen geneLength  podStates ps = do
   let [p1,p2] = take 2 ps
   matingPool <- select popSize ps 
   childrens  <- crossoverAndMutate geneLength matingPool
-  return $ take popSize $ sortOn (fitness podStates) (p1:p2:childrens)
+  return $ take popSize $ sortOn (negate.fitness podStates) (p1:p2:childrens)
     where
       select :: Int -> Population -> IO Population
       select n ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
@@ -201,3 +205,15 @@ nextGen geneLength  podStates ps = do
             return ((g11'',g12''):(g21'',g22''):gs'')
       crossoverAndMutate geneLength [] =return  []
 
+--- Default Gene
+{-
+defaultGene :: [PodState]->(Gene,Gene)
+defaultGene [PodState{podPosition = pos1 , podNextCheckPoints = tar1:_ , podAngle = ang1},
+             PodState{podPosition = pos2 , podNextCheckPoints = tar2:_ , podAngle = ang2},_,_]
+  = let [tarAng1 , tarAng2] = map (radToDeg.arg) [(tar1-pos1) ,(tar2-pos2)]
+        delAng1  = map clamp (-18) (normalizeDeg (tarAng1-ang1)) (+18)
+        delAng2  = map clamp (-18) (normalizeDeg (tarAng2-ang2)) (+18)
+        return 
+
+
+-}
