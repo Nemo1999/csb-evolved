@@ -1,6 +1,7 @@
 module Util
     ( degToRad
-    , normalizeAngle
+    , normalizeRad
+    , normalizeDeg
     , clamp
     , maxTurnAngle
     , boostAccel
@@ -62,8 +63,8 @@ degToRad = (* (pi / 180))
 radToDeg :: Double -> Double
 radToDeg = (*(180/pi))
 
-normalizeAngle :: Double -> Double
-normalizeAngle x = ((x + pi) `fmod` (2 * pi)) - pi
+normalizeRad :: Double -> Double
+normalizeRad x = ((x + pi) `fmod` (2 * pi)) - pi
 
 clamp :: (Ord a) => a -> a -> a -> a
 clamp mi x ma = max mi (min x ma)
@@ -84,3 +85,6 @@ randomPerm xs = do
     n = length xs
     newArray :: Int -> [a] -> IO (IOArray Int a)
     newArray n xs =  newListArray (1,n) xs
+
+normalizeDeg :: Double -> Double
+normalizeDeg x = x - ((fromIntegral.round) (x/360) * 360)  

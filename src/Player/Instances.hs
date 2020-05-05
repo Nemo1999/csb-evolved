@@ -131,7 +131,7 @@ instance Player ElementarySearchPlayer where
         = podState
 
       -- Rotation.
-      theta' = normalizeAngle $ fromMaybe 0 theta + deltatheta
+      theta' = normalizeRad $ fromMaybe 0 theta + deltatheta
 
       -- Acceleration.
       am     = case thr of
