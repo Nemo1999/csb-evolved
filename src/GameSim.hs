@@ -11,6 +11,7 @@ module GameSim
   , rotatePod
   , thrustPod
   , movePods
+  , driftPod
   , speedDecay
   , gameSimTurns
   )
