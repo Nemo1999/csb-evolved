@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -O2  #-}
 {-# LANGUAGE BangPatterns#-}
 {-# LANGUAGE PatternGuards #-}
--- module Warrier.Weapons where
+module Warrier.Weapons where
 
 {-
 import Util
@@ -434,13 +434,13 @@ instance (Player p) => PlayerIO (WrapIO p) where
 ----GA------------------------------------------------
 -------- Parameters
 geneLength = 6 :: Int
-popSize = 18 :: Int 
+popSize = 10 :: Int 
 pCross = 1 :: Double
 pMutate = 1 :: Double
 boostPenalty = 10000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
-maxTime = 70000000000 ::Integer -- maximum time before returning the final answer 
+maxTime = 71000000000 ::Integer -- maximum time before returning the final answer 
 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
@@ -495,13 +495,13 @@ randomGene geneLength = sequence $ replicate geneLength randomStep
 
 randomStep :: IO Step
 randomStep = do
-  delAngleBool <- randomIO ::IO Bool
-  let  delAngle = if delAngleBool then 18 else -18
+  i <- randomRIO ((-1),1)::IO Double
+  let  delAngle = i*18
   
   n        <- randomRIO (0,49) :: IO Double                
   let thrust = case n of                                
         _ | 0<=n  && n<10 -> Normal 0                   
-          | 10<=n && n<20 -> Normal 50                 
+          | 10<=n && n<20 -> Normal 80                 
           | 20<=n && n<30 -> Normal 100                 
           | 30<=n && n<40 -> Boost                      
           | 35<=n && n<50 -> Shield                     
@@ -558,14 +558,14 @@ measureTeam  [p1,p2,o1,o2] =
  in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
      - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
      - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-     + (0.2*(measurePodScore $ min (getPodScore p1)(getPodScore p2)))
+     + (0.3*(measurePodScore $ min (getPodScore p1)(getPodScore p2)))
      -- + if isJust $ podAngle pp then 100*((1/norm targetDir) `scalarMul` targetDir) `dot` (unitVec $ fromJust $ podAngle pp) else 0
      
 -- | turn TeamScore into Double for compare
 -- | the higher the score , the better the team
 measureTeamScore :: Double -> TeamScore -> Double
 measureTeamScore selfOppoRate TeamScore{selfBest=s,oppoBest = o} =
-    selfOppoRate * measurePodScore s +  measurePodScore o  
+    selfOppoRate * measurePodScore s -  measurePodScore o  
  
 -- | turn PodScore into Double for compare
 measurePodScore ::  PodScore -> Double
@@ -573,10 +573,10 @@ measurePodScore (PodScore (i,d))=
   ( negate $ fromIntegral ( podScoreCkptWeight * i)) - d 
 -- | Evalutating the score of a single  PodState
 getPodScore :: PodState -> PodScore
-getPodScore PodState{podPosition=pos,podNextCheckPoints = ckpts} =
+getPodScore PodState{podPosition=pos,podAngle = (Just ang),podNextCheckPoints = ckpts} =
   let len = length ckpts
-      dist = if len > 0 then norm (pos-head ckpts) else 0
-  in PodScore (len ,dist) 
+      dist = if len > 0 then norm ((pos+(250`scalarMul`unitVec ang)) -head ckpts) else 0
+  in PodScore (len ,dist)
 
 
 -------------Define Player

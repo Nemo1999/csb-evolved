@@ -2,9 +2,10 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE PatternGuards #-}
 -- {-# LANGUAGE TypeSynonymInstances #-}
-module Player.GA
+module Player.GAM
 (
-  GASimple(..)
+  GAMeta(..),
+  defaultGAMeta
 )
 where
 import Player
@@ -19,12 +20,32 @@ import System.Random
 import System.Timeout
 import System.CPUTime
 import Debug.Trace
-  
+
+{- --- Just for Look up ~~
+data GAMeta = GAMeta{seed::Bool,
+                     angRes::Bool
+                     geneLength::Int,
+                     popSize::Int,
+                     pMutate::Double,
+                     pCross::Double,
+                     select::Int -> Population -> IO Population,
+                     crossover ::Int->Double->Gene->Gene->IO (Gene,Gene)
+                     mutation  ::Bool -> Int->Double->Gene-> IO Gene
+                    }
+
+-}
 -------- Parameters
-geneLength = 6 :: Int
-popSize = 16 :: Int 
-pCross = 0.8 :: Double
-pMutate = 0.8 :: Double
+defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial Population?
+                       angRes=True, --- do we divide random generated angle range (-18,18) into 3 or 5 part  
+                       geneLength=6,
+                       popSize=8, 
+                       pMutate=1,
+                       pCross=1, 
+                       select=defaultSelect, 
+                       crossover=defaultCross, 
+                       mutation = defaultMutate
+                      }
+                       
 boostPenalty = 10000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
@@ -59,8 +80,8 @@ instance Ord TeamScore where
 
 -------------CrossOver 
 
-crossover ::Int ->  Gene -> Gene -> IO (Gene,Gene)
-crossover geneLength g1 g2 = do
+defaultCross ::Int->Double ->  Gene -> Gene -> IO (Gene,Gene)
+defaultCross  geneLength pCross  g1 g2 = do
   n <- randomIO :: IO Double
   k <- randomIO :: IO Double
   if n>pCross then return (g1,g2) else do
@@ -69,26 +90,31 @@ crossover geneLength g1 g2 = do
     let g2' = take crossPoint g2 ++ drop crossPoint g1
     return (midValues k g1' g2',midValues k g2' g1')
     where
-      midValues k  = zipWith (\(ang1,th1) (ang2,th2)->(ang1*k + ang2*(1-k),th1)) 
+      midValues k  = zipWith (\(ang1,th1) (ang2,th2)->(ang1*k + ang2*(1-k),th1))
+
+-------------Selection
+defaultSelect :: Int -> Population -> IO Population
+defaultSelect popSize ps = randomPerm $ take popSize $ cycle $ take (popSize `div` 2) ps  
 
 ------------- Random Population
 
-randomPop  :: Int -> Int -> IO Population
-randomPop geneLength popSize =
-  let randomPair = (,) <$> randomGene geneLength <*> randomGene geneLength
+randomPop  :: Bool -> Int -> Int -> IO Population
+randomPop angRes geneLength popSize =
+  let randomPair = (,) <$> randomGene angRes geneLength <*> randomGene angRes geneLength
   in  sequence $ replicate popSize randomPair
 
-randomGene :: Int -> IO Gene
-randomGene geneLength = sequence $ replicate geneLength randomStep
+randomGene :: Bool -> Int -> IO Gene
+randomGene angRes geneLength = sequence $ replicate geneLength $ randomStep angRes
 
-randomStep :: IO Step
-randomStep = do
-  i <- randomRIO ((-1),1) ::IO Double
-  let delAngle = 18*i
+randomStep :: Bool -> IO Step
+randomStep angleRes = do
+  let res = if angleRes then 1 else 2
+  i <- randomRIO ((-res),res) ::IO Int
+  let delAngle = (18/fromIntegral res)*(fromIntegral i)
   n        <- randomRIO (0,49) :: IO Double                
   let thrust = case n of                                
         _ | 0<=n  && n<10 -> Normal 0                   
-          | 10<=n && n<20 -> Normal 80                 
+          | 10<=n && n<20 -> Normal 50                 
           | 20<=n && n<30 -> Normal 100                 
           | 30<=n && n<40 -> Boost                      
           | 35<=n && n<50 -> Shield                     
@@ -96,22 +122,22 @@ randomStep = do
 
 --------------- Mutation
 
-mutate :: Int -> Gene -> IO Gene
-mutate geneLength g = do
+defaultMutate ::Bool -> Int-> Double -> Gene -> IO Gene
+defaultMutate angRes  geneLength pMutate  g = do
   n <- randomIO :: IO Double
   if n>pMutate then return g else do 
     mutatePoint <- randomRIO (0,geneLength-1)
     let (oldAng, oldThrust) = g!!mutatePoint  
-    (newAng,newThrust) <- randomStep
+    (newAng,newThrust) <- randomStep angRes 
     angOrThrust <- randomIO :: IO Bool
     let newStep = if angOrThrust then (newAng,oldThrust) else (oldAng,newThrust)
     return (take mutatePoint g ++ [newStep] ++ drop (mutatePoint+1) g)  
 
 ------------- Fitness 
 
-fitness   :: [PodState]-> (Gene,Gene) -> Double 
-fitness initialState genePair =
-  let simResult = simTeam geneLength (makeDriver genePair , defaultOpponent) initialState
+fitness   :: Int -> [PodState]-> (Gene,Gene) -> Double 
+fitness geneL initialState genePair =
+  let simResult = simTeam geneL geneL(makeDriver genePair , defaultOpponent) initialState
   in  measureTeam simResult
 
 -- | take step number and a list of 2 PodStates and update the "PodMovement" of the two pods
@@ -129,11 +155,11 @@ makeDriver :: (Gene,Gene) -> Driver
 makeDriver (g1,g2) n [p1,p2] =
   [p1{podMovement = decodeStep p1 (g1!!n)},p2{podMovement = decodeStep p2 (g2!!n)}]
 
-simTeam :: Int -> (Driver,Driver) -> [PodState] -> [PodState]
-simTeam 0 (player ,opponent) psNow = psNow
-simTeam n (player ,opponent) psNow =
-  let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
-  in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+simTeam :: Int -> Int -> (Driver,Driver) -> [PodState] -> [PodState]
+simTeam _ 0 (player ,opponent) psNow = psNow
+simTeam geneLen n (player ,opponent) psNow =
+  let ps' = player (geneLen - n) (take 2 psNow) ++ opponent (geneLen - n) (drop 2 psNow)
+  in  simTeam geneLen (n-1) (player,opponent) $ gameSimTurns 1 ps'
 
 -- | Calculate the fitness of a (Gene,Gene) for (pod1,pod2)
 measureTeam :: [PodState] -> Double 
@@ -143,7 +169,7 @@ measureTeam  [p1,p2,o1,o2] =
  in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
      - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
      - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-     + (0.8*(measurePodScore $ min (getPodScore p1)(getPodScore p2)))
+     + ((min (measurePodScore $ getPodScore p1)(measurePodScore $ getPodScore p2)))
 
 -- | turn TeamScore into Double for compare
 -- | the higher the score , the better the team
@@ -167,33 +193,40 @@ getPodScore PodState{podPosition=pos,podAngle = (Just ang),podNextCheckPoints = 
 
 -- | A simple GA player (no configuring parameter for now)
 
-data GASimple = GASimple
-instance PlayerIO GASimple where
-  playerInitIO _ = return GASimple
-  playerRunIO _ PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
-    t0 <- getCPUTime
-    let defaultSeed = (defaultGene p1 ,defaultGene p2)
+data GAMeta = GAMeta{seed::Bool,
+                     angRes::Bool,
+                     geneLength::Int,
+                     popSize::Int,
+                     pMutate::Double,
+                     pCross::Double,
+                     select::Int -> Population -> IO Population,
+                     crossover ::Int->Double->Gene->Gene->IO (Gene,Gene),
+                     mutation  ::Bool -> Int->Double->Gene-> IO Gene
+                    }
 
-    --popRand <- randomPop geneLength (popSize)
-    --let pop0 = sortOn (negate.fitness [p1,p2,o1,o2]) $  popRand
-    
-    popRand <- randomPop geneLength (popSize-2)
-    let pop0 = sortOn (negate.fitness [p1,p2,o1,o2]) $  defaultSeed:defaultSeed:popRand
-    
-    popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
-    return (decodeGene (p1,p2) $  head popFinal , GASimple)
+instance PlayerIO GAMeta where
+  playerInitIO  = return 
+  playerRunIO player@(GAMeta seed angRes  geneLength popSize _ _ _ _ _) PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
+    t0 <- getCPUTime
+    let defaultSeed = (defaultGene geneLength p1 ,defaultGene geneLength p2)
+        
+    let randSize = if seed then (popSize-2) else popSize
+    popRand <- randomPop angRes  geneLength randSize
+    let pop0 = sortOn (negate.fitness geneLength [p1,p2,o1,o2]) $ if seed then defaultSeed:defaultSeed:popRand else popRand
+    popFinal <- evolve player t0 [p1,p2,o1,o2] pop0 0
+    return (decodeGene (p1,p2) $  head popFinal ,player)
     where
       decodeGene :: (PodState,PodState) -> (Gene,Gene) -> [PodMovement]
       decodeGene (ps1,ps2) (g1,g2) = [decodeStep ps1 $ head g1 , decodeStep ps2 $ head g2]
-      evolve :: Integer -> [PodState]-> Population -> Int -> IO Population 
-      evolve t0 ps g0 gCnt= do
+      evolve :: GAMeta -> Integer -> [PodState]-> Population -> Int -> IO Population 
+      evolve player t0 ps g0 gCnt= do
         t1 <- getCPUTime
         if (t1-t0)>maxTime then return $
           trace (show gCnt )-- ++" "++show (head g0))
                                                 $ g0 else do
-          mg1 <-(nextGen geneLength ps g0) -- timeout 10 ....
+          mg1 <-(nextGen player  ps g0) -- timeout 10 ....
           case Just mg1 of
-            Just  g1 -> evolve t0 ps g1 (gCnt+1)
+            Just  g1 -> evolve player t0 ps g1 (gCnt+1)
             Nothing  -> return g0
       
       
@@ -204,23 +237,21 @@ decodeStep PodState{podPosition=pos,podAngle = podAng,podNextCheckPoints = ckpts
   | Nothing      <- podAng = PodMovement (head ckpts) thrust
 
   
-nextGen :: Int -> [PodState] -> Population -> IO Population
-nextGen geneLength  podStates ps = do
+nextGen :: GAMeta -> [PodState] -> Population -> IO Population
+nextGen player@(GAMeta seed angRes geneLength popSize pMutate pCross select crossover mutate) podStates ps = do
   let [p1,p2] = take 2 ps
   matingPool <- select popSize ps 
-  childrens  <- crossoverAndMutate geneLength matingPool
-  return $ take popSize $ sortOn (negate.fitness podStates) (p1:p2:childrens)
+  childrens  <- crossoverAndMutate  matingPool
+  return $ take popSize $ sortOn (negate.fitness geneLength podStates) (p1:p2:childrens)
     where
-      select :: Int -> Population -> IO Population
-      select n ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
-      crossoverAndMutate :: Int -> Population -> IO Population -- length population should be even 
-      crossoverAndMutate geneLength ((g11,g12):(g21,g22):gs) = do
-            (g11', g21') <- crossover geneLength g11 g21
-            (g12', g22') <- crossover geneLength g12 g22 
-            [g11'',g12'', g21'' , g22''] <- sequence $ map (mutate geneLength) [g11', g12', g21', g22']
-            gs'' <- crossoverAndMutate geneLength gs
+      crossoverAndMutate :: Population -> IO Population -- length population should be even 
+      crossoverAndMutate  ((g11,g12):(g21,g22):gs) = do
+            (g11', g21') <- crossover geneLength pCross g11 g21
+            (g12', g22') <- crossover geneLength pMutate g12 g22 
+            [g11'',g12'', g21'' , g22''] <- sequence $ map (mutate angRes geneLength pMutate) [g11', g12', g21', g22']
+            gs'' <- crossoverAndMutate gs
             return ((g11'',g12''):(g21'',g22''):gs'')
-      crossoverAndMutate geneLength [] =return  []
+      crossoverAndMutate  [] =return  []
 
 -- Default Gene
 encode :: PodState -> PodMovement -> Step
@@ -229,12 +260,12 @@ encode PodState{podPosition=pos,podAngle=ang} PodMovement{podTarget=target,podTh
         turnAng= clamp (-18) (normalizeDeg (tarAng - (radToDeg.fromJust) ang)) (18)
     in (turnAng,thrust)
 
-defaultGene :: PodState-> Gene
-defaultGene ps =
+defaultGene :: Int -> PodState-> Gene
+defaultGene geneL  ps =
   let 
       iterFunc = (\x ->  (speedDecay $driftPod 1$ thrustPod $ rotatePod $ defaultDriver x ))
       defaultDriverHistory = iterate iterFunc ps
-  in map (\ps -> encode ps (podMovement ps)) $ take geneLength $ tail defaultDriverHistory 
+  in map (\ps -> encode ps (podMovement ps)) $ take geneL $ tail defaultDriverHistory 
          
 
 

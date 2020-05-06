@@ -5,7 +5,7 @@ module Interact
     gameAnimateIO
   , testAnimate
   , testGameSim
-  ,main 
+  ,main
   )
 where
 import GameRule
@@ -13,6 +13,7 @@ import GameSim
 import Player(WrapIO(..))
 import Player.Instances
 import Player.GA
+import Player.GAM
 import Graphics.Gloss.Interface.IO.Game
 import Graphics.Gloss.Data.Color
 import Graphics.Gloss.Data.Picture
@@ -82,6 +83,7 @@ gameAnimateIO turnPerSec  gameSpec gs =
 
 e1 = WrapIO (ElementaryPlayer ())
 e2 = GASimple
+e3 = defaultGAMeta
 
 testSim :: Int -> IO [Int]
 testSim n = sequence $ replicate n testGameSim
@@ -89,7 +91,7 @@ testSim n = sequence $ replicate n testGameSim
 testGameSim :: IO Int
 testGameSim = do
   gsp  <- randomGameSpecIO
-  ghis <- runGame (e1,e2) gsp gameEnd
+  ghis <- runGame (e2,e3) gsp gameEnd
   return $ length ghis
 
 testGsp = GameSpec {gameSLaps = 3, gameSCheckpoints = [Vec2 13479.867410300898 771.2779802449776,Vec2 13991.177029911074 5957.9577506621745,Vec2 11283.183037190614 4051.7698613074967,Vec2 890.6858795864157 65.26211610815757,Vec2 364.6964748594801 8655.346773911324,Vec2 1687.2787736171979 3407.517451010222,Vec2 2219.1046319873317 1212.3349781580753]}
@@ -97,7 +99,7 @@ testGsp = GameSpec {gameSLaps = 3, gameSCheckpoints = [Vec2 13479.867410300898 7
 testAnimate :: Double ->  IO()
 testAnimate turnPerSec = do
   gsp <- randomGameSpecIO
-  ghis <- runGame (e1,e2) gsp gameEnd
+  ghis <- runGame (e2,e3) gsp gameEnd
   gameAnimateIO turnPerSec  gsp ghis
 
 
