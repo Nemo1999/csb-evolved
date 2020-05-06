@@ -27,6 +27,7 @@ dependencies:
 - vector
 - timeit
 - array
+- directory
 
 library:
   source-dirs: src
