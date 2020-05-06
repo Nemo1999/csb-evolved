@@ -400,7 +400,7 @@ roundt = mapM_ (\t -> putStrLn $ show $ map podAngle $  gameSimTime t game)
 
 ----Player------------------------------------------------
 data PlayerIn = PlayerIn {selfPod ::[PodState]
-                         ,oppoPod ::[PodState]} 
+                         ,oppoPod ::[PodState]} deriving Show
 
 type PlayerOut = [PodMovement]
 
@@ -642,33 +642,37 @@ readPoint = do
   [x,y] <- fmap (map read) $ words<$>getLine :: IO [Double]
   return $ Vec2 x y
 
-readCkpts :: IO [Vec2]
+readCkpts :: IO (Int , Ckpts)
 readCkpts = do
   laps <- read<$>getLine :: IO Int
   ckptCount <- read<$>getLine :: IO Int 
-  sequence $ replicate ckptCount readPoint
+  ckpts <- sequence $ replicate ckptCount readPoint
+  return (laps,ckpts)
 
-readPod   :: Ckpts -> IO PodState
-readPod  ckpts= do
+readPod   :: (Int , Ckpts) -> IO PodState
+readPod  (laps, ckpts)= do
   [x,y,vx,xy,angle,ckptId] <- fmap (map read) $  words<$>getLine :: IO [ Int ]
   let pos = Vec2 (fromIntegral x) (fromIntegral y)
   let speed = Vec2 (fromIntegral vx) ( fromIntegral y)
   let ang = Nothing -- Just $ fromIntegral angle ?
+  let podCkpts = take (laps*length ckpts) (tail $ cycle ckpts)
   return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=ckpts}
 
 updatePod :: Ckpts -> PodState -> IO PodState
 updatePod ckpts podPrev = do
-  [x,y,vx,xy,angle,ckptId] <- fmap (map read) $  words<$>getLine :: IO [ Int ]
+  [x,y,vx,vy,angle,ckptId] <- fmap (map read) $  words<$>getLine :: IO [ Int ]
   let pos = Vec2 (fromIntegral x) (fromIntegral y)
-  let speed = Vec2 (fromIntegral vx) ( fromIntegral y)
+  let speed = Vec2 (fromIntegral vx) ( fromIntegral vy)
   let ang = Just $ fromIntegral angle
+  
   let podCkpts = dropWhile (/= (ckpts!!ckptId)) (podNextCheckPoints podPrev)
+  
   return podPrev{podPosition=pos ,podSpeed = speed , podAngle = ang,podNextCheckPoints=podCkpts}
         
 updateShieldThrust :: PodState -> PodState
 updateShieldThrust ps@PodState{podBoostAvail=ba,podShieldState=sh,podMovement=(PodMovement _ boost)} =
   let sh' = shieldNextState (boost==Shield) sh
-      ba' = if ba' then (boost /= Boost) else ba'
+      ba' = if ba then (boost /= Boost) else ba
   in  ps{podBoostAvail = ba',podShieldState = sh'}
 
 putMovement :: PodMovement -> IO ()
@@ -687,15 +691,15 @@ logStr = hPutStrLn stderr
 gameCycles :: (PlayerIO p) => Ckpts -> [PodState]-> p -> IO ()
 gameCycles ckpts [p1,p2,o1,o2] player = do
    [p1',p2',o1',o2'] <- sequence $ map (updatePod ckpts) [p1,p2,o1,o2]
-   logStr "hello"
+   
    let playerIn = PlayerIn [p1',p2'] [o1',o2']
-   logStr "0"
+   
    ([move1,move2] , player') <- playerRunIO player playerIn
-   logStr "1"
+   
    let (p1'' ,p2'')= (p1'{podMovement = move1} ,p2'{podMovement=move2})
-   logStr "2"
+   
    let [p1''',p2'''] = map updateShieldThrust [p1'',p2'']
-   logStr "3"
+   
    putMovement move1
    putMovement move2
    gameCycles ckpts [p1''',p2''',o1',o2'] player'
@@ -705,11 +709,11 @@ main = do
     hSetBuffering stdout NoBuffering -- DO NOT REMOVE
 
     
-    ckpts <- readCkpts
-    pod1  <- readPod ckpts
-    pod2  <- readPod ckpts
-    opp1  <- readPod ckpts
-    opp2  <- readPod ckpts
+    cInfo@(laps,ckpts) <- readCkpts
+    pod1  <- readPod cInfo
+    pod2  <- readPod cInfo
+    opp1  <- readPod cInfo
+    opp2  <- readPod cInfo
 
     player <- playerInitIO GASimple
     let playerIn = PlayerIn [pod1,pod2] [opp1,opp2]
