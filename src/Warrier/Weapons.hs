@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -O2  #-}
 {-# LANGUAGE BangPatterns#-}
 {-# LANGUAGE PatternGuards #-}
--- module Warrier.Weapons where
+module Warrier.Weapons where
 
 {-
 import Util
@@ -276,7 +276,7 @@ driftPod (!dt) pod =
       reletivePos  = position - ckpt
       speed = podSpeed pod
       position' =  position + (dt `scalarMul` speed)
-      radius = podForceFieldRadius + checkPointRadius
+      radius = checkPointRadius
       reachTime = collideTime reletivePos speed radius
       ckpts'
         | ckpts == []  = []
@@ -411,6 +411,14 @@ class Player p where
 class PlayerIO p where
     playerInitIO :: p -> IO p
     playerRunIO  :: p -> PlayerIn -> IO (PlayerOut , p)
+    
+newtype WrapIO p = WrapIO p
+
+-- | every Player p can be used as PlayerIO p     
+instance (Player p) => PlayerIO (WrapIO p) where  
+  playerInitIO (WrapIO !p)  = return  $ WrapIO $ playerInit p
+  playerRunIO  (WrapIO !p)  !pin =
+    let (!pout, !p') = playerRun p pin  in return (pout, WrapIO p')
 
 ----GA------------------------------------------------
 -------- Parameters
@@ -649,24 +657,22 @@ readCkpts = do
   ckpts <- sequence $ replicate ckptCount readPoint
   return (laps,ckpts)
 
-readPod   :: (Int , Ckpts) -> IO PodState
+readPod   :: (Int , Ckpts)-> IO PodState
 readPod  (laps, ckpts)= do
-  [x,y,vx,xy,angle,ckptId] <- fmap (map read) $  words<$>getLine :: IO [ Int ]
-  let pos = Vec2 (fromIntegral x) (fromIntegral y)
-  let speed = Vec2 (fromIntegral vx) ( fromIntegral y)
-  let ang = Nothing -- Just $ fromIntegral angle ?
-  let podCkpts = take (laps*length ckpts) (tail $ cycle ckpts)
-  return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=ckpts}
-
-updatePod :: Ckpts -> PodState -> IO PodState
-updatePod ckpts podPrev = do
   [x,y,vx,vy,angle,ckptId] <- fmap (map read) $  words<$>getLine :: IO [ Int ]
   let pos = Vec2 (fromIntegral x) (fromIntegral y)
   let speed = Vec2 (fromIntegral vx) ( fromIntegral vy)
-  let ang = Just $ fromIntegral angle
-  
+  let ang = Nothing -- Just $ fromIntegral angle ?
+  let podCkpts = take (laps*length ckpts) (tail $ cycle ckpts)
+  return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=podCkpts}
+
+updatePod :: Ckpts -> PodState -> IO PodState
+updatePod ckpts podPrev = do
+  [x,y,vx,vy,degree,ckptId] <- fmap (map read) $  words<$>getLine :: IO [ Int ]
+  let pos = Vec2 (fromIntegral x) (fromIntegral y)
+  let speed = Vec2 (fromIntegral vx) ( fromIntegral vy)
+  let ang = Just $ degToRad $fromIntegral degree
   let podCkpts = dropWhile (/= (ckpts!!ckptId)) (podNextCheckPoints podPrev)
-  
   return podPrev{podPosition=pos ,podSpeed = speed , podAngle = ang,podNextCheckPoints=podCkpts}
         
 updateShieldThrust :: PodState -> PodState
@@ -703,6 +709,20 @@ gameCycles ckpts [p1,p2,o1,o2] player = do
    putMovement move1
    putMovement move2
    gameCycles ckpts [p1''',p2''',o1',o2'] player'
+
+newtype ElementaryPlayer = ElementaryPlayer () deriving (Show)
+instance Player ElementaryPlayer where
+    playerInit = id
+    playerRun _ PlayerIn { selfPod = ss }  =
+        (map straightToTarget ss, ElementaryPlayer ())
+      where
+        straightToTarget PodState { podNextCheckPoints = ckpts } = PodMovement
+            { podTarget = case ckpts of
+                              []         -> Vec2 0 0
+                              target : _ -> target
+            , podThrust = Normal 100
+            }
+
    
 main :: IO ()
 main = do
@@ -714,8 +734,8 @@ main = do
     pod2  <- readPod cInfo
     opp1  <- readPod cInfo
     opp2  <- readPod cInfo
-
-    player <- playerInitIO GASimple
+    
+    player <- playerInitIO $ GASimple--WrapIO $  ElementaryPlayer ()
     let playerIn = PlayerIn [pod1,pod2] [opp1,opp2]
     ([move1,move2] , player' )  <- playerRunIO player playerIn
     let (pod1' ,pod2')= (pod1{podMovement = move1} ,pod2{podMovement=move2})
