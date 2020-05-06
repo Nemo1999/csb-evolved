@@ -28,7 +28,7 @@ pMutate = 0.8 :: Double
 boostPenalty = 10000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
-maxTime = 60000000000 :: Integer -- maximum time before returning the final answer 
+maxTime = 70000000000 :: Integer -- maximum time before returning the final answer 
 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
@@ -83,7 +83,8 @@ randomGene geneLength = sequence $ replicate geneLength randomStep
 
 randomStep :: IO Step
 randomStep = do
-  delAngle <- randomRIO (-18.0,18.0)::IO Double 
+  b <- randomIO ::IO Bool
+  let delAngle = if b then 18 else (-18)
   n        <- randomRIO (0,49) :: IO Double                
   let thrust = case n of                                
         _ | 0<=n  && n<10 -> Normal 0                   
