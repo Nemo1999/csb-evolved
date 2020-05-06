@@ -122,7 +122,7 @@ simulate p1 p2 gss@(g:gs) stopRule =
     --seq g0 $ putStrLn "moved"
     (p1',p2',g1) <- playerDrivePod p1 p2 g0
     --putStrLn "Drived"
-    let g2 =  map (thrustPod.rotatePod) g1
+    let g2 =  map (roundTrunc.thrustPod.rotatePod) g1
     --seq g2 $ putStrLn "thrusted"
     simulate p1' p2' (g2:gss) stopRule
       
