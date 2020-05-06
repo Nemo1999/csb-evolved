@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -O2  #-}
 {-# LANGUAGE BangPatterns#-}
 {-# LANGUAGE PatternGuards #-}
--- module Warrier.Weapons where
+module Warrier.Wapons where
 
 {-
 import Util

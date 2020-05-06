@@ -10,7 +10,7 @@ import           System.Directory
 makeWarrier :: FilePath -> IO String
 makeWarrier srcPath = do
     let files =
-            [ "Warrier/Wapons.hs"
+            [ "Wapons.txt"
             , "Data/Vec2.hs"
             , "GameRule.hs"
             , "GameSim.hs"
