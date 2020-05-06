@@ -14,6 +14,7 @@ module GameSim
   , driftPod
   , speedDecay
   , gameSimTurns
+  ,shieldNextState
   )
 where
 

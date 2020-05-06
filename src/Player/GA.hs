@@ -10,7 +10,7 @@ where
 import Player
 import Data.Vec2
 import GameSim
-import GameRule
+-- import GameRule
 import Util
 import Data.List
 import Data.Maybe
@@ -22,13 +22,13 @@ import Debug.Trace
 
 -------- Parameters
 geneLength = 6 :: Int
-popSize = 14 :: Int 
-pCross = 0.5 :: Double
+popSize = 16 :: Int 
+pCross = 0.8 :: Double
 pMutate = 0.8 :: Double
 boostPenalty = 10000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
-maxTime = 60000000000 ::Integer -- maximum time before returning the final answer 
+maxTime = 60000000000 :: Integer -- maximum time before returning the final answer 
 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
@@ -48,7 +48,7 @@ data PodScore =  PodScore (Int,Double) deriving Eq
 instance Ord PodScore where
   compare ps1 ps2 =
     compare  (measurePodScore  ps1)
-             $ measurePodScore  ps2
+             $ measurePodScore ps2
 
 -- | The Score of a simulation result of a pair of Genes
 -- | Contains the PodScore of player's best Pod and opponent's best Pod  
@@ -142,7 +142,7 @@ measureTeam  [p1,p2,o1,o2] =
  in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
      - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
      - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-     + (0.2*(measurePodScore $ min (getPodScore p1)(getPodScore p2)))
+     + (0.5*(measurePodScore $ min (getPodScore p1)(getPodScore p2)))
 
 -- | turn TeamScore into Double for compare
 -- | the higher the score , the better the team
@@ -172,9 +172,13 @@ instance PlayerIO GASimple where
   playerRunIO _ PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
     t0 <- getCPUTime
     let defaultSeed = (defaultGene p1 ,defaultGene p2)
-    putStrLn $ show defaultSeed 
+
+    --popRand <- randomPop geneLength (popSize)
+    --let pop0 = sortOn (negate.fitness [p1,p2,o1,o2]) $  popRand
+    
     popRand <- randomPop geneLength (popSize-2)
     let pop0 = sortOn (negate.fitness [p1,p2,o1,o2]) $  defaultSeed:defaultSeed:popRand
+    
     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
     return (decodeGene (p1,p2) $  head popFinal , GASimple)
     where
@@ -185,7 +189,7 @@ instance PlayerIO GASimple where
       evolve t0 ps g0 gCnt= do
         t1 <- getCPUTime
         if (t1-t0)>maxTime then return $
-          trace (show gCnt ++" "++show (head g0))
+          trace (show gCnt )-- ++" "++show (head g0))
                                                 $ g0 else do
           mg1 <-(nextGen geneLength ps g0) -- timeout 10 ....
           case Just mg1 of
