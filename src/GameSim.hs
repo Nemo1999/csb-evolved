@@ -15,6 +15,7 @@ module GameSim
   , speedDecay
   , gameSimTurns
   ,shieldNextState
+  , roundTrunc
   )
 where
 
@@ -58,7 +59,7 @@ shieldNextState activated ss = if activated then Just 3 else
 -- | simulate Game Phisic for n turn
 gameSimTurns ::Int -> [PodState] -> [PodState]
 gameSimTurns 0 !pss = pss
-gameSimTurns n !pss = gameSimTurns (n-1) $ map speedDecay $ movePods 1 $ map (thrustPod.rotatePod) pss
+gameSimTurns n !pss = gameSimTurns (n-1) $ map (roundTrunc.speedDecay) $ movePods 1 $ map (thrustPod.rotatePod) pss
 {-
 -- | simulate Game Physic for less than 1 turn
 gameSimTime :: Time -> [PodState] -> [PodState]
@@ -210,7 +211,15 @@ collide2Points i1 i2 pss =
 speedDecay :: PodState -> PodState
 speedDecay ps@PodState{podSpeed = speed} = ps{podSpeed = 0.85 `V.scalarMul` speed}
 
-
+-- | Round the position and truncate the speed
+roundTrunc :: PodState -> PodState
+roundTrunc ps@PodState { podPosition = r, podSpeed = v } = ps
+  { podPosition = r'
+  , podSpeed    = v'
+  }
+ where
+  r' = V.elementWise (fromIntegral . round) r
+  v' = V.elementWise (fromIntegral . truncate) v
 
 -----------TESTING UTILITY-------------
 {-
