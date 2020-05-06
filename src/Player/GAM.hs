@@ -169,7 +169,7 @@ measureTeam  [p1,p2,o1,o2] =
  in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
      - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
      - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-     + ((min (measurePodScore $ getPodScore p1)(measurePodScore $ getPodScore p2)))
+     -- + (((measurePodScore $ getPodScore p1)+(measurePodScore $ getPodScore p2)))
 
 -- | turn TeamScore into Double for compare
 -- | the higher the score , the better the team
@@ -182,12 +182,12 @@ measurePodScore ::  PodScore -> Double
 measurePodScore (PodScore (i,d))=
   ( negate $ fromIntegral ( podScoreCkptWeight * i)) - d
 -- | Evalutating the score of a single  PodState
+
 getPodScore :: PodState -> PodScore
 getPodScore PodState{podPosition=pos,podAngle = (Just ang),podNextCheckPoints = ckpts} =
   let len = length ckpts
       dist = if len > 0 then norm ((pos+(250`scalarMul`unitVec ang)) -head ckpts) else 0
   in PodScore (len ,dist)
-
 
 -------------Define Player
 

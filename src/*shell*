@@ -1,0 +1,8005 @@
+nemo@nemo-Swift-SF514-51 ~ $ cd Evolutionary/csb-evolved/src/
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   GameSim.hs
+	modified:   Player/GA.hs
+	modified:   Warrier/Weapons.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add .
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "Warrier done "
+[master de34e92] Warrier done
+ 3 files changed, 735 insertions(+), 24 deletions(-)
+ rewrite src/Warrier/Weapons.hs (69%)
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com
+Password for 'https://tiny.nemo.fish@gmail.com@github.com': 
+Counting objects: 8, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (8/8), 8.70 KiB | 0 bytes/s, done.
+Total 8 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.        
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/Nemo1999/csb-evolved.git        
+To https://github.com/Nemo1999/CodingStrikeBack-Evolution.git
+   9efaa6b..de34e92  master -> master
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run 
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GA.hs src/Warrier/Weapons.hs)
+csb-evolution> configure (lib + exe)
+Configuring csb-evolution-0.1.0.0...
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run 
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[ 8 of 10] Compiling Player.GA
+[10 of 10] Compiling Warrier.Weapons
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+17
+52
+56
+55
+46
+63
+65
+60
+55
+52
+50
+59
+59
+32
+59
+71
+72
+57
+46
+64
+62
+67
+58
+54
+59
+54
+36
+72
+63
+54
+63
+79
+63
+67
+72
+65
+56
+71
+67
+54
+60
+68
+74
+68
+71
+61
+60
+68
+55
+60
+66
+59
+51
+60
+38
+68
+67
+65
+64
+68
+65
+74
+62
+61
+66
+46
+67
+60
+67
+62
+63
+52
+71
+59
+59
+66
+65
+56
+40
+59
+62
+60
+65
+57
+66
+65
+66
+66
+72
+60
+59
+45
+60
+51
+72
+52
+56
+64
+55
+62
+76
+72
+66
+68
+58
+50
+61
+60
+67
+67
+63
+71
+67
+60
+49
+76
+65
+60
+52
+58
+60
+56
+61
+69
+74
+62
+59
+59
+64
+63
+59
+47
+62
+43
+6
+43
+66
+69
+65
+73
+77
+56
+75
+58
+48
+64
+73
+80
+66
+63
+68
+61
+64
+67
+60
+39
+62
+56
+32
+59
+72
+60
+57
+67
+66
+61
+63
+72
+60
+63
+56
+55
+61
+62
+77
+59
+62
+72
+58
+50
+65
+68
+58
+67
+66
+21
+34
+56
+64
+62
+73
+71
+67
+58
+67
+74
+67
+49
+70
+65
+64
+70
+68
+67
+68
+58
+60
+56
+67
+59
+45
+73
+62
+63
+66
+66
+59
+61
+71
+66
+55
+56
+67
+25
+66
+61
+61
+60
+53
+56
+59
+61
+60
+57
+65
+78
+36
+53
+70
+60
+62
+74
+57
+62
+70
+54
+75
+68
+58
+70
+64
+73
+57
+62
+84
+58
+70
+77
+66
+62
+66
+58
+48
+60
+65
+67
+61
+67
+64
+71
+64
+61
+67
+63
+65
+61
+49
+67
+57
+56
+70
+70
+64
+62
+69
+74
+58
+73
+72
+56
+38
+78
+64
+60
+71
+67
+56
+68
+69
+56
+65
+78
+56
+57
+52
+59
+65
+76
+59
+68
+66
+67
+61
+57
+80
+55
+65
+19
+48
+44
+66
+79
+57
+71
+82
+78
+67
+65
+71
+80
+65
+68
+71
+72
+62
+64
+68
+64
+75
+61
+64
+68
+76
+28
+58
+51
+85
+25
+69
+64
+71
+81
+66
+62
+72
+67
+57
+60
+32
+81
+68
+64
+66
+67
+58
+66
+83
+68
+64
+68
+71
+53
+56
+67
+66
+57
+61
+54
+62
+77
+66
+69
+69
+62
+53
+59
+79
+65
+63
+66
+60
+57
+61
+74
+56
+64
+37
+61
+57
+64
+68
+75
+69
+72
+70
+61
+64
+76
+66
+64
+72
+67
+38
+64
+76
+69
+65
+76
+70
+65
+66
+75
+58
+61
+73
+58
+41
+66
+77
+74
+58
+60
+64
+64
+61
+64
+55
+67
+53
+47
+69
+62
+58
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status 
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   Warrier/Weapons.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add .
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "Warrier Debugging "
+[master b97e450] Warrier Debugging
+ 1 file changed, 22 insertions(+), 18 deletions(-)
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gail.com
+Password for 'https://tiny.nemo.fish@gail.com@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/Nemo1999/CodingStrikeBack-Evolution.git/'
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git pull
+remote: Enumerating objects: 13, done.        
+remote: Counting objects: 100% (13/13), done.        
+remote: Compressing objects: 100% (5/5), done.        
+remote: Total 9 (delta 7), reused 6 (delta 4), pack-reused 0        
+Unpacking objects: 100% (9/9), done.
+From https://github.com/Nemo1999/CodingStrikeBack-Evolution
+   de34e92..a1c7981  master     -> origin/master
+error: Terminal is dumb, but EDITOR unset
+Not committing merge; use 'git commit' to complete the merge.
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit 
+error: Terminal is dumb, but EDITOR unset
+Please supply the message using either -m or -F option. 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "merge"
+[master f74bcfc] merge
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com
+Password for 'https://tiny.nemo.fish@gmail.com@github.com': 
+Counting objects: 8, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (8/8), 951 bytes | 0 bytes/s, done.
+Total 8 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 4 local objects.        
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/Nemo1999/csb-evolved.git        
+To https://github.com/Nemo1999/CodingStrikeBack-Evolution.git
+   a1c7981..f74bcfc  master -> master
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/GameRule.hs src/GameSim.hs src/Warrier/Weapons.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[ 4 of 10] Compiling GameSim
+[ 5 of 10] Compiling Player [GameSim changed]
+[ 6 of 10] Compiling Player.Instances [GameSim changed]
+[ 7 of 10] Compiling Player.GA [GameSim changed]
+[ 8 of 10] Compiling GameRule
+[ 9 of 10] Compiling Interact [GameRule changed]
+[10 of 10] Compiling Warrier.Weapons
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+[1 of 2] Compiling Main [Interact changed]
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+66
+60
+67
+58
+54
+61
+56
+51
+49
+65
+43
+52
+60
+60
+67
+71
+72
+65
+54
+54
+65
+59
+60
+42
+65
+63
+64
+65
+61
+70
+74
+74
+59
+82
+66
+61
+70
+72
+69
+53
+82
+67
+70
+42
+72
+65
+75
+74
+29
+64
+66
+70
+73
+64
+65
+73
+75
+68
+67
+73
+75
+51
+61
+80
+73
+61
+67
+71
+74
+48
+72
+72
+72
+68
+55
+68
+61
+61
+65
+71
+64
+63
+62
+63
+55
+72
+54
+44
+58
+66
+79
+67
+61
+69
+64
+55
+59
+64
+68
+61
+44
+69
+62
+58
+73
+63
+78
+64
+66
+75
+74
+62
+67
+52
+63
+67
+74
+74
+65
+71
+46
+68
+58
+63
+64
+61
+55
+70
+62
+72
+61
+52
+82
+70
+64
+69
+71
+72
+47
+60
+69
+56
+56
+61
+69
+69
+48
+74
+66
+73
+63
+50
+79
+72
+72
+76
+75
+72
+65
+71
+85
+58
+75
+73
+66
+60
+63
+76
+74
+64
+75
+66
+76
+66
+70
+72
+82
+54
+64
+65
+74
+63
+67
+78
+72
+64
+69
+78
+74
+63
+49
+77
+65
+63
+76
+76
+63
+69
+74
+73
+57
+72
+78
+49
+69
+75
+71
+55
+56
+70
+74
+64
+68
+68
+69
+56
+59
+65
+68
+66
+67
+67
+38
+60
+71
+66
+63
+58
+61
+55
+78
+66
+71
+66
+68
+73
+67
+54
+67
+63
+48
+46
+71
+60
+70
+62
+71
+60
+77
+68
+71
+63
+71
+69
+50
+69
+66
+72
+62
+63
+59
+80
+69
+65
+75
+72
+54
+53
+80
+61
+63
+75
+69
+60
+69
+74
+72
+70
+40
+48
+56
+73
+69
+67
+60
+70
+69
+65
+67
+72
+75
+63
+58
+67
+74
+63
+66
+75
+73
+66
+63
+76
+75
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   Warrier/Weapons.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add .
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "智障bug"
+[master a8f723a] 智障bug
+ 1 file changed, 32 insertions(+), 12 deletions(-)
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com
+Password for 'https://tiny.nemo.fish@gmail.com@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/Nemo1999/CodingStrikeBack-Evolution.git/'
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   Player/GA.hs
+	modified:   Warrier/Weapons.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add .
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "beat Boss !!"
+git commit -m "beat Boss git add ."
+[master a44e883] beat Boss git add .
+ 2 files changed, 30 insertions(+), 13 deletions(-)
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+sbehavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': nemo.fish@gmail.com
+Password for 'https://nemo.fish@gmail.com@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/Nemo1999/CodingStrikeBack-Evolution.git/'
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com
+Password for 'https://tiny.nemo.fish@gmail.com@github.com': 
+Counting objects: 12, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (12/12), 1.98 KiB | 0 bytes/s, done.
+Total 12 (delta 7), reused 0 (delta 0)
+remote: Resolving deltas: 100% (7/7), completed with 4 local objects.        
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/Nemo1999/csb-evolved.git        
+To https://github.com/Nemo1999/CodingStrikeBack-Evolution.git
+   f74bcfc..a44e883  master -> master
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GA.hs src/Warrier/Weapons.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[ 8 of 10] Compiling Player.GA
+[10 of 10] Compiling Warrier.Weapons
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:578:64: error:
+    • Couldn't match expected type ‘Double’
+                  with actual type ‘Maybe Angle’
+    • In the first argument of ‘unitVec’, namely ‘ang’
+      In the second argument of ‘scalarMul’, namely ‘unitVec ang’
+      In the second argument of ‘(+)’, namely
+        ‘(250 `scalarMul` unitVec ang)’
+    |
+578 |       dist = if len > 0 then norm ((pos+(250`scalarMul`unitVec ang)) -head ckpts) else 0
+    |                                                                ^^^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 10] Compiling Warrier.Weapons
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+72
+64
+69
+77
+79
+74
+75
+81
+71
+70
+64
+64
+75
+50
+89
+89
+80
+73
+82
+89
+77
+75
+85
+72
+28
+49
+18
+27
+23
+16
+42
+40
+47
+57
+44
+67
+77
+46
+34
+54
+46
+50
+66
+38
+55
+38
+65
+59
+61
+22
+24
+6
+78
+94
+78
+92
+85
+76
+56
+63
+30
+16
+33
+62
+93
+84
+90
+88
+74
+90
+89
+79
+83
+80
+77
+25
+30
+53
+41
+40
+61
+22
+25
+32
+33
+40
+71
+37
+38
+85
+85
+82
+87
+88
+90
+90
+84
+76
+76
+91
+46
+20
+40
+53
+24
+54
+38
+33
+37
+32
+43
+45
+65
+60
+17
+34
+63
+52
+36
+57
+16
+34
+62
+61
+50
+46
+33
+50
+50
+51
+62
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+80
+72
+61
+70
+73
+62
+83
+68
+73
+79
+75
+69
+78
+83
+80
+60
+69
+63
+67
+59
+75
+81
+92
+79
+77
+71
+80
+98
+87
+88
+88
+90
+78
+82
+81
+75
+74
+85
+51
+91
+87
+84
+92
+74
+83
+86
+62
+70
+88
+86
+84
+81
+87
+80
+66
+78
+76
+72
+82
+62
+88
+82
+77
+76
+84
+75
+89
+76
+76
+86
+92
+85
+82
+86
+80
+77
+81
+84
+60
+82
+80
+84
+91
+86
+82
+80
+79
+80
+77
+60
+89
+81
+80
+84
+91
+94
+78
+93
+90
+73
+83
+41
+90
+90
+82
+86
+76
+87
+82
+72
+66
+80
+82
+84
+82
+84
+84
+72
+80
+72
+67
+73
+55
+77
+79
+76
+82
+78
+83
+90
+94
+79
+89
+86
+68
+81
+95
+87
+76
+75
+74
+73
+77
+50
+54
+74
+88
+75
+67
+74
+79
+84
+79
+77
+81
+76
+88
+76
+78
+72
+77
+77
+69
+82
+64
+86
+85
+88
+83
+73
+75
+75
+83
+68
+75
+87
+82
+97
+83
+85
+73
+77
+87
+85
+73
+52
+86
+84
+88
+77
+70
+72
+80
+92
+89
+62
+87
+82
+86
+85
+78
+78
+83
+80
+86
+77
+49
+92
+82
+91
+92
+90
+80
+83
+83
+89
+65
+81
+89
+85
+92
+79
+83
+83
+84
+89
+83
+46
+73
+86
+91
+77
+82
+80
+88
+85
+89
+88
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GA.hs src/Warrier/Weapons.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[ 8 of 10] Compiling Player.GA
+[10 of 10] Compiling Warrier.Weapons
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+11
+20
+7
+21
+18
+26
+32
+26
+28
+13
+26
+24
+20
+18
+24
+8
+30
+17
+28
+25
+31
+21
+35
+14
+37
+19
+16
+17
+14
+34
+29
+33
+31
+25
+17
+31
+28
+22
+6
+31
+29
+35
+32
+28
+34
+24
+16
+20
+24
+30
+21
+33
+16
+28
+21
+28
+27
+31
+37
+21
+33
+28
+32
+22
+27
+30
+18
+14
+38
+32
+5
+24
+16
+36
+27
+29
+20
+22
+14
+31
+31
+33
+24
+19
+29
+21
+24
+27
+21
+28
+23
+29
+18
+20
+25
+31
+28
+23
+26
+27
+28
+37
+31
+28
+21
+24
+28
+28
+27
+28
+31
+17
+33
+23
+24
+37
+20
+30
+32
+43
+34
+27
+33
+38
+32
+12
+20
+26
+30
+26
+8
+16
+36
+33
+23
+34
+23
+34
+18
+23
+30
+38
+28
+18
+15
+30
+39
+23
+10
+25
+32
+26
+27
+15
+22
+21
+9
+8
+36
+36
+27
+21
+28
+60
+79
+68
+65
+76
+57
+72
+13
+37
+45
+29
+66
+69
+75
+72
+73
+77
+78
+76
+74
+78
+72
+78
+62
+59
+74
+67
+59
+71
+81
+62
+77
+68
+80
+83
+78
+76
+70
+72
+67
+72
+75
+75
+65
+79
+80
+68
+79
+71
+62
+76
+65
+77
+66
+67
+77
+77
+75
+73
+54
+73
+81
+79
+76
+77
+79
+84
+78
+79
+64
+47
+50
+58
+56
+48
+31
+71
+65
+85
+68
+84
+82
+67
+72
+69
+79
+78
+81
+60
+77
+62
+73
+76
+76
+74
+74
+73
+71
+73
+71
+75
+59
+76
+68
+65
+65
+81
+69
+69
+67
+68
+52
+69
+71
+72
+69
+32
+42
+14
+36
+18
+22
+19
+24
+10
+13
+8
+22
+23
+32
+17
+20
+33
+19
+20
+33
+16
+27
+19
+20
+29
+29
+20
+35
+23
+17
+23
+31
+30
+32
+24
+18
+14
+23
+20
+27
+23
+27
+18
+21
+16
+25
+29
+17
+25
+23
+21
+13
+32
+23
+18
+10
+19
+13
+26
+25
+29
+21
+12
+29
+20
+22
+23
+18
+19
+17
+24
+27
+16
+30
+24
+27
+37
+13
+19
+23
+20
+16
+23
+11
+21
+18
+20
+13
+9
+26
+28
+19
+19
+21
+25
+31
+31
+32
+29
+26
+29
+33
+18
+29
+28
+37
+32
+30
+24
+23
+23
+26
+26
+31
+28
+16
+26
+28
+26
+28
+37
+35
+34
+18
+26
+22
+30
+29
+35
+23
+37
+19
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack ghci
+Using main module: 1. Package `csb-evolution' component csb-evolution:exe:csb-evolution-exe with main-is file: /home/nemo/Evolutionary/csb-evolved/app/Main.hs
+csb-evolution> configure (lib + exe)
+Configuring csb-evolution-0.1.0.0...
+csb-evolution> initial-build-steps (lib + exe)
+The following GHC options are incompatible with GHCi and have not been passed to it: -threaded -O2
+Configuring GHCi with the following packages: csb-evolution
+GHCi, version 8.6.5: http://www.haskell.org/ghc/  :? for help
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+Failed, no modules loaded.
+
+<no location info>: error:
+    Could not load module ‘Data.Vec2’
+    It is a member of the hidden package ‘csb-evolution-0.1.0.0’.
+    You can run ‘:set -package csb-evolution’ to expose it.
+    (Note: this unloads all the modules in the current scope.)
+Loaded GHCi configuration from /tmp/haskell-stack-ghci/5a0a169f/ghci-script
+Prelude> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:198:32: error:
+    parse error on input ‘::’
+    |
+198 |                      geneLength::Int,
+    |                                ^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:213:14: error:
+    parse error on input ‘=’
+    Perhaps you need a 'let' in a 'do' block?
+    e.g. 'let x = 5' instead of 'x = 5'
+    |
+213 |     randSize = if seed then (popSize-2) else popSize
+    |              ^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:46: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                              ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:64: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:140:27: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘geneLength’ is applied to too few arguments
+      In the first argument of ‘simTeam’, namely ‘geneLength’
+      In the expression:
+        simTeam
+          geneLength (makeDriver genePair, defaultOpponent) initialState
+      In an equation for ‘simResult’:
+          simResult
+            = simTeam
+                geneLength (makeDriver genePair, defaultOpponent) initialState
+    |
+140 |   let simResult = simTeam geneLength (makeDriver genePair , defaultOpponent) initialState
+    |                           ^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                     ^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:32: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:63: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                               ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:76: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                                            ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:17: error:
+    • Couldn't match expected type ‘IO [(Gene, Gene)]’
+                  with actual type ‘Int -> IO Population’
+    • Probable cause: ‘evolve’ is applied to too few arguments
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+      In an equation for ‘playerRunIO’:
+          playerRunIO
+            player@(GAMeta seed angRes geneLength popSize _ _ _ _ _)
+            PlayerIn {selfPod = [p1, p2], oppoPod = [o1, o2]}
+            = do t0 <- getCPUTime
+                 let defaultSeed = ...
+                 let randSize = ...
+                 ....
+            where
+                decodeGene :: (PodState, PodState) -> (Gene, Gene) -> [PodMovement]
+                decodeGene (ps1, ps2) (g1, g2) = [decodeStep ps1 $ head g1, ....]
+                evolve ::
+                  GAMeta
+                  -> Integer -> [PodState] -> Population -> Int -> IO Population
+                evolve player t0 ps g0 gCnt
+                  = do t1 <- getCPUTime
+                       ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:24: error:
+    • Couldn't match expected type ‘GAMeta’ with actual type ‘Integer’
+    • In the first argument of ‘evolve’, namely ‘t0’
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                        ^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:27: error:
+    • Couldn't match expected type ‘Integer’
+                  with actual type ‘[PodState]’
+    • In the second argument of ‘evolve’, namely ‘[p1, p2, o1, o2]’
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                           ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:41: error:
+    • Couldn't match type ‘(Gene, Gene)’ with ‘PodState’
+      Expected type: [PodState]
+        Actual type: [(Gene, Gene)]
+    • In the third argument of ‘evolve’, namely ‘pop0’
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                                         ^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:227:18: error:
+    • Couldn't match expected type ‘Population -> IO Population’
+                  with actual type ‘IO Population’
+    • The function ‘nextGen’ is applied to four arguments,
+      but its type ‘GAMeta -> [PodState] -> Population -> IO Population’
+      has only three
+      In a stmt of a 'do' block: mg1 <- (nextGen player geneLength ps g0)
+      In the expression:
+        do mg1 <- (nextGen player geneLength ps g0)
+           case Just mg1 of
+             Just g1 -> evolve player t0 ps g1 (gCnt + 1)
+             Nothing -> return g0
+    |
+227 |           mg1 <-(nextGen player geneLength ps g0) -- timeout 10 ....
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:227:33: error:
+    • Couldn't match expected type ‘[PodState]’ with actual type ‘Int’
+    • In the second argument of ‘nextGen’, namely ‘geneLength’
+      In a stmt of a 'do' block: mg1 <- (nextGen player geneLength ps g0)
+      In the expression:
+        do mg1 <- (nextGen player geneLength ps g0)
+           case Just mg1 of
+             Just g1 -> evolve player t0 ps g1 (gCnt + 1)
+             Nothing -> return g0
+    |
+227 |           mg1 <-(nextGen player geneLength ps g0) -- timeout 10 ....
+    |                                 ^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:227:44: error:
+    • Couldn't match type ‘PodState’ with ‘(Gene, Gene)’
+      Expected type: Population
+        Actual type: [PodState]
+    • In the third argument of ‘nextGen’, namely ‘ps’
+      In a stmt of a 'do' block: mg1 <- (nextGen player geneLength ps g0)
+      In the expression:
+        do mg1 <- (nextGen player geneLength ps g0)
+           case Just mg1 of
+             Just g1 -> evolve player t0 ps g1 (gCnt + 1)
+             Nothing -> return g0
+    |
+227 |           mg1 <-(nextGen player geneLength ps g0) -- timeout 10 ....
+    |                                            ^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:46: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                              ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:64: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:140:27: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘geneLength’ is applied to too few arguments
+      In the first argument of ‘simTeam’, namely ‘geneLength’
+      In the expression:
+        simTeam
+          geneLength (makeDriver genePair, defaultOpponent) initialState
+      In an equation for ‘simResult’:
+          simResult
+            = simTeam
+                geneLength (makeDriver genePair, defaultOpponent) initialState
+    |
+140 |   let simResult = simTeam geneLength (makeDriver genePair , defaultOpponent) initialState
+    |                           ^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                     ^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:32: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:63: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                               ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:76: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                                            ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:17: error:
+    • Couldn't match expected type ‘IO [(Gene, Gene)]’
+                  with actual type ‘Int -> IO Population’
+    • Probable cause: ‘evolve’ is applied to too few arguments
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+      In an equation for ‘playerRunIO’:
+          playerRunIO
+            player@(GAMeta seed angRes geneLength popSize _ _ _ _ _)
+            PlayerIn {selfPod = [p1, p2], oppoPod = [o1, o2]}
+            = do t0 <- getCPUTime
+                 let defaultSeed = ...
+                 let randSize = ...
+                 ....
+            where
+                decodeGene :: (PodState, PodState) -> (Gene, Gene) -> [PodMovement]
+                decodeGene (ps1, ps2) (g1, g2) = [decodeStep ps1 $ head g1, ....]
+                evolve ::
+                  GAMeta
+                  -> Integer -> [PodState] -> Population -> Int -> IO Population
+                evolve player t0 ps g0 gCnt
+                  = do t1 <- getCPUTime
+                       ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:24: error:
+    • Couldn't match expected type ‘GAMeta’ with actual type ‘Integer’
+    • In the first argument of ‘evolve’, namely ‘t0’
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                        ^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:27: error:
+    • Couldn't match expected type ‘Integer’
+                  with actual type ‘[PodState]’
+    • In the second argument of ‘evolve’, namely ‘[p1, p2, o1, o2]’
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                           ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:216:41: error:
+    • Couldn't match type ‘(Gene, Gene)’ with ‘PodState’
+      Expected type: [PodState]
+        Actual type: [(Gene, Gene)]
+    • In the third argument of ‘evolve’, namely ‘pop0’
+      In a stmt of a 'do' block:
+        popFinal <- evolve t0 [p1, p2, o1, o2] pop0 0
+      In the expression:
+        do t0 <- getCPUTime
+           let defaultSeed = ...
+           let randSize = ...
+           popRand <- randomPop angRes geneLength randSize
+           ....
+    |
+216 |     popFinal <- evolve t0 [p1,p2,o1,o2] pop0 0
+    |                                         ^^^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:46: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                              ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:64: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:140:27: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘geneLength’ is applied to too few arguments
+      In the first argument of ‘simTeam’, namely ‘geneLength’
+      In the expression:
+        simTeam
+          geneLength (makeDriver genePair, defaultOpponent) initialState
+      In an equation for ‘simResult’:
+          simResult
+            = simTeam
+                geneLength (makeDriver genePair, defaultOpponent) initialState
+    |
+140 |   let simResult = simTeam geneLength (makeDriver genePair , defaultOpponent) initialState
+    |                           ^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                     ^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:32: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:63: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                               ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:76: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+    |
+161 |   let ps' = player (geneLength-n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                                            ^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:46: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                              ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:64: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                                                ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength - n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                     ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:34: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘player’, namely ‘(geneLength - n)’
+      In the first argument of ‘(++)’, namely
+        ‘player (geneLength - n) (take 2 psNow)’
+    |
+161 |   let ps' = player (geneLength - n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                  ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:65: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘(-)’ is applied to too few arguments
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+      In the expression:
+        player (geneLength - n) (take 2 psNow)
+          ++ opponent (geneLength - n) (drop 2 psNow)
+    |
+161 |   let ps' = player (geneLength - n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                                 ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:161:78: error:
+    • Couldn't match expected type ‘GAMeta -> Int’
+                  with actual type ‘Int’
+    • In the second argument of ‘(-)’, namely ‘n’
+      In the first argument of ‘opponent’, namely ‘(geneLength - n)’
+      In the second argument of ‘(++)’, namely
+        ‘opponent (geneLength - n) (drop 2 psNow)’
+    |
+161 |   let ps' = player (geneLength - n) (take 2 psNow) ++ opponent (geneLength - n) (drop 2 psNow)
+    |                                                                              ^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:46: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                              ^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:97:64: error:
+    Variable not in scope: n :: Int
+   |
+97 | defaultSelect popSize ps = randomPerm $ take n $ cycle $ take (n `div` 2) ps  
+   |                                                                ^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:121:3: error:
+    • Couldn't match type ‘Int’ with ‘Double’
+      Expected type: IO Step
+        Actual type: IO (Int, Thrust)
+    • In a stmt of a 'do' block: return (delAngle, thrust)
+      In the expression:
+        do let res = ...
+           i <- randomRIO ((- res), res) :: IO Int
+           let delAngle = (18 / res) * (fromIntegral i)
+           n <- randomRIO (0, 49) :: IO Double
+           ....
+      In an equation for ‘randomStep’:
+          randomStep angleRes
+            = do let res = ...
+                 i <- randomRIO ((- res), res) :: IO Int
+                 let delAngle = ...
+                 ....
+    |
+121 |   return (delAngle,thrust)
+    |   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:7: error:
+    • Couldn't match expected type ‘[PodState]’
+                  with actual type ‘[PodState] -> [PodState]’
+    • In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In the expression:
+        let
+          ps'
+            = player (geneLen - n) (take 2 psNow)
+                ++ opponent (geneLen - n) (drop 2 psNow)
+        in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In an equation for ‘simTeam’:
+          simTeam geneLen n (player, opponent) psNow
+            = let
+                ps'
+                  = player (geneLen - n) (take 2 psNow)
+                      ++ opponent (geneLen - n) (drop 2 psNow)
+              in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘(Driver, Driver)’
+    • In the second argument of ‘simTeam’, namely ‘(player, opponent)’
+      In the expression: simTeam (n - 1) (player, opponent)
+      In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |                     ^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:41: error:
+    • Couldn't match expected type ‘(Driver, Driver)’
+                  with actual type ‘[PodState]’
+    • In the second argument of ‘($)’, namely ‘gameSimTurns 1 ps'’
+      In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In the expression:
+        let
+          ps'
+            = player (geneLen - n) (take 2 psNow)
+                ++ opponent (geneLen - n) (drop 2 psNow)
+        in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |                                         ^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:243:17: error:
+    • Couldn't match expected type ‘Population -> IO Population’
+                  with actual type ‘IO Population’
+    • The function ‘select’ is applied to two arguments,
+      but its type ‘Population -> IO Population’ has only one
+      In a stmt of a 'do' block: matingPool <- select popSize ps
+      In the expression:
+        do let [p1, p2] = take 2 ps
+           matingPool <- select popSize ps
+           childrens <- crossoverAndMutate matingPool
+           return
+             $ take popSize
+                 $ sortOn
+                     (negate . fitness geneLength podStates) (p1 : p2 : childrens)
+    |
+243 |   matingPool <- select popSize ps 
+    |                 ^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:243:24: error:
+    • Couldn't match type ‘Int’ with ‘[(Gene, Gene)]’
+      Expected type: Population
+        Actual type: Int
+    • In the first argument of ‘select’, namely ‘popSize’
+      In a stmt of a 'do' block: matingPool <- select popSize ps
+      In the expression:
+        do let [p1, p2] = take 2 ps
+           matingPool <- select popSize ps
+           childrens <- crossoverAndMutate matingPool
+           return
+             $ take popSize
+                 $ sortOn
+                     (negate . fitness geneLength podStates) (p1 : p2 : childrens)
+    |
+243 |   matingPool <- select popSize ps 
+    |                        ^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:268:53: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘GAMeta -> Int’
+    • Probable cause: ‘geneLength’ is applied to too few arguments
+      In the first argument of ‘take’, namely ‘geneLength’
+      In the expression: take geneLength
+      In the second argument of ‘($)’, namely
+        ‘take geneLength $ tail defaultDriverHistory’
+    |
+268 |   in map (\ps -> encode ps (podMovement ps)) $ take geneLength $ tail defaultDriverHistory 
+    |                                                     ^^^^^^^^^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:267:47: error:
+    • Couldn't match expected type ‘PodState’ with actual type ‘Int’
+    • In the second argument of ‘iterate’, namely ‘ps’
+      In the expression: iterate iterFunc ps
+      In an equation for ‘defaultDriverHistory’:
+          defaultDriverHistory = iterate iterFunc ps
+    |
+267 |       defaultDriverHistory = iterate iterFunc ps
+    |                                               ^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:268:53: error:
+    Variable not in scope: geneL :: Int
+    |
+268 |   in map (\ps -> encode ps (podMovement ps)) $ take geneL $ tail defaultDriverHistory 
+    |                                                     ^^^^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:44:31: error:
+    • Couldn't match type ‘Population -> IO Population’
+                     with ‘IO Population’
+      Expected type: Population -> IO Population
+        Actual type: Int -> Population -> IO Population
+    • Probable cause: ‘defaultSelect’ is applied to too few arguments
+      In the ‘select’ field of a record
+      In the expression:
+        GAMeta
+          {seed = True, angRes = True, geneLength = 5, popSize = 20,
+           pMutate = 1, pCross = 1, select = defaultSelect,
+           crossover = defaultCross, mutation = defaultMutate}
+      In an equation for ‘defaultGAMeta’:
+          defaultGAMeta
+            = GAMeta
+                {seed = True, angRes = True, geneLength = 5, popSize = 20,
+                 pMutate = 1, pCross = 1, select = defaultSelect,
+                 crossover = defaultCross, mutation = defaultMutate}
+   |
+44 |                        select=defaultSelect, 
+   |                               ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:121:3: error:
+    • Couldn't match type ‘Int’ with ‘Double’
+      Expected type: IO Step
+        Actual type: IO (Int, Thrust)
+    • In a stmt of a 'do' block: return (delAngle, thrust)
+      In the expression:
+        do let res = ...
+           i <- randomRIO ((- res), res) :: IO Int
+           let delAngle = (18 / res) * (fromIntegral i)
+           n <- randomRIO (0, 49) :: IO Double
+           ....
+      In an equation for ‘randomStep’:
+          randomStep angleRes
+            = do let res = ...
+                 i <- randomRIO ((- res), res) :: IO Int
+                 let delAngle = ...
+                 ....
+    |
+121 |   return (delAngle,thrust)
+    |   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:7: error:
+    • Couldn't match expected type ‘[PodState]’
+                  with actual type ‘[PodState] -> [PodState]’
+    • In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In the expression:
+        let
+          ps'
+            = player (geneLen - n) (take 2 psNow)
+                ++ opponent (geneLen - n) (drop 2 psNow)
+        in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In an equation for ‘simTeam’:
+          simTeam geneLen n (player, opponent) psNow
+            = let
+                ps'
+                  = player (geneLen - n) (take 2 psNow)
+                      ++ opponent (geneLen - n) (drop 2 psNow)
+              in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘(Driver, Driver)’
+    • In the second argument of ‘simTeam’, namely ‘(player, opponent)’
+      In the expression: simTeam (n - 1) (player, opponent)
+      In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |                     ^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:41: error:
+    • Couldn't match expected type ‘(Driver, Driver)’
+                  with actual type ‘[PodState]’
+    • In the second argument of ‘($)’, namely ‘gameSimTurns 1 ps'’
+      In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In the expression:
+        let
+          ps'
+            = player (geneLen - n) (take 2 psNow)
+                ++ opponent (geneLen - n) (drop 2 psNow)
+        in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |                                         ^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:243:17: error:
+    • Couldn't match expected type ‘Population -> IO Population’
+                  with actual type ‘IO Population’
+    • The function ‘select’ is applied to two arguments,
+      but its type ‘Population -> IO Population’ has only one
+      In a stmt of a 'do' block: matingPool <- select popSize ps
+      In the expression:
+        do let [p1, p2] = take 2 ps
+           matingPool <- select popSize ps
+           childrens <- crossoverAndMutate matingPool
+           return
+             $ take popSize
+                 $ sortOn
+                     (negate . fitness geneLength podStates) (p1 : p2 : childrens)
+    |
+243 |   matingPool <- select popSize ps 
+    |                 ^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:243:24: error:
+    • Couldn't match type ‘Int’ with ‘[(Gene, Gene)]’
+      Expected type: Population
+        Actual type: Int
+    • In the first argument of ‘select’, namely ‘popSize’
+      In a stmt of a 'do' block: matingPool <- select popSize ps
+      In the expression:
+        do let [p1, p2] = take 2 ps
+           matingPool <- select popSize ps
+           childrens <- crossoverAndMutate matingPool
+           return
+             $ take popSize
+                 $ sortOn
+                     (negate . fitness geneLength podStates) (p1 : p2 : childrens)
+    |
+243 |   matingPool <- select popSize ps 
+    |                        ^^^^^^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:121:3: error:
+    • Couldn't match type ‘Int’ with ‘Double’
+      Expected type: IO Step
+        Actual type: IO (Int, Thrust)
+    • In a stmt of a 'do' block: return (delAngle, thrust)
+      In the expression:
+        do let res = ...
+           i <- randomRIO ((- res), res) :: IO Int
+           let delAngle = (18 / res) * (fromIntegral i)
+           n <- randomRIO (0, 49) :: IO Double
+           ....
+      In an equation for ‘randomStep’:
+          randomStep angleRes
+            = do let res = ...
+                 i <- randomRIO ((- res), res) :: IO Int
+                 let delAngle = ...
+                 ....
+    |
+121 |   return (delAngle,thrust)
+    |   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:7: error:
+    • Couldn't match expected type ‘[PodState]’
+                  with actual type ‘[PodState] -> [PodState]’
+    • In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In the expression:
+        let
+          ps'
+            = player (geneLen - n) (take 2 psNow)
+                ++ opponent (geneLen - n) (drop 2 psNow)
+        in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In an equation for ‘simTeam’:
+          simTeam geneLen n (player, opponent) psNow
+            = let
+                ps'
+                  = player (geneLen - n) (take 2 psNow)
+                      ++ opponent (geneLen - n) (drop 2 psNow)
+              in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:21: error:
+    • Couldn't match expected type ‘Int’
+                  with actual type ‘(Driver, Driver)’
+    • In the second argument of ‘simTeam’, namely ‘(player, opponent)’
+      In the expression: simTeam (n - 1) (player, opponent)
+      In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |                     ^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:162:41: error:
+    • Couldn't match expected type ‘(Driver, Driver)’
+                  with actual type ‘[PodState]’
+    • In the second argument of ‘($)’, namely ‘gameSimTurns 1 ps'’
+      In the expression:
+        simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+      In the expression:
+        let
+          ps'
+            = player (geneLen - n) (take 2 psNow)
+                ++ opponent (geneLen - n) (drop 2 psNow)
+        in simTeam (n - 1) (player, opponent) $ gameSimTurns 1 ps'
+    |
+162 |   in  simTeam (n-1) (player,opponent) $ gameSimTurns 1 ps'
+    |                                         ^^^^^^^^^^^^^^^^^^
+Failed, four modules loaded.
+*Player> 243 |   matingPool <- select popSize ps 
+
+<interactive>:12:41: error:
+    parse error (possibly incorrect indentation or mismatched brackets)
+*Player> 243 |   matingPool <- select popSize ps 
+
+<interactive>:13:41: error:
+    parse error (possibly incorrect indentation or mismatched brackets)
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:121:3: error:
+    • Couldn't match type ‘Int’ with ‘Double’
+      Expected type: IO Step
+        Actual type: IO (Int, Thrust)
+    • In a stmt of a 'do' block: return (delAngle, thrust)
+      In the expression:
+        do let res = ...
+           i <- randomRIO ((- res), res) :: IO Int
+           let delAngle = (18 / res) * (fromIntegral i)
+           n <- randomRIO (0, 49) :: IO Double
+           ....
+      In an equation for ‘randomStep’:
+          randomStep angleRes
+            = do let res = ...
+                 i <- randomRIO ((- res), res) :: IO Int
+                 let delAngle = ...
+                 ....
+    |
+121 |   return (delAngle,thrust)
+    |   ^^^^^^^^^^^^^^^^^^^^^^^^
+Failed, four modules loaded.
+*Player> :l Player.GAM
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+
+when making flags consistent: warning:
+    -O conflicts with --interactive; -O ignored.
+[1 of 5] Compiling Data.Vec2        ( /home/nemo/Evolutionary/csb-evolved/src/Data/Vec2.hs, interpreted )
+[2 of 5] Compiling Util             ( /home/nemo/Evolutionary/csb-evolved/src/Util.hs, interpreted )
+[3 of 5] Compiling GameSim          ( /home/nemo/Evolutionary/csb-evolved/src/GameSim.hs, interpreted )
+[4 of 5] Compiling Player           ( /home/nemo/Evolutionary/csb-evolved/src/Player.hs, interpreted )
+[5 of 5] Compiling Player.GAM       ( /home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs, interpreted )
+Ok, five modules loaded.
+*Player.GAM> :q
+Leaving GHCi.
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: csb-evolution.cabal src/Interact.hs src/Player/GA.hs src/Player/GAM.hs src/Warrier/Weapons.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Weapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Weapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[ 8 of 11] Compiling Player.GAM
+[ 9 of 11] Compiling Player.GA
+[10 of 11] Compiling Interact
+
+/home/nemo/Evolutionary/csb-evolved/src/Interact.hs:85:6: error: Variable not in scope: defaultGAMeta
+   |
+85 | e3 = defaultGAMeta
+   |      ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Interact.hs:101:11: error:
+    • Ambiguous type variable ‘player20’ arising from a use of ‘runGame’
+      prevents the constraint ‘(Player.PlayerIO
+                                  player20)’ from being solved.
+      Probable fix: use a type annotation to specify what ‘player20’ should be.
+      These potential instances exist:
+        instance Player.Player p => Player.PlayerIO (WrapIO p)
+          -- Defined in ‘Player’
+        instance Player.PlayerIO GASimple
+          -- Defined at src/Player/GA.hs:171:10
+        instance Player.PlayerIO Bool -- Defined in ‘Player’
+    • In a stmt of a 'do' block: ghis <- runGame (e1, e3) gsp gameEnd
+      In the expression:
+        do gsp <- randomGameSpecIO
+           ghis <- runGame (e1, e3) gsp gameEnd
+           gameAnimateIO turnPerSec gsp ghis
+      In an equation for ‘testAnimate’:
+          testAnimate turnPerSec
+            = do gsp <- randomGameSpecIO
+                 ghis <- runGame (e1, e3) gsp gameEnd
+                 gameAnimateIO turnPerSec gsp ghis
+    |
+101 |   ghis <- runGame (e1,e3) gsp gameEnd
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 11] Compiling Interact
+[11 of 11] Compiling Warrier.Weapons
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+[1 of 2] Compiling Main [Interact changed]
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+54
+49
+49
+63
+64
+48
+65
+60
+58
+55
+64
+67
+63
+48
+66
+48
+47
+57
+61
+69
+60
+68
+63
+50
+61
+57
+60
+59
+59
+68
+63
+62
+60
+55
+61
+68
+67
+68
+58
+60
+63
+65
+45
+73
+68
+54
+65
+57
+65
+58
+59
+62
+61
+56
+60
+65
+66
+71
+69
+54
+56
+50
+58
+63
+60
+63
+65
+59
+58
+61
+62
+69
+68
+66
+66
+58
+66
+69
+64
+73
+60
+70
+57
+31
+41
+19
+26
+43
+65
+59
+54
+18
+35
+36
+25
+50
+43
+37
+45
+31
+68
+67
+64
+61
+64
+68
+64
+61
+66
+52
+58
+48
+75
+58
+64
+58
+69
+65
+65
+50
+54
+65
+59
+62
+65
+67
+69
+67
+61
+63
+54
+61
+60
+65
+62
+66
+52
+59
+71
+67
+63
+52
+59
+61
+73
+65
+69
+63
+60
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+55
+55
+50
+75
+59
+60
+59
+59
+62
+70
+59
+63
+61
+67
+59
+61
+63
+53
+49
+50
+45
+36
+56
+60
+72
+46
+65
+58
+58
+40
+59
+69
+60
+61
+54
+59
+61
+62
+61
+62
+53
+53
+63
+49
+63
+65
+62
+49
+62
+61
+61
+38
+62
+64
+63
+64
+57
+55
+59
+66
+71
+64
+38
+60
+60
+44
+71
+61
+52
+56
+63
+57
+54
+51
+56
+64
+57
+53
+68
+65
+71
+57
+49
+57
+58
+67
+71
+30
+56
+61
+53
+55
+56
+60
+60
+49
+64
+65
+63
+62
+59
+61
+57
+62
+68
+57
+52
+60
+67
+47
+60
+62
+59
+54
+62
+55
+59
+53
+45
+75
+66
+71
+62
+57
+63
+57
+60
+58
+75
+52
+69
+67
+60
+64
+65
+65
+64
+53
+63
+68
+51
+69
+66
+56
+60
+65
+66
+56
+56
+58
+55
+58
+69
+42
+64
+70
+65
+66
+62
+65
+63
+57
+57
+69
+63
+57
+47
+53
+42
+55
+41
+63
+71
+62
+52
+65
+53
+67
+62
+70
+55
+66
+62
+62
+66
+48
+68
+66
+58
+59
+63
+49
+62
+64
+66
+53
+47
+62
+47
+66
+63
+61
+44
+63
+60
+60
+59
+59
+53
+63
+61
+55
+64
+54
+66
+53
+57
+56
+68
+50
+56
+61
+60
+57
+66
+59
+65
+64
+60
+63
+61
+68
+71
+72
+68
+62
+57
+63
+62
+60
+69
+56
+49
+66
+58
+58
+66
+71
+69
+62
+65
+62
+52
+68
+69
+69
+61
+63
+63
+75
+75
+71
+65
+66
+56
+57
+63
+67
+56
+63
+68
+67
+63
+60
+38
+62
+66
+70
+61
+66
+61
+59
+68
+60
+75
+62
+51
+62
+64
+60
+68
+59
+69
+59
+58
+68
+62
+58
+67
+68
+56
+67
+60
+56
+69
+73
+64
+59
+51
+65
+74
+57
+63
+69
+51
+65
+60
+69
+72
+60
+67
+61
+66
+63
+63
+70
+67
+71
+62
+51
+63
+67
+59
+77
+72
+71
+60
+66
+63
+72
+61
+65
+58
+54
+64
+70
+70
+71
+59
+69
+59
+46
+53
+55
+66
+63
+62
+57
+58
+58
+54
+62
+65
+48
+67
+62
+57
+73
+70
+70
+57
+63
+59
+56
+57
+69
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GAM.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 11] Compiling Player.GAM
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+61
+52
+60
+47
+43
+57
+60
+64
+49
+63
+66
+51
+53
+55
+51
+49
+48
+59
+60
+60
+61
+63
+64
+50
+57
+54
+57
+54
+66
+70
+49
+61
+61
+62
+59
+64
+64
+72
+64
+57
+53
+60
+62
+62
+70
+65
+66
+60
+61
+52
+66
+63
+63
+67
+66
+61
+71
+59
+60
+60
+69
+61
+63
+55
+66
+66
+51
+60
+61
+66
+45
+66
+70
+57
+55
+67
+64
+68
+68
+65
+52
+59
+67
+65
+63
+65
+64
+60
+62
+60
+62
+60
+53
+74
+67
+53
+57
+54
+52
+64
+59
+60
+55
+64
+62
+58
+62
+69
+63
+67
+69
+57
+58
+52
+52
+68
+60
+64
+54
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Interact.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[11 of 11] Compiling Interact
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+[1 of 2] Compiling Main [Interact changed]
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+66
+52
+67
+53
+71
+57
+70
+65
+68
+22
+80
+64
+79
+52
+75
+66
+85
+64
+80
+66
+79
+65
+80
+59
+68
+57
+65
+59
+83
+56
+54
+61
+82
+61
+54
+64
+72
+62
+66
+57
+70
+59
+75
+65
+63
+57
+76
+58
+64
+72
+72
+63
+65
+68
+67
+58
+62
+61
+78
+56
+72
+67
+64
+63
+70
+55
+66
+51
+51
+61
+78
+60
+71
+63
+65
+59
+71
+51
+51
+59
+65
+61
+72
+58
+77
+59
+56
+64
+62
+49
+52
+67
+77
+64
+76
+64
+72
+66
+68
+53
+56
+53
+63
+62
+73
+70
+74
+68
+77
+58
+72
+58
+73
+60
+66
+63
+73
+58
+74
+61
+65
+60
+59
+57
+70
+65
+72
+64
+61
+55
+68
+58
+70
+53
+73
+56
+74
+68
+70
+63
+67
+64
+66
+54
+60
+65
+71
+75
+63
+71
+74
+44
+74
+59
+70
+42
+74
+57
+68
+69
+72
+64
+58
+64
+73
+57
+64
+65
+77
+66
+73
+62
+73
+66
+79
+52
+67
+58
+68
+63
+76
+57
+46
+51
+75
+60
+71
+73
+62
+69
+64
+61
+64
+58
+73
+70
+76
+66
+65
+65
+68
+58
+65
+65
+61
+67
+84
+68
+68
+62
+61
+67
+71
+64
+80
+66
+85
+69
+77
+64
+71
+52
+56
+58
+64
+41
+76
+70
+73
+63
+66
+60
+63
+53
+76
+71
+77
+61
+71
+65
+84
+62
+70
+70
+75
+63
+71
+25
+65
+70
+75
+67
+75
+61
+50
+66
+76
+59
+69
+66
+73
+60
+72
+68
+77
+66
+77
+66
+39
+71
+74
+62
+76
+67
+77
+60
+57
+67
+67
+70
+83
+71
+75
+61
+66
+67
+70
+68
+80
+66
+76
+69
+69
+55
+64
+77
+69
+50
+77
+55
+69
+66
+76
+68
+78
+66
+80
+59
+52
+58
+71
+59
+81
+68
+70
+59
+73
+59
+79
+67
+78
+63
+75
+57
+69
+69
+79
+66
+74
+60
+62
+62
+74
+47
+84
+65
+74
+64
+66
+64
+70
+52
+78
+64
+71
+64
+70
+63
+71
+65
+74
+64
+53
+63
+48
+60
+65
+70
+73
+66
+67
+58
+71
+52
+72
+65
+73
+57
+71
+58
+64
+54
+74
+75
+72
+68
+53
+57
+81
+66
+69
+70
+82
+64
+68
+53
+76
+67
+79
+67
+68
+66
+70
+66
+79
+70
+78
+35
+67
+65
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run 
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GAM.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 11] Compiling Player.GAM
+[11 of 11] Compiling Interact [Player.GAM changed]
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+[1 of 2] Compiling Main [Interact changed]
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+43
+119
+71
+139
+72
+130
+69
+137
+76
+159
+67
+110
+74
+130
+59
+142
+70
+133
+72
+146
+60
+111
+59
+132
+77
+160
+66
+159
+65
+156
+69
+146
+47
+142
+64
+117
+75
+124
+59
+109
+84
+135
+54
+126
+60
+126
+68
+130
+74
+130
+59
+120
+67
+109
+62
+121
+62
+136
+64
+127
+65
+128
+70
+129
+63
+90
+58
+119
+73
+138
+71
+108
+59
+150
+67
+113
+63
+65
+53
+148
+75
+150
+78
+147
+67
+114
+66
+123
+64
+135
+65
+133
+70
+137
+74
+134
+75
+104
+55
+131
+66
+148
+72
+131
+70
+127
+59
+144
+66
+131
+72
+118
+79
+138
+65
+142
+73
+133
+56
+108
+78
+136
+72
+149
+77
+124
+66
+139
+82
+119
+64
+141
+69
+153
+72
+143
+85
+147
+75
+118
+58
+130
+79
+140
+76
+157
+62
+137
+70
+124
+65
+140
+69
+153
+77
+126
+66
+137
+73
+151
+60
+89
+59
+133
+76
+138
+66
+149
+75
+150
+78
+117
+47
+130
+70
+115
+67
+151
+72
+136
+70
+131
+68
+117
+68
+150
+74
+140
+79
+137
+69
+142
+76
+126
+73
+150
+76
+126
+69
+134
+65
+131
+75
+124
+13
+136
+73
+140
+65
+156
+80
+141
+73
+129
+63
+135
+69
+133
+82
+144
+73
+145
+71
+141
+70
+126
+66
+146
+75
+119
+71
+141
+70
+130
+68
+144
+65
+142
+72
+129
+66
+123
+72
+136
+71
+123
+39
+122
+68
+125
+72
+116
+77
+138
+67
+135
+68
+98
+68
+136
+73
+147
+67
+121
+77
+139
+67
+138
+55
+139
+67
+127
+74
+143
+77
+142
+73
+152
+64
+114
+66
+139
+67
+136
+58
+153
+69
+133
+72
+86
+51
+149
+67
+134
+71
+130
+75
+122
+69
+112
+65
+126
+69
+140
+75
+115
+65
+141
+72
+140
+62
+125
+67
+130
+66
+137
+74
+132
+84
+143
+73
+140
+75
+126
+69
+146
+70
+130
+73
+127
+73
+108
+62
+130
+76
+133
+68
+132
+80
+116
+77
+140
+64
+117
+75
+151
+75
+153
+75
+146
+75
+148
+63
+109
+71
+123
+61
+145
+68
+114
+70
+141
+68
+122
+57
+130
+76
+152
+72
+136
+74
+141
+73
+132
+65
+128
+71
+148
+62
+146
+70
+123
+22
+120
+60
+126
+71
+157
+65
+152
+75
+120
+60
+130
+63
+99
+70
+125
+76
+136
+70
+139
+76
+157
+77
+139
+75
+152
+75
+135
+75
+154
+62
+146
+77
+141
+54
+138
+54
+152
+70
+159
+75
+156
+71
+139
+66
+136
+72
+126
+75
+141
+69
+121
+69
+141
+74
+127
+71
+98
+62
+144
+65
+108
+70
+129
+76
+125
+63
+136
+67
+138
+75
+134
+74
+136
+75
+137
+59
+128
+67
+113
+74
+129
+71
+136
+70
+124
+63
+122
+72
+135
+67
+150
+78
+124
+67
+149
+65
+148
+70
+147
+65
+150
+80
+143
+63
+142
+71
+132
+74
+134
+75
+139
+76
+129
+67
+135
+78
+137
+70
+135
+75
+108
+71
+145
+67
+125
+64
+142
+73
+137
+78
+124
+71
+141
+75
+144
+82
+152
+72
+145
+87
+150
+64
+107
+77
+147
+78
+153
+76
+151
+80
+149
+72
+138
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GAM.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 11] Compiling Player.GAM
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+64
+102
+58
+75
+65
+136
+62
+114
+63
+133
+59
+136
+54
+144
+68
+134
+71
+110
+79
+157
+79
+122
+74
+152
+53
+133
+70
+133
+71
+138
+66
+147
+67
+124
+62
+146
+64
+138
+62
+146
+72
+141
+24
+111
+72
+72
+74
+127
+72
+122
+73
+141
+56
+119
+66
+138
+74
+134
+74
+112
+74
+138
+66
+123
+64
+147
+53
+131
+75
+96
+65
+146
+73
+138
+64
+144
+72
+154
+77
+132
+56
+120
+66
+135
+69
+123
+65
+112
+82
+139
+66
+135
+71
+138
+71
+94
+69
+149
+69
+121
+59
+125
+67
+136
+77
+133
+59
+141
+75
+133
+76
+154
+53
+125
+75
+136
+65
+129
+64
+123
+61
+123
+79
+116
+74
+131
+74
+109
+77
+149
+73
+132
+70
+131
+64
+131
+67
+123
+43
+133
+74
+129
+61
+135
+77
+139
+72
+146
+81
+100
+73
+92
+72
+138
+71
+121
+73
+143
+62
+119
+62
+135
+79
+126
+66
+140
+69
+144
+71
+139
+71
+146
+61
+143
+77
+143
+73
+138
+78
+143
+72
+102
+67
+136
+77
+133
+67
+135
+76
+129
+60
+119
+66
+139
+66
+143
+75
+124
+63
+128
+69
+141
+75
+157
+82
+142
+70
+135
+69
+124
+59
+139
+76
+120
+64
+30
+9
+98
+59
+128
+71
+47
+83
+147
+61
+130
+69
+149
+81
+152
+75
+143
+75
+145
+59
+117
+60
+140
+79
+136
+77
+151
+71
+96
+67
+134
+61
+130
+77
+147
+62
+138
+71
+128
+73
+132
+81
+123
+65
+146
+72
+129
+75
+125
+85
+158
+68
+95
+79
+141
+81
+144
+77
+141
+71
+126
+71
+136
+52
+115
+79
+139
+70
+141
+63
+123
+70
+131
+80
+153
+64
+129
+77
+144
+72
+128
+71
+144
+77
+102
+43
+111
+69
+138
+74
+134
+67
+122
+65
+108
+67
+130
+74
+118
+78
+140
+65
+119
+61
+135
+84
+88
+66
+113
+76
+126
+65
+132
+76
+131
+75
+122
+57
+140
+75
+147
+69
+146
+79
+150
+49
+124
+73
+71
+65
+144
+61
+130
+71
+134
+67
+140
+72
+133
+59
+134
+68
+127
+73
+146
+70
+140
+74
+133
+49
+141
+69
+135
+74
+155
+71
+130
+66
+131
+72
+131
+59
+133
+62
+150
+81
+153
+75
+136
+70
+157
+76
+154
+64
+142
+73
+137
+70
+139
+84
+151
+67
+100
+58
+149
+78
+151
+70
+144
+61
+126
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GAM.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 11] Compiling Player.GAM
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+46
+100
+67
+141
+75
+136
+72
+129
+66
+121
+60
+146
+77
+158
+56
+127
+75
+145
+61
+95
+60
+151
+73
+155
+80
+118
+64
+141
+70
+155
+45
+140
+68
+99
+71
+156
+55
+154
+78
+137
+73
+150
+71
+147
+63
+139
+76
+133
+78
+150
+82
+126
+73
+146
+66
+135
+82
+125
+58
+143
+71
+141
+70
+152
+66
+141
+69
+147
+57
+157
+84
+132
+67
+140
+71
+100
+70
+150
+80
+125
+86
+155
+74
+148
+77
+150
+75
+162
+72
+122
+76
+137
+79
+133
+71
+142
+58
+133
+77
+139
+51
+142
+81
+142
+79
+146
+62
+151
+74
+139
+74
+115
+61
+153
+52
+135
+59
+144
+65
+145
+71
+127
+71
+154
+76
+137
+70
+152
+75
+133
+72
+167
+54
+159
+67
+144
+72
+139
+69
+150
+83
+141
+75
+102
+78
+138
+60
+156
+76
+153
+69
+141
+81
+120
+70
+141
+75
+156
+79
+145
+58
+127
+80
+151
+55
+150
+72
+136
+73
+139
+79
+133
+70
+161
+80
+144
+73
+137
+68
+147
+77
+133
+76
+151
+63
+137
+62
+130
+66
+155
+73
+154
+76
+132
+68
+143
+73
+142
+81
+133
+75
+124
+63
+148
+73
+148
+76
+127
+76
+147
+72
+119
+84
+143
+73
+146
+79
+135
+52
+136
+67
+149
+76
+162
+67
+124
+69
+140
+72
+114
+77
+136
+61
+138
+77
+151
+76
+152
+75
+146
+74
+133
+63
+129
+71
+110
+72
+153
+69
+132
+69
+146
+79
+126
+75
+141
+69
+133
+71
+144
+74
+129
+67
+149
+67
+134
+67
+155
+64
+166
+75
+142
+57
+149
+72
+138
+77
+155
+83
+157
+71
+129
+68
+121
+70
+144
+77
+118
+78
+141
+67
+149
+66
+134
+74
+148
+75
+150
+78
+155
+73
+137
+70
+133
+56
+140
+75
+158
+71
+130
+76
+143
+68
+136
+71
+165
+76
+138
+69
+150
+73
+139
+75
+124
+78
+138
+72
+152
+72
+130
+64
+146
+72
+157
+71
+148
+65
+128
+75
+144
+73
+154
+78
+139
+62
+130
+68
+107
+77
+164
+70
+99
+69
+171
+83
+142
+78
+129
+60
+149
+81
+148
+68
+148
+75
+141
+71
+142
+51
+122
+75
+132
+66
+32
+72
+159
+66
+134
+69
+138
+64
+131
+69
+139
+68
+152
+66
+156
+73
+145
+70
+137
+65
+133
+63
+148
+71
+132
+69
+153
+80
+123
+58
+145
+74
+157
+76
+135
+75
+143
+66
+139
+42
+140
+77
+137
+79
+150
+81
+127
+66
+138
+73
+118
+73
+145
+74
+127
+71
+139
+69
+119
+73
+158
+66
+138
+56
+140
+77
+136
+76
+137
+80
+135
+62
+118
+63
+154
+77
+156
+69
+141
+67
+163
+75
+149
+72
+145
+73
+130
+72
+121
+83
+149
+71
+141
+64
+141
+64
+153
+72
+146
+73
+143
+63
+133
+67
+118
+68
+103
+61
+141
+71
+143
+80
+151
+79
+138
+63
+126
+73
+152
+63
+146
+78
+152
+79
+161
+75
+101
+63
+126
+82
+150
+66
+161
+79
+150
+75
+116
+70
+141
+78
+153
+73
+150
+74
+138
+74
+144
+52
+144
+68
+167
+79
+168
+69
+147
+77
+154
+79
+93
+83
+155
+80
+155
+72
+150
+69
+151
+77
+154
+60
+146
+80
+129
+75
+139
+69
+166
+74
+161
+62
+129
+62
+156
+70
+130
+77
+151
+64
+155
+68
+131
+63
+136
+83
+144
+72
+131
+75
+151
+76
+167
+60
+148
+72
+146
+75
+162
+63
+128
+69
+149
+76
+79
+70
+146
+80
+157
+68
+141
+75
+148
+70
+143
+66
+144
+82
+149
+74
+144
+76
+169
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run 
+55
+103
+69
+115
+77
+125
+68
+144
+73
+141
+79
+123
+73
+78
+59
+108
+67
+136
+54
+141
+66
+136
+70
+122
+69
+120
+66
+127
+72
+131
+69
+120
+65
+138
+55
+138
+60
+119
+68
+137
+53
+146
+75
+140
+66
+126
+66
+128
+62
+144
+71
+135
+78
+156
+71
+142
+72
+147
+69
+158
+75
+93
+73
+153
+83
+136
+73
+140
+50
+146
+71
+136
+77
+155
+67
+129
+75
+145
+53
+129
+67
+158
+61
+103
+70
+146
+73
+129
+62
+140
+79
+164
+70
+149
+65
+145
+61
+142
+69
+135
+63
+123
+64
+149
+51
+146
+73
+143
+77
+133
+69
+143
+70
+144
+70
+146
+81
+164
+80
+151
+65
+123
+71
+133
+83
+116
+79
+154
+78
+145
+73
+134
+64
+106
+72
+160
+75
+137
+81
+136
+67
+87
+68
+131
+65
+135
+66
+74
+75
+155
+71
+141
+60
+150
+23
+144
+65
+136
+72
+134
+67
+57
+78
+173
+91
+161
+90
+182
+69
+157
+83
+186
+75
+180
+86
+173
+92
+181
+87
+181
+92
+185
+78
+165
+92
+170
+66
+189
+89
+175
+87
+107
+67
+153
+75
+155
+75
+124
+76
+159
+88
+139
+70
+166
+90
+142
+87
+138
+79
+173
+66
+187
+65
+142
+66
+150
+69
+122
+58
+68
+51
+146
+71
+146
+71
+139
+68
+165
+77
+131
+80
+132
+41
+179
+92
+191
+90
+179
+84
+145
+64
+143
+67
+127
+80
+158
+76
+148
+71
+161
+80
+116
+67
+186
+86
+182
+92
+144
+52
+160
+79
+142
+80
+156
+84
+166
+74
+96
+79
+193
+97
+186
+91
+167
+89
+179
+91
+175
+78
+190
+82
+170
+66
+175
+82
+165
+87
+175
+61
+110
+60
+121
+49
+159
+79
+183
+88
+185
+84
+188
+89
+168
+84
+173
+86
+182
+88
+175
+74
+151
+82
+195
+94
+159
+76
+168
+77
+148
+81
+155
+78
+170
+80
+153
+78
+159
+87
+165
+89
+156
+77
+184
+84
+176
+85
+161
+86
+175
+88
+147
+86
+185
+79
+164
+62
+166
+90
+169
+83
+169
+71
+160
+85
+173
+84
+144
+30
+131
+81
+169
+78
+179
+82
+172
+90
+146
+84
+175
+88
+159
+85
+151
+88
+175
+82
+163
+75
+163
+87
+166
+89
+147
+76
+171
+87
+177
+66
+155
+85
+191
+89
+139
+84
+168
+96
+189
+73
+118
+81
+187
+91
+182
+69
+179
+77
+156
+87
+141
+91
+175
+81
+154
+77
+175
+90
+170
+89
+164
+76
+162
+85
+174
+89
+141
+87
+175
+89
+177
+69
+165
+86
+179
+88
+151
+87
+175
+90
+174
+88
+146
+91
+171
+94
+166
+89
+189
+82
+167
+85
+134
+91
+152
+87
+175
+78
+187
+93
+191
+91
+159
+81
+177
+89
+185
+83
+162
+87
+154
+86
+169
+76
+181
+84
+175
+91
+149
+93
+181
+82
+190
+92
+98
+84
+168
+95
+180
+91
+180
+94
+168
+82
+158
+84
+180
+82
+168
+91
+177
+85
+179
+82
+170
+74
+168
+89
+165
+87
+168
+89
+174
+89
+156
+71
+171
+79
+172
+88
+170
+83
+185
+85
+177
+88
+132
+85
+175
+89
+188
+86
+183
+87
+158
+89
+131
+90
+167
+88
+177
+93
+180
+81
+185
+90
+186
+80
+190
+86
+179
+86
+184
+93
+188
+81
+184
+87
+176
+90
+177
+93
+160
+84
+181
+89
+178
+88
+168
+78
+175
+92
+179
+91
+196
+90
+177
+90
+163
+83
+188
+93
+174
+92
+184
+89
+179
+89
+112
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run 
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GAM.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 11] Compiling Player.GAM
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-5a4VMkTZBrDKeyU5eelaKc
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+53
+95
+59
+121
+67
+146
+73
+81
+65
+143
+57
+152
+22
+134
+63
+133
+66
+142
+53
+111
+61
+154
+72
+154
+71
+162
+69
+128
+56
+145
+64
+147
+73
+105
+70
+144
+75
+154
+72
+116
+63
+142
+70
+139
+69
+153
+80
+132
+76
+144
+65
+113
+64
+123
+65
+148
+78
+125
+77
+133
+70
+81
+64
+147
+66
+136
+78
+145
+70
+141
+68
+125
+65
+153
+72
+150
+72
+132
+68
+152
+77
+161
+72
+128
+75
+137
+71
+130
+78
+140
+78
+146
+76
+98
+64
+145
+77
+144
+73
+138
+62
+139
+72
+149
+52
+142
+67
+142
+74
+160
+64
+160
+70
+152
+72
+152
+77
+153
+64
+142
+74
+157
+75
+147
+76
+133
+78
+132
+68
+118
+73
+143
+73
+148
+70
+129
+55
+151
+74
+129
+77
+150
+80
+140
+70
+145
+72
+128
+76
+148
+85
+160
+68
+145
+65
+128
+73
+129
+65
+120
+68
+113
+73
+146
+80
+158
+65
+125
+57
+136
+72
+151
+74
+137
+72
+135
+68
+137
+78
+136
+65
+161
+55
+139
+67
+129
+85
+142
+83
+157
+59
+139
+72
+141
+81
+159
+81
+164
+77
+153
+61
+102
+80
+146
+69
+171
+76
+151
+67
+148
+73
+156
+62
+146
+79
+156
+62
+47
+88
+157
+76
+155
+66
+129
+76
+147
+72
+160
+61
+130
+75
+133
+84
+156
+75
+157
+68
+140
+75
+143
+74
+139
+78
+140
+65
+137
+57
+143
+75
+164
+70
+138
+67
+144
+79
+153
+71
+163
+84
+147
+65
+147
+74
+131
+69
+148
+72
+149
+73
+152
+67
+151
+76
+150
+78
+150
+75
+168
+82
+169
+68
+149
+69
+156
+71
+141
+81
+129
+76
+168
+74
+133
+61
+152
+82
+146
+77
+154
+78
+160
+72
+138
+81
+148
+88
+154
+83
+178
+74
+151
+68
+154
+76
+142
+82
+184
+82
+153
+70
+150
+70
+145
+77
+142
+75
+151
+84
+157
+87
+144
+67
+153
+84
+158
+74
+132
+74
+163
+80
+160
+66
+147
+61
+169
+72
+136
+75
+164
+76
+137
+74
+106
+76
+158
+72
+158
+72
+157
+72
+160
+67
+129
+73
+146
+84
+132
+68
+125
+72
+175
+68
+140
+42
+126
+82
+152
+71
+156
+82
+154
+69
+164
+83
+135
+70
+158
+70
+140
+82
+139
+73
+145
+73
+132
+57
+129
+77
+163
+82
+149
+81
+145
+70
+145
+72
+153
+74
+162
+77
+159
+69
+120
+69
+159
+60
+107
+65
+139
+75
+129
+70
+138
+78
+157
+66
+154
+69
+156
+78
+129
+77
+130
+74
+139
+75
+132
+67
+136
+76
+150
+68
+140
+78
+130
+81
+136
+73
+139
+54
+138
+81
+142
+65
+137
+75
+154
+79
+136
+78
+169
+74
+148
+71
+147
+73
+146
+77
+164
+78
+132
+72
+145
+68
+153
+71
+163
+75
+163
+67
+150
+50
+154
+74
+141
+78
+158
+71
+126
+77
+154
+77
+130
+83
+160
+69
+147
+73
+143
+75
+169
+66
+143
+74
+146
+77
+154
+83
+149
+67
+157
+80
+164
+74
+152
+68
+125
+80
+146
+80
+144
+78
+95
+73
+134
+77
+151
+66
+141
+67
+147
+78
+162
+77
+133
+48
+153
+93
+139
+75
+150
+67
+155
+66
+161
+68
+149
+67
+160
+84
+146
+69
+134
+63
+144
+67
+146
+82
+150
+75
+146
+77
+133
+72
+156
+73
+146
+51
+153
+59
+189
+70
+148
+69
+135
+66
+141
+73
+129
+71
+158
+73
+144
+68
+146
+70
+125
+80
+155
+62
+150
+72
+157
+76
+154
+70
+163
+67
+144
+77
+137
+71
+136
+79
+145
+69
+126
+64
+147
+82
+144
+75
+164
+72
+136
+71
+155
+73
+156
+79
+139
+62
+137
+72
+154
+69
+138
+71
+149
+79
+158
+81
+119
+56
+134
+78
+151
+79
+141
+74
+135
+69
+136
+59
+153
+84
+145
+64
+159
+70
+123
+71
+164
+77
+112
+72
+148
+78
+165
+70
+158
+71
+144
+76
+149
+55
+145
+79
+148
+69
+155
+75
+138
+65
+133
+68
+132
+82
+151
+66
+129
+79
+143
+74
+137
+75
+112
+59
+151
+70
+160
+63
+147
+65
+134
+60
+139
+67
+138
+68
+124
+64
+130
+81
+136
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../csb-evolution.cabal
+	modified:   Interact.hs
+	modified:   Player/GA.hs
+	modified:   Warrier/Weapons.hs
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	Player/GAM.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git pull
+remote: Enumerating objects: 9, done.        
+remote: Counting objects: 100% (9/9), done.        
+remote: Compressing objects: 100% (4/4), done.        
+remote: Total 6 (delta 2), reused 6 (delta 2), pack-reused 0        
+Unpacking objects: 100% (6/6), done.
+From https://github.com/Nemo1999/CodingStrikeBack-Evolution
+   a44e883..747bde2  master     -> origin/master
+Updating a44e883..747bde2
+Fast-forward
+ src/Warrier/Make.hs   | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/Warrier/Wapons.hs | 117 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 217 insertions(+)
+ create mode 100644 src/Warrier/Make.hs
+ create mode 100644 src/Warrier/Wapons.hs
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../csb-evolution.cabal
+	modified:   Interact.hs
+	modified:   Player/GA.hs
+	modified:   Warrier/Weapons.hs
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	Player/GAM.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add .
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com
+Password for 'https://tiny.nemo.fish@gmail.com@github.com': 
+Everything up-to-date
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status 
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   Interact.hs
+	modified:   Player/GA.hs
+	new file:   Player/GAM.hs
+	modified:   Warrier/Weapons.hs
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../csb-evolution.cabal
+
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "GAMeta "
+[master 06484bd] GAMeta
+ 4 files changed, 298 insertions(+), 25 deletions(-)
+ create mode 100644 src/Player/GAM.hs
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com 
+Password for 'https://tiny.nemo.fish@gmail.com @github.com': 
+Counting objects: 9, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 2.30 KiB | 0 bytes/s, done.
+Total 9 (delta 7), reused 0 (delta 0)
+remote: Resolving deltas: 100% (7/7), completed with 6 local objects.        
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/Nemo1999/csb-evolved.git        
+To https://github.com/Nemo1999/CodingStrikeBack-Evolution.git
+   747bde2..06484bd  master -> master
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: csb-evolution.cabal src/Player/GAM.hs src/Warrier/Make.hs src/Warrier/Wapons.hs)
+csb-evolution> configure (lib + exe)
+Configuring csb-evolution-0.1.0.0...
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:1:1: error:
+    File name does not match module name:
+    Saw: ‘Main’
+    Expected: ‘Warrier.Wapons’
+  |
+1 | {-# OPTIONS_GHC -O2  #-}
+  | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[10 of 13] Compiling Player.GAM
+[12 of 13] Compiling Warrier.Make
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Make.hs:8:1: error:
+    Could not load module ‘System.Directory’
+    It is a member of the hidden package ‘directory-1.3.3.0’.
+    Perhaps you need to add ‘directory’ to the build-depends in your .cabal file.
+    Use -v to see a list of the files searched for.
+  |
+8 | import           System.Directory
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> configure (lib + exe)
+Configuring csb-evolution-0.1.0.0...
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[ 1 of 13] Compiling Data.Vec2
+[ 2 of 13] Compiling Util
+[ 3 of 13] Compiling GameSim
+[ 4 of 13] Compiling Player
+[ 5 of 13] Compiling Player.Instances
+[ 6 of 13] Compiling Player.GAM
+[ 7 of 13] Compiling Player.GA
+[ 8 of 13] Compiling GameRule
+[ 9 of 13] Compiling Interact
+[10 of 13] Compiling Warrier.Weapons
+[11 of 13] Compiling Paths_csb_evolution
+[12 of 13] Compiling Warrier.Make
+[13 of 13] Compiling Warrier.Wapons
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:28:15: error:
+    Not in scope: type constructor or class ‘Vec2’
+   |
+28 | type Ckpts = [Vec2]
+   |               ^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:30:17: error:
+    Not in scope: type constructor or class ‘Vec2’
+   |
+30 | readPoint :: IO Vec2
+   |                 ^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:42:33: error:
+    Not in scope: type constructor or class ‘PodState’
+   |
+42 | readPod   :: (Int , Ckpts)-> IO PodState
+   |                                 ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:49:24: error: Not in scope: ‘podPosition’
+   |
+49 |   return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=podCkpts}
+   |                        ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:49:40: error: Not in scope: ‘podSpeed’
+   |
+49 |   return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=podCkpts}
+   |                                        ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:49:55: error: Not in scope: ‘podAngle’
+   |
+49 |   return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=podCkpts}
+   |                                                       ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:49:68: error:
+    Not in scope: ‘podNextCheckPoints’
+   |
+49 |   return emptyPodState{podPosition=pos,podSpeed=speed,podAngle=ang,podNextCheckPoints=podCkpts}
+   |                                                                    ^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:51:23: error:
+    Not in scope: type constructor or class ‘PodState’
+   |
+51 | updatePod :: Ckpts -> PodState -> IO PodState
+   |                       ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:51:38: error:
+    Not in scope: type constructor or class ‘PodState’
+   |
+51 | updatePod :: Ckpts -> PodState -> IO PodState
+   |                                      ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:58:18: error: Not in scope: ‘podPosition’
+   |
+58 |   return podPrev{podPosition=pos ,podSpeed = speed , podAngle = ang,podNextCheckPoints=podCkpts}
+   |                  ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:58:35: error: Not in scope: ‘podSpeed’
+   |
+58 |   return podPrev{podPosition=pos ,podSpeed = speed , podAngle = ang,podNextCheckPoints=podCkpts}
+   |                                   ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:58:54: error: Not in scope: ‘podAngle’
+   |
+58 |   return podPrev{podPosition=pos ,podSpeed = speed , podAngle = ang,podNextCheckPoints=podCkpts}
+   |                                                      ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:58:69: error:
+    Not in scope: ‘podNextCheckPoints’
+   |
+58 |   return podPrev{podPosition=pos ,podSpeed = speed , podAngle = ang,podNextCheckPoints=podCkpts}
+   |                                                                     ^^^^^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:60:23: error:
+    Not in scope: type constructor or class ‘PodState’
+   |
+60 | updateShieldThrust :: PodState -> PodState
+   |                       ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:60:35: error:
+    Not in scope: type constructor or class ‘PodState’
+   |
+60 | updateShieldThrust :: PodState -> PodState
+   |                                   ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:61:23: error:
+    Not in scope: data constructor ‘PodState’
+   |
+61 | updateShieldThrust ps@PodState{podBoostAvail=ba,podShieldState=sh,podMovement=(PodMovement _ boost)} =
+   |                       ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:61:32: error: Not in scope: ‘podBoostAvail’
+   |
+61 | updateShieldThrust ps@PodState{podBoostAvail=ba,podShieldState=sh,podMovement=(PodMovement _ boost)} =
+   |                                ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:61:49: error: Not in scope: ‘podShieldState’
+   |
+61 | updateShieldThrust ps@PodState{podBoostAvail=ba,podShieldState=sh,podMovement=(PodMovement _ boost)} =
+   |                                                 ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:61:67: error:
+    Not in scope: ‘podMovement’
+    Perhaps you meant ‘putMovement’ (line 67)
+   |
+61 | updateShieldThrust ps@PodState{podBoostAvail=ba,podShieldState=sh,podMovement=(PodMovement _ boost)} =
+   |                                                                   ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:61:80: error:
+    Not in scope: data constructor ‘PodMovement’
+    Perhaps you meant variable ‘putMovement’ (line 67)
+   |
+61 | updateShieldThrust ps@PodState{podBoostAvail=ba,podShieldState=sh,podMovement=(PodMovement _ boost)} =
+   |                                                                                ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:64:10: error: Not in scope: ‘podBoostAvail’
+   |
+64 |   in  ps{podBoostAvail = ba',podShieldState = sh'}
+   |          ^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:64:30: error: Not in scope: ‘podShieldState’
+   |
+64 |   in  ps{podBoostAvail = ba',podShieldState = sh'}
+   |                              ^^^^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:66:16: error:
+    Not in scope: type constructor or class ‘PodMovement’
+   |
+66 | putMovement :: PodMovement -> IO ()
+   |                ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:67:14: error:
+    Not in scope: data constructor ‘PodMovement’
+    Perhaps you meant variable ‘putMovement’ (line 67)
+   |
+67 | putMovement (PodMovement (Vec2 x y) thrust) =
+   |              ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:67:27: error:
+    Not in scope: data constructor ‘Vec2’
+   |
+67 | putMovement (PodMovement (Vec2 x y) thrust) =
+   |                           ^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:71:9: error:
+    Not in scope: data constructor ‘Boost’
+   |
+71 |         Boost -> "BOOST"
+   |         ^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:72:9: error:
+    Not in scope: data constructor ‘Shield’
+   |
+72 |         Shield -> "SHIELD"
+   |         ^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:73:9: error:
+    Not in scope: data constructor ‘Normal’
+   |
+73 |         Normal n -> show n
+   |         ^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:79:16: error:
+    Not in scope: type constructor or class ‘PlayerIO’
+   |
+79 | gameCycles :: (PlayerIO p) => Ckpts -> [PodState]-> p -> IO ()
+   |                ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:79:41: error:
+    Not in scope: type constructor or class ‘PodState’
+   |
+79 | gameCycles :: (PlayerIO p) => Ckpts -> [PodState]-> p -> IO ()
+   |                                         ^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:87:27: error:
+    Not in scope: ‘podMovement’
+    Perhaps you meant ‘putMovement’ (line 67)
+   |
+87 |    let (p1'' ,p2'')= (p1'{podMovement = move1} ,p2'{podMovement=move2})
+   |                           ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:87:53: error:
+    Not in scope: ‘podMovement’
+    Perhaps you meant ‘putMovement’ (line 67)
+   |
+87 |    let (p1'' ,p2'')= (p1'{podMovement = move1} ,p2'{podMovement=move2})
+   |                                                     ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:112:31: error:
+    Not in scope: ‘podMovement’
+    Perhaps you meant ‘putMovement’ (line 67)
+    |
+112 |     let (pod1' ,pod2')= (pod1{podMovement = move1} ,pod2{podMovement=move2})
+    |                               ^^^^^^^^^^^
+
+/home/nemo/Evolutionary/csb-evolved/src/Warrier/Wapons.hs:112:58: error:
+    Not in scope: ‘podMovement’
+    Perhaps you meant ‘putMovement’ (line 67)
+    |
+112 |     let (pod1' ,pod2')= (pod1{podMovement = move1} ,pod2{podMovement=move2})
+    |                                                          ^^^^^^^^^^^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git mv Warrier/Wapons.hs Wapons.txt
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack ru 
+Invalid argument `ru'
+Auxiliary command not found in path `stack-ru'
+File does not exist or is not a regular file `ru'
+
+Did you mean one of these?
+    -v
+    -j
+    run
+    ls
+
+Usage: stack [--help] [--version] [--numeric-version] [--hpack-numeric-version]
+             [--docker*] [--nix*] ([--verbosity VERBOSITY] | [-v|--verbose] |
+             [--silent]) [--[no-]time-in-log] [--stack-root STACK-ROOT]
+             [--work-dir WORK-DIR] [--[no-]system-ghc] [--[no-]install-ghc]
+             [--arch ARCH] [--ghc-variant VARIANT] [--ghc-build BUILD]
+             [-j|--jobs JOBS] [--extra-include-dirs DIR] [--extra-lib-dirs DIR]
+             [--with-gcc PATH-TO-GCC] [--with-hpack HPACK]
+             [--[no-]skip-ghc-check] [--[no-]skip-msys] [--local-bin-path DIR]
+             [--[no-]modify-code-page] [--[no-]allow-different-user]
+             [--[no-]dump-logs] [--color|--colour WHEN] [--resolver RESOLVER]
+             [--compiler COMPILER] [--[no-]terminal]
+             [--stack-colors|--stack-colours STYLES] [--terminal-width INT]
+             [--stack-yaml STACK-YAML] [--lock-file ARG] COMMAND|FILE
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution> configure (lib + exe)
+Configuring csb-evolution-0.1.0.0...
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[12 of 12] Compiling Warrier.Make
+Preprocessing executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+Building executable 'csb-evolution-exe' for csb-evolution-0.1.0.0..
+[1 of 2] Compiling Main [Interact changed]
+[2 of 2] Compiling Paths_csb_evolution
+Linking .stack-work/dist/x86_64-linux/Cabal-2.4.0.1/build/csb-evolution-exe/csb-evolution-exe ...
+csb-evolution> copy/register
+Installing library in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/lib/x86_64-linux-ghc-8.6.5/csb-evolution-0.1.0.0-EscBtytWciq3Y43EoKUFjr
+Installing executable csb-evolution-exe in /home/nemo/Evolutionary/csb-evolved/.stack-work/install/x86_64-linux/ec585e0200b5b285551131e78bb178d79884871434687a11b9f6bec8c7266205/8.6.5/bin
+Registering library for csb-evolution-0.1.0.0..
+52
+111
+66
+117
+66
+136
+50
+150
+54
+130
+49
+123
+72
+142
+64
+149
+74
+136
+75
+75
+76
+60
+63
+129
+72
+154
+54
+162
+72
+125
+64
+143
+68
+124
+71
+143
+79
+139
+61
+129
+70
+123
+78
+118
+66
+146
+72
+141
+57
+115
+68
+126
+62
+134
+67
+122
+70
+163
+64
+145
+72
+130
+71
+124
+74
+88
+77
+130
+82
+139
+66
+109
+73
+153
+63
+118
+78
+131
+71
+134
+68
+157
+81
+151
+80
+104
+70
+104
+72
+154
+82
+137
+80
+138
+78
+110
+76
+141
+86
+170
+82
+114
+76
+155
+72
+129
+68
+117
+73
+137
+81
+133
+68
+121
+72
+166
+77
+146
+77
+149
+75
+147
+66
+141
+69
+132
+70
+128
+73
+139
+81
+141
+76
+152
+76
+163
+72
+130
+69
+139
+68
+161
+68
+150
+76
+138
+72
+148
+55
+115
+79
+140
+70
+135
+76
+140
+91
+138
+74
+119
+72
+153
+64
+140
+80
+154
+75
+149
+68
+130
+56
+102
+81
+165
+78
+153
+65
+138
+72
+166
+82
+100
+82
+132
+68
+130
+79
+136
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	renamed:    Warrier/Wapons.hs -> Wapons.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../csb-evolution.cabal
+	modified:   ../package.yaml
+	modified:   Player/GAM.hs
+	modified:   Wapons.txt
+	modified:   Warrier/Make.hs
+
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add Wapons.txt Warrier/Make.hs 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "make !!!!"
+git commit -m "make git add Wapons.txt Warrier/Make.hs git add Wapons.txt Warrier/Make.hs "
+[master 9ac6fdd] make git add Wapons.txt Warrier/Make.hs git add Wapons.txt Warrier/Make.hs
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ rename src/{Warrier/Wapons.hs => Wapons.txt} (99%)
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git add ../package.yaml 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git commit -m "dirrectory!!!!!"
+git commit -m "dirrectorygit add ../package.yaml git add ../package.yaml !"
+[master 63daf8f] dirrectorygit add ../package.yaml git add ../package.yaml !
+ 1 file changed, 1 insertion(+)
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ git status
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../csb-evolution.cabal
+	modified:   Player/GAM.hs
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $git push 
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tiny.nemo.fish@gmail.com
+Password for 'https://tiny.nemo.fish@gmail.com@github.com': 
+Counting objects: 9, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 2.13 KiB | 0 bytes/s, done.
+Total 9 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 4 local objects.        
+remote: This repository moved. Please use the new location:        
+remote:   https://github.com/Nemo1999/csb-evolved.git        
+To https://github.com/Nemo1999/CodingStrikeBack-Evolution.git
+   06484bd..63daf8f  master -> master
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ stack run
+csb-evolution-0.1.0.0: unregistering (local file changes: src/Player/GAM.hs)
+csb-evolution> build (lib + exe)
+Preprocessing library for csb-evolution-0.1.0.0..
+Building library for csb-evolution-0.1.0.0..
+[11 of 12] Compiling Player.GAM
+
+/home/nemo/Evolutionary/csb-evolved/src/Player/GAM.hs:176:1: error:
+    parse error (possibly incorrect indentation or mismatched brackets)
+    |
+176 | measureTeamScore :: Double -> TeamScore -> Double
+    | ^
+
+--  While building package csb-evolution-0.1.0.0 using:
+      /home/nemo/.stack/setup-exe-cache/x86_64-linux/Cabal-simple_mPHDZzAJ_2.4.0.1_ghc-8.6.5 --builddir=.stack-work/dist/x86_64-linux/Cabal-2.4.0.1 build lib:csb-evolution exe:csb-evolution-exe --ghc-options ""
+    Process exited with code: ExitFailure 1
+nemo@nemo-Swift-SF514-51 ~/Evolutionary/csb-evolved/src $ 

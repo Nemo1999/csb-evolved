@@ -196,14 +196,14 @@ collide2Points i1 i2 pss =
       m1 = if (podShieldState  pod1) == Just 3 then 10 else 1
       m2 = if (podShieldState  pod2) == Just 3 then 10 else 1
       -- the impact is the
-      impactCoefficiant = ((m1*m2)/(m1+m2))
-      impact = impactCoefficiant `V.scalarMul` (v2' `V.proj` p2')
+      impactCoefficiant = 2*((m1*m2)/(m1+m2))
+      impact = impactCoefficiant `V.scalarMul` (v2' `V.proj`  p2')
       -- if the impact vector is shorter than minima , normalize it  
       impact' = if V.norm impact < U.podMinCollisionImpact
         then ( U.podMinCollisionImpact /V.norm impact) `V.scalarMul` impact
         else impact
-      pod1' = pod1{podSpeed = v1 + impact + impact'}
-      pod2' = pod2{podSpeed = v2 - impact - impact'}
+      pod1' = pod1{podSpeed = v1 + impact  }
+      pod2' = pod2{podSpeed = v2 - impact  }
       replace i x xs = take i xs ++ [x] ++ drop (i+1) xs
   in  
       replace i1 pod1' $ replace i2 pod2' pss
