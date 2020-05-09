@@ -2,10 +2,7 @@
 {-# OPTIONS_GHC -O2  #-}
 module Interact
   (
-    gameAnimateIO
-  , testAnimate
-  , testGameSim
-  ,main
+    gameAnimateIO  
   )
 where
 import GameRule
@@ -81,29 +78,36 @@ gameAnimateIO turnPerSec  gameSpec gs =
 
 -- Testing
 
-e1 = WrapIO (ElementaryPlayer ())
-e2 = GASimple
-e3 = defaultGAMeta
 
-testSim :: Int -> IO [Int]
-testSim n = sequence $ replicate n testGameSim
 
-testGameSim :: IO Int
-testGameSim = do
-  gsp  <- randomGameSpecIO
-  ghis <- runGame (e2,e3) gsp gameEnd
-  return $ length ghis
 
-testGsp = GameSpec {gameSLaps = 3, gameSCheckpoints = [Vec2 13479.867410300898 771.2779802449776,Vec2 13991.177029911074 5957.9577506621745,Vec2 11283.183037190614 4051.7698613074967,Vec2 890.6858795864157 65.26211610815757,Vec2 364.6964748594801 8655.346773911324,Vec2 1687.2787736171979 3407.517451010222,Vec2 2219.1046319873317 1212.3349781580753]}
+
   
-testAnimate :: Double ->  IO()
-testAnimate turnPerSec = do
-  gsp <- randomGameSpecIO
-  ghis <- runGame (e2,e3) gsp gameEnd
-  gameAnimateIO turnPerSec  gsp ghis
 
 
-main = do
-  n <- read <$> getLine
-  xs  <- testSim n
-  return $ sum xs
+
+defaultGS1 = GameSpec 3 [Vec2 10545.0 6005.0,Vec2 3559.0 5204.0,Vec2 13574.0 7618.0,Vec2 12476.0 1344.0]
+initPodPos1 = [Vec2 10488.0 6502.0,Vec2 10602.0 5508.0,Vec2 10374.0 7495.0,Vec2 10716.0 4515.0]
+
+defaultGS2 = GameSpec 3 [Vec2 7285.0 6638.0,Vec2 5397.0 2810.0,Vec2 10336.0 3368.0,Vec2 11222.0 5395.0]
+initPodPos2 = [Vec2 6837.0 6859.0,Vec2 7733.0 6417.0,Vec2 5940.0 7302.0,Vec2 8630.0 5974.0]
+
+defaultGS3  = GameSpec 3 [Vec2 5398.0 2821.0,Vec2 10295.0 3372.0,Vec2 11182.0 5424.0,Vec2 7248.0 6684.0]
+initPodPos3 = [Vec2 5454.0 2324.0,Vec2 5342.0 3318.0,Vec2 5566.0 1330.0,Vec2 5230.0 4312.0]
+
+defaultGS4 = GameSpec 3[Vec2 5999.0 5364.0,Vec2 11271.0 2827.0,Vec2 7479.0 6944.0]
+initPodPos4 = [Vec2 5782.0 4913.0,Vec2 6216.0 5815.0,Vec2 5349.0 4012.0,Vec2 6649.0 6716.0]
+
+defaultGS5 = GameSpec 3 [Vec2 6015.0 5383.0,Vec2 11272.0 2830.0,Vec2 7498.0 6936.0]
+initPodPos5 = [Vec2 5797.0 4933.0,Vec2 6233.0 5833.0,Vec2 5360.0 4034.0,Vec2 6670.0 6732.0]
+
+defaultGS6 = GameSpec 3 [Vec2 11325.0 2820.0,Vec2 7530.0 6922.0,Vec2 6022.0 5368.0]
+initPodPos6 = [Vec2 11692.0 3160.0,Vec2 10958.0 2480.0,Vec2 12426.0 3839.0,Vec2 10224.0 1801.0]
+
+defaultGS7 = GameSpec 3 [Vec2 13906.0 1191.0,Vec2 10230.0 4907.0,Vec2 6105.0 2218.0,Vec2 3030.0 5182.0,Vec2 6287.0 7788.0,Vec2 14097.0 7733.0]
+
+defaultGS8 = GameSpec 3[Vec2 8698.0 7466.0,Vec2 7215.0 2140.0,Vec2 3575.0 5281.0,Vec2 13830.0 5104.0,Vec2 10660.0 2270.0]
+
+defaultGameSpecs = [defaultGS1,defaultGS2,defaultGS3,defaultGS4,defaultGS5,defaultGS6,defaultGS7,defaultGS8] 
+
+

@@ -34,15 +34,15 @@ data PodState = PodState { podPosition          :: !Vec2
                          , podShieldState       :: !ShieldState
                          , podMovement          :: !PodMovement
                          , podNextCheckPoints   :: ![Vec2]
-                         } deriving (Show)
+                         } deriving (Show,Read)
 
 
 data PodMovement = PodMovement { podTarget :: Vec2
                                , podThrust :: Thrust
-                               } deriving (Show, Eq)
+                               } deriving (Show,Read, Eq)
 
 
-data Thrust = Normal Int | Shield | Boost deriving (Show,Eq)
+data Thrust = Normal Int | Shield | Boost deriving (Show,Read,Eq)
 
 
 
@@ -202,8 +202,8 @@ collide2Points i1 i2 pss =
       impact' = if V.norm impact < U.podMinCollisionImpact
         then ( U.podMinCollisionImpact /V.norm impact) `V.scalarMul` impact
         else impact
-      pod1' = pod1{podSpeed = v1 + impact  }
-      pod2' = pod2{podSpeed = v2 - impact  }
+      pod1' = pod1{podSpeed = v1 + (impact `V.scalarDiv` m1)  }
+      pod2' = pod2{podSpeed = v2 - (impact `V.scalarDiv` m2) }
       replace i x xs = take i xs ++ [x] ++ drop (i+1) xs
   in  
       replace i1 pod1' $ replace i2 pod2' pss

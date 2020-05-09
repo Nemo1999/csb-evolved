@@ -9,6 +9,8 @@ module GameRule
   ,maxSimTurn
   ,GameHistory(..)
   ,gameEnd
+  ,emptyMovement
+  ,emptyPodState
   )
 where
 
@@ -20,7 +22,7 @@ import GameSim
 import Player
 import System.Random
 import Control.Monad.Fix
-maxSimTurn = 2000 :: Int
+maxSimTurn = 1000 :: Int
 
 -- | Informaiton about the GameSetting
 data GameSpec = GameSpec { gameSLaps :: Int
@@ -35,16 +37,16 @@ emptyPodState = PodState V.zeroVec V.zeroVec Nothing True Nothing emptyMovement 
 
 initPodStates :: GameSpec -> IO([PodState])
 initPodStates (GameSpec laps ckpts) =
-  let podckpts =concat $ replicate laps ckpts
+  let podckpts =take (length ckpts * laps) $ tail $cycle ckpts
       (ckpt0,ckpt1) = (head ckpts , head $ tail ckpts)
       perp = V.rotate90 (ckpt1-ckpt0)
-      shift = (410 / V.norm perp) `V.scalarMul` perp
+      shift = (250 / V.norm perp) `V.scalarMul` perp
       podPos = [ckpt0+shift,
                 ckpt0 + 3`V.scalarMul`shift,
                 ckpt0-shift,
                 ckpt0 - 3`V.scalarMul`shift]
   --in U.randomPerm $  map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
-  in   return $ map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=tail podckpts}) podPos
+  in   return $ map (\pos->emptyPodState{podPosition=pos,podNextCheckPoints=podckpts}) podPos
 
 
 
@@ -87,7 +89,7 @@ playerDrivePod p1 p2 g = do
 type GameHistory = [[PodState]]
 
 
--- | initialize and runGame
+-- | initialize and simulate the Game
 runGame ::
   forall player1  player2. (PlayerIO player1 , PlayerIO player2) =>
   (player1 , player2)

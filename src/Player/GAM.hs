@@ -26,6 +26,7 @@ data GAMeta = GAMeta{seed::Bool,
                      angRes::Bool
                      geneLength::Int,
                      popSize::Int,
+                     pSwap  :: Double, 
                      pMutate::Double,
                      pCross::Double,
                      select::Int -> Population -> IO Population,
@@ -37,8 +38,9 @@ data GAMeta = GAMeta{seed::Bool,
 -------- Parameters
 defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial Population?
                        angRes=True, --- do we divide random generated angle range (-18,18) into 3 or 5 part  
-                       geneLength=6,
-                       popSize=8, 
+                       geneLength=5,
+                       popSize=16,
+                       pSwap =0.3,
                        pMutate=1,
                        pCross=1, 
                        select=defaultSelect, 
@@ -46,7 +48,7 @@ defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial 
                        mutation = defaultMutate
                       }
                        
-boostPenalty = 10000 :: Double
+boostPenalty = 8000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
 maxTime = 71000000000 :: Integer -- maximum time before returning the final answer 
@@ -169,7 +171,7 @@ measureTeam  [p1,p2,o1,o2] =
  in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
      - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
      - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-     -- + (((measurePodScore $ getPodScore p1)+(measurePodScore $ getPodScore p2)))
+      + (0.5*(min (measurePodScore $ getPodScore p1)(measurePodScore $ getPodScore p2)))
 
 -- | turn TeamScore into Double for compare
 -- | the higher the score , the better the team
@@ -197,6 +199,7 @@ data GAMeta = GAMeta{seed::Bool,
                      angRes::Bool,
                      geneLength::Int,
                      popSize::Int,
+                     pSwap::Double,
                      pMutate::Double,
                      pCross::Double,
                      select::Int -> Population -> IO Population,
@@ -206,7 +209,7 @@ data GAMeta = GAMeta{seed::Bool,
 
 instance PlayerIO GAMeta where
   playerInitIO  = return 
-  playerRunIO player@(GAMeta seed angRes  geneLength popSize _ _ _ _ _) PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
+  playerRunIO player@(GAMeta seed angRes  geneLength popSize _ _ _ _ _ _) PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
     t0 <- getCPUTime
     let defaultSeed = (defaultGene geneLength p1 ,defaultGene geneLength p2)
         
@@ -238,7 +241,7 @@ decodeStep PodState{podPosition=pos,podAngle = podAng,podNextCheckPoints = ckpts
 
   
 nextGen :: GAMeta -> [PodState] -> Population -> IO Population
-nextGen player@(GAMeta seed angRes geneLength popSize pMutate pCross select crossover mutate) podStates ps = do
+nextGen player@(GAMeta seed angRes geneLength popSize pSwap pMutate pCross select crossover mutate) podStates ps = do
   let [p1,p2] = take 2 ps
   matingPool <- select popSize ps 
   childrens  <- crossoverAndMutate  matingPool
@@ -246,11 +249,13 @@ nextGen player@(GAMeta seed angRes geneLength popSize pMutate pCross select cros
     where
       crossoverAndMutate :: Population -> IO Population -- length population should be even 
       crossoverAndMutate  ((g11,g12):(g21,g22):gs) = do
-            (g11', g21') <- crossover geneLength pCross g11 g21
-            (g12', g22') <- crossover geneLength pMutate g12 g22 
-            [g11'',g12'', g21'' , g22''] <- sequence $ map (mutate angRes geneLength pMutate) [g11', g12', g21', g22']
-            gs'' <- crossoverAndMutate gs
-            return ((g11'',g12''):(g21'',g22''):gs'')
+        gs'' <- crossoverAndMutate gs
+        s  <- randomIO :: IO Double
+        if s<pSwap then return  ((g11,g22):(g21,g12):gs'') else do
+              (g11', g21') <- crossover geneLength pCross g11 g21
+              (g12', g22') <- crossover geneLength pMutate g12 g22 
+              [g11'',g12'', g21'' , g22''] <- sequence $ map (mutate angRes geneLength pMutate) [g11', g12', g21', g22']
+              return ((g11'',g12''):(g21'',g22''):gs'')
       crossoverAndMutate  [] =return  []
 
 -- Default Gene

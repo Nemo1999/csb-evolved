@@ -12,11 +12,13 @@ makeWarrier srcPath = do
     let files =
             [ "Wapons.txt"
             , "Data/Vec2.hs"
+            , "Warrier/IO.hs"
             , "GameRule.hs"
             , "GameSim.hs"
             , "Player.hs"
             , "Player/Instances.hs"
-            , "Player/GA.hs"
+            --, "Player/GA.hs"
+            , "Player/GAM.hs"
             , "Util.hs"
             ]
 
