@@ -18,9 +18,9 @@ import Data.Maybe
 import System.Environment
 import System.Exit
 
-p3 = WrapIO (ElementaryPlayer ())
-p2 = GASimple
-p1 = defaultGAMeta
+(p1,name1) = (defaultGAMeta,"Boss1")
+(p2,name2) = (GASimple , "Boss2")
+(p3,name3) = (WrapIO (ElementaryPlayer ()),"Boss3")
 
 testGameSim :: IO GameHistory
 testGameSim = do
@@ -35,7 +35,7 @@ testAnimate turnPerSec = do
   gameAnimateIO turnPerSec  gsp ghis
 
 type PlayerID = Int 
-data PlayerMode = Default PlayerID | IOMode | Executable FilePath 
+data PlayerMode = Default PlayerID String  | IOMode String | Executable FilePath String  
 
 data GameConfig = GameConfig{
   player1 :: PlayerMode
@@ -43,27 +43,29 @@ data GameConfig = GameConfig{
   showAnimatetion :: Bool,
   saveGameHistory :: Maybe FilePath
   playGameHistory :: Maybe FilePath
-                        }
+                        }deriving (Eq,Show,Read)
 
-defaultGameConfig = GameConfig (Default 1) (Default 2) True Nothing Nothing
+defaultGameConfig = GameConfig (Default 3) (Default 3) True Nothing Nothing
 
-parsePlayerMode :: String -> IO PlayerMode
-parsePlayerMode playerArg
+data SaveType = SaveType (String ,String) GameSpec GameHistory deriving (Show,Read)
+
+parsePlayerMode :: String -> String -> IO PlayerMode
+parsePlayerMode playerArg name
   |all isDigit playerArg
-  = Default (read playerArg)
+  = Default (read playerArg) name
   |"io"<-playerArg
-  = IOMode
+  = IOMode name
   | otherwise
-  = Executable palyerArg 
+  = Executable palyerArg name 
 
 parseArgs :: [String] -> GameConfig -> IO GameConfig
 parseArgs args config
   | []<-args
   = return $ config
-  | "-p1":playerArg:rest <-args
-  = parseArgs rest config{player1=parsePlayerMode playerArg}
-  | "-p2":playerArg:rest <-args
-  = parseArgs rest config{player2=parsePlayerMode playerArg}
+  | "-p1":playerArg:playerName:rest <-args
+  = parseArgs rest config{player1=parsePlayerMode playerArg playerName}
+  | "-p2":playerArg:playerName:rest <-args
+  = parseArgs rest config{player2=parsePlayerMode playerArg playerName}
   | "-noAnimation":rest <- args
   = parseArgs rest config{showAnimatetion=False}
   | "-saveGame":savePath:rest <- args
@@ -77,20 +79,31 @@ parseArgs args config
 printUsage :: IO()
 printUsage = putStrLn $ unlines
   ["Usage: csb-evolved [flages] "
-  ,"  -p1/-p2    <player arg>      specify players"
-  ,"  -noAnimation                 don't show animation"
-  ,"  -saveGame  <save path>       save game log"
-  ,"  -playFile  <open path>       show animation of saved game"
+  ,"  -p1/-p2    <PlayerMode> <Name>    specify players"
+  ,"  -noAnimation                      don't show animation"
+  ,"  -saveGame  <Save Path>            save game log"
+  ,"  -playFile  <Open Path>            show animation of saved game"
   ,""
   ,"-----------------------------------------"
   ,"<player arg>:"
   ,"  <ID ::Int>                   default players"
-  ,"  <path :: FilePath>           executable file"
-  ,"  \"io\":: String                play interactively with standard in/out"]
+  ,"  <Path :: FilePath>           executable file"
+  ,"  \"io\"                     play interactively with standard in/out"]
 
 
 main :: IO ()
 main = do
   args <- getArgs
-  gConfig <- parseArgs args defaultGameConfig
+  config <- parseArgs args defaultGameConfig
+  case playGameHistory config of
+    Just path -> do
+      SaveType (name1,name2) gameSpec gameHist <-read<$>readFile path
+      gameAnimateIO (name1,name2) 4.5 gameSpec gameHist
+      exitWith ExitSuccess
+    Nothing   -> return ()
   
+  
+  
+      
+
+
