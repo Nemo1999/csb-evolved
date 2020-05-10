@@ -4,7 +4,9 @@
 -- {-# LANGUAGE TypeSynonymInstances #-}
 module Player.GA
 (
-  GASimple(..)
+  GASimple(..),
+  getPodScore,
+  measurePodScore
 )
 where
 import Player

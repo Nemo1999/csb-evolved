@@ -27,7 +27,10 @@ maxSimTurn = 1000 :: Int
 -- | Informaiton about the GameSetting
 data GameSpec = GameSpec { gameSLaps :: Int
                          , gameSCheckpoints :: [Vec2] } deriving (Show, Read)
--- | generate random gamespec
+
+
+-- Game history , the time goes from right to left in the list 
+type GameHistory = [[PodState]]
 
 
 
@@ -50,7 +53,7 @@ initPodStates (GameSpec laps ckpts) =
 
 
 
-
+-- | generate random gamespec
 randomGameSpecIO :: IO GameSpec
 randomGameSpecIO = do
     nCkpts <- randomRIO (3, 8)::IO Int
@@ -85,8 +88,6 @@ playerDrivePod p1 p2 g = do
           (g!!2){podMovement=p2Out1},(g!!3){podMovement=p2Out2}]                         
     return (p1', p2',g')                                                                 
 
--- Game history , the time goes from right to left in the list 
-type GameHistory = [[PodState]]
 
 
 -- | initialize and simulate the Game

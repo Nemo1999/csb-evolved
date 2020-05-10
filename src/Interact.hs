@@ -30,14 +30,19 @@ vec2Point :: Vec2 -> Point
 vec2Point (Vec2 !x !y) = (realToFrac x  * scaleFactor , realToFrac y * scaleFactor)
 
 
-
-makePicture :: GameSpec -> [PodState] -> Picture
-makePicture (GameSpec _ ckpts) ps =
-  let picture = Pictures $ imap drawCheckPoint ckpts ++
-                           (zipWith drawPod [blue,blue,red,red]  ps)
-      (shiftX,shiftY)  = vec2Point ((-0.5) `scalarMul` U.gameWorldSize)
+makePicture :: (String,String) -> GameSpec -> [PodState] -> Picture
+makePicture (name1,name2) (GameSpec _ ckpts) ps =
+  let
+    [s11,s12,s21,s22] = map (measurePodScore. getPodScore) ps
+    p1Win = (max s11 s12 >  max s21 s22)
+    legends = izipWith3 drawLegends [blue,red] [name1,name2] [p1Win,not p1Win]
+    pods = (zipWith drawPod [blue,blue,red,red]  ps)
+    ckpts = imap drawCheckPoint ckpts 
+    picture = Pictures $ legends ++ pods ++ ckpts
+    (shiftX,shiftY)  = vec2Point ((-0.5) `scalarMul` U.gameWorldSize)
   in Translate shiftX shiftY picture
-    where drawCheckPoint :: Int -> Vec2 -> Picture
+    where
+          drawCheckPoint :: Int -> Vec2 -> Picture
           drawCheckPoint n  pos =
             let (x,y) = vec2Point pos
             in 
@@ -55,12 +60,20 @@ makePicture (GameSpec _ ckpts) ps =
             in
                  Pictures $ [ (Color c $ Line dir)   ,
                               Translate x y $ Pictures [Color c $ circleBody , Color yellow $ dirTriangle] ]
+          drawLegends :: Int -> Color -> String -> Bool -> Picture
+          drawLegends index c name isWinner =
+            let (posX,posY) = (fromIntegral 20,fromIntegral $ 50+index*30)
+                square = Translate posX posY $ Color c $ rectangleSolid 25 25
+                text = Translate (posX+35) posY $ Color c $ Text name
+                winnerSign = Translate (posX + 100) posY $ if isWinner then Color orange $ Text "<< 1'st >>"
+                                                                       else Color (dim orange)$ Text "<< 2'nd >>"
+            in  Pictures $ [square,text,winnerSign]
 
 
 
 
-gameAnimateIO :: Double -> GameSpec -> GameHistory -> IO() 
-gameAnimateIO turnPerSec  gameSpec gs =
+gameAnimateIO :: (String,String) -> Double -> GameSpec -> GameHistory -> IO() 
+gameAnimateIO (name1,name2) -> turnPerSec  gameSpec gs =
   let
     window = InWindow "pod-race simulation" (1600, 900) (0,0)
     initWorld = 0 :: World
@@ -68,7 +81,7 @@ gameAnimateIO turnPerSec  gameSpec gs =
     draw time = do
       let ps = gs !! max 0 ((length gs - 1 ) - fromInteger (floor time))
       let psNow = movePods (time - fromIntegral (floor time)) ps
-      return $ makePicture gameSpec psNow --should use psNow instead
+      return $ makePicture (name1,name2) gameSpec psNow --should use psNow instead
     eventHandler _ = pure
     updateWorld :: Float -> World -> IO World
     updateWorld time w = do
