@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -O2  #-}
-{-# LANGUAGES PatternGuards #-}
+{-# LANGUAGE PatternGuards #-}
 module Main
 
 where
@@ -17,6 +17,7 @@ import Player.GAM
 import Data.Maybe
 import System.Environment
 import System.Exit
+import Data.Char
 
 (p1,name1) = (defaultGAMeta,"Boss1")
 (p2,name2) = (GASimple , "Boss2")
@@ -31,32 +32,32 @@ testGameSim = do
 testAnimate :: Double ->  IO()
 testAnimate turnPerSec = do
   gsp <- randomGameSpecIO
-  ghis <- runGame (p2,p3) gsp gameEnd
-  gameAnimateIO turnPerSec  gsp ghis
+  ghis <- runGame (p3,p1) gsp gameEnd
+  gameAnimateIO ("player1","player2") turnPerSec  gsp ghis
 
 type PlayerID = Int 
-data PlayerMode = Default PlayerID String  | IOMode String | Executable FilePath String  
+data PlayerMode = Default PlayerID String  | IOMode String | Executable FilePath String  deriving (Show,Read)
 
 data GameConfig = GameConfig{
-  player1 :: PlayerMode
-  player2 :: PlayerMode
+  player1 :: PlayerMode,
+  player2 :: PlayerMode,
   showAnimatetion :: Bool,
-  saveGameHistory :: Maybe FilePath
+  saveGameHistory :: Maybe FilePath,
   playGameHistory :: Maybe FilePath
-                        }deriving (Eq,Show,Read)
+                        } deriving (Show ,Read)
 
-defaultGameConfig = GameConfig (Default 3) (Default 3) True Nothing Nothing
+defaultGameConfig = GameConfig (Default 3 name3) (Default 3 name3) True Nothing Nothing
 
 data SaveType = SaveType (String ,String) GameSpec GameHistory deriving (Show,Read)
 
-parsePlayerMode :: String -> String -> IO PlayerMode
+parsePlayerMode :: String -> String -> PlayerMode
 parsePlayerMode playerArg name
   |all isDigit playerArg
   = Default (read playerArg) name
   |"io"<-playerArg
   = IOMode name
   | otherwise
-  = Executable palyerArg name 
+  = Executable playerArg name 
 
 parseArgs :: [String] -> GameConfig -> IO GameConfig
 parseArgs args config
@@ -102,6 +103,7 @@ main = do
       exitWith ExitSuccess
     Nothing   -> return ()
   
+  testAnimate 4.5
   
   
       

@@ -36,9 +36,9 @@ makePicture (name1,name2) (GameSpec _ ckpts) ps =
     [s11,s12,s21,s22] = map (measurePodScore. getPodScore) ps
     p1Win = (max s11 s12 >  max s21 s22)
     legends = izipWith3 drawLegends [blue,red] [name1,name2] [p1Win,not p1Win]
-    pods = (zipWith drawPod [blue,blue,red,red]  ps)
-    ckpts = imap drawCheckPoint ckpts 
-    picture = Pictures $ legends ++ pods ++ ckpts
+    podPictures = (zipWith drawPod [blue,blue,red,red]  ps)
+    ckptPictures = imap drawCheckPoint ckpts 
+    picture = Pictures $ legends ++ podPictures ++ ckptPictures
     (shiftX,shiftY)  = vec2Point ((-0.5) `scalarMul` U.gameWorldSize)
   in Translate shiftX shiftY picture
     where
@@ -47,8 +47,9 @@ makePicture (name1,name2) (GameSpec _ ckpts) ps =
             let (x,y) = vec2Point pos
             in 
               Color green $ 
-                 Translate x y  $
-                 Pictures [Scale 0.2 0.2 $ Text $ show n , ThickCircle (realToFrac U.checkPointRadius*scaleFactor) 5]
+              Translate x y  $
+              Pictures [Scale 0.2 0.2 $ Text $ show n ,
+                        ThickCircle (realToFrac U.checkPointRadius*scaleFactor) 5]
           drawPod :: Color -> PodState -> Picture
           drawPod c pod =
             let dir@[(x,y),(tX,tY)] = [vec2Point $ podPosition pod , vec2Point $ podTarget  $ podMovement pod ] 
@@ -58,22 +59,37 @@ makePicture (name1,name2) (GameSpec _ ckpts) ps =
                 sqrt05 = sqrt 0.5 
                 dirTriangle=  Rotate (realToFrac $ U.radToDeg (-ang)) $ Polygon [(podR,0),((-sqrt05)*podR ,(sqrt05)*podR),((-sqrt05)*podR,(-sqrt05)*podR)] 
             in
-                 Pictures $ [ (Color c $ Line dir)   ,
-                              Translate x y $ Pictures [Color c $ circleBody , Color yellow $ dirTriangle] ]
+                 Pictures $
+                 [ (Color c $ Line dir)   ,
+                   Translate x y $
+                   Pictures [Color c $ circleBody ,
+                             Color yellow $ dirTriangle
+                            ]
+                 ]
           drawLegends :: Int -> Color -> String -> Bool -> Picture
           drawLegends index c name isWinner =
-            let (posX,posY) = (fromIntegral 20,fromIntegral $ 50+index*30)
-                square = Translate posX posY $ Color c $ rectangleSolid 25 25
-                text = Translate (posX+35) posY $ Color c $ Text name
-                winnerSign = Translate (posX + 100) posY $ if isWinner then Color orange $ Text "<< 1'st >>"
-                                                                       else Color (dim orange)$ Text "<< 2'nd >>"
+            let (posX,posY) = (fromIntegral 20,fromIntegral $ (900-(50+index*50)))
+                square =
+                  Translate posX posY $
+                  Color c $
+                  circleSolid 15
+                text =
+                  Translate (posX+35) (posY-15) $
+                  Scale 0.25 0.25 $
+                  Color c $
+                  Text name
+                winnerSign =
+                  Translate (posX + 200) (posY-15) $ 
+                  Scale 0.4 0.4$
+                  if isWinner then Color orange $ Text "<< 1'st >>"
+                  else Color (dim  $ dim orange)$ Text "          "
             in  Pictures $ [square,text,winnerSign]
 
 
 
 
 gameAnimateIO :: (String,String) -> Double -> GameSpec -> GameHistory -> IO() 
-gameAnimateIO (name1,name2) -> turnPerSec  gameSpec gs =
+gameAnimateIO (name1,name2)  turnPerSec  gameSpec gs =
   let
     window = InWindow "pod-race simulation" (1600, 900) (0,0)
     initWorld = 0 :: World
@@ -89,15 +105,7 @@ gameAnimateIO (name1,name2) -> turnPerSec  gameSpec gs =
   in playIO window black 10 initWorld draw eventHandler updateWorld 
     
 
--- Testing
-
-
-
-
-
-  
-
-
+-- default gameSpec (not used yet)
 
 defaultGS1 = GameSpec 3 [Vec2 10545.0 6005.0,Vec2 3559.0 5204.0,Vec2 13574.0 7618.0,Vec2 12476.0 1344.0]
 initPodPos1 = [Vec2 10488.0 6502.0,Vec2 10602.0 5508.0,Vec2 10374.0 7495.0,Vec2 10716.0 4515.0]
