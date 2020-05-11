@@ -17,6 +17,7 @@ import Graphics.Gloss.Data.Picture
 import Data.Vec2(Vec2(..),scalarMul)
 import Data.List.Index
 import Data.Maybe
+import System.Exit 
 import qualified Util as U
 
 -- Every thing is scaled by 0.1 times on the screen 
@@ -104,7 +105,8 @@ gameAnimateIO (name1,name2)  turnPerSec  gameSpec gs =
       _ -> pure
     updateWorld :: Float -> World -> IO World
     updateWorld time w = do
-      return (w + (realToFrac time) * turnPerSec)
+      let newW =  (w + (realToFrac time) * turnPerSec)
+      if newW >= fromIntegral (length gs) then exitWith ExitSuccess else return newW
   in playIO window black 10 initWorld draw eventHandler updateWorld 
     
 
