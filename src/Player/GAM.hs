@@ -20,6 +20,8 @@ import System.Random
 import System.Timeout
 import System.CPUTime
 import Debug.Trace
+import Control.Parallel.Strategies
+
 
 {- --- Just for Look up ~~
 data GAMeta = GAMeta{seed::Bool,
@@ -168,11 +170,15 @@ measureTeam :: [PodState] -> Double
 measureTeam  [p1,p2,o1,o2] =
  let pMax = max (getPodScore p1) (getPodScore p2)
      oMax = max (getPodScore o1) (getPodScore o2)
+     podMin = if getPodScore p1 == pMax then p2 else p1
+     oppoMax = if oMax == getPodScore o1 then o1 else o2
  in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
      - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
      - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-      + (0.5*(min (measurePodScore $ getPodScore p1)(measurePodScore $ getPodScore p2)))
-
+     - if podNextCheckPoints oppoMax /= [] && isJust (podAngle podMin) then
+         100 * norm ((podPosition podMin + (350 `scalarMul` unitVec (fromJust $ podAngle podMin)))
+                     - head (podNextCheckPoints oppoMax)) else 0
+                                                                       
 -- | turn TeamScore into Double for compare
 -- | the higher the score , the better the team
 measureTeamScore :: Double -> TeamScore -> Double
@@ -245,17 +251,24 @@ nextGen player@(GAMeta seed angRes geneLength popSize pSwap pMutate pCross selec
   let [p1,p2] = take 2 ps
   matingPool <- select popSize ps 
   childrens  <- crossoverAndMutate  matingPool
+  let fits =  parMap rpar (fitness geneLength podStates) (p1:p2:childrens)
   return $ take popSize $ sortOn (negate.fitness geneLength podStates) (p1:p2:childrens)
     where
       crossoverAndMutate :: Population -> IO Population -- length population should be even 
-      crossoverAndMutate  ((g11,g12):(g21,g22):gs) = do
-        gs'' <- crossoverAndMutate gs
+      crossoverAndMutate  (g1@(g11,g12):g2@(g21,g22):gRest) = do
+        gRest'' <- crossoverAndMutate gRest
         s  <- randomIO :: IO Double
-        if s<pSwap then return  ((g11,g22):(g21,g12):gs'') else do
-              (g11', g21') <- crossover geneLength pCross g11 g21
-              (g12', g22') <- crossover geneLength pMutate g12 g22 
-              [g11'',g12'', g21'' , g22''] <- sequence $ map (mutate angRes geneLength pMutate) [g11', g12', g21', g22']
-              return ((g11'',g12''):(g21'',g22''):gs'')
+        if s<pSwap then return  ((g11,g22):(g21,g12):gRest'') else do
+          whichGene <- randomIO :: IO Bool
+          if whichGene then do
+            (g11' ,g21')<- crossover geneLength pMutate g11 g21
+            [g11'', g21''] <- sequence $ map (mutate angRes geneLength pMutate) [g11',g21']
+            return ((g11'',g12):(g21'',g22):gRest'')
+            else do
+            (g12' ,g22')<- crossover geneLength pMutate g12 g22
+            [g12'', g22''] <- sequence $ map (mutate angRes geneLength pMutate) [g12',g22']
+            return ((g11,g12''):(g21,g22''):gRest'')
+                                                  
       crossoverAndMutate  [] =return  []
 
 -- Default Gene

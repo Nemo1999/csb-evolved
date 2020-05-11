@@ -28,7 +28,7 @@ type World  = Time
 
 vec2Point :: Vec2 -> Point
 vec2Point (Vec2 !x !y) = (realToFrac x  * scaleFactor , realToFrac y * scaleFactor)
-
+  
 
 makePicture :: (String,String) -> GameSpec -> [PodState] -> Picture
 makePicture (name1,name2) (GameSpec _ ckpts) ps =
@@ -98,7 +98,10 @@ gameAnimateIO (name1,name2)  turnPerSec  gameSpec gs =
       let ps = gs !! max 0 ((length gs - 1 ) - fromInteger (floor time))
       let psNow = movePods (time - fromIntegral (floor time)) ps
       return $ makePicture (name1,name2) gameSpec psNow --should use psNow instead
-    eventHandler _ = pure
+    eventHandler e = case e of
+      EventKey (SpecialKey KeyLeft) Down _ _ -> (\x->return (max 0 (x-3)))
+      EventKey (SpecialKey KeyRight) Down _ _ -> (\x->return(min (fromIntegral (length gs) - 1) (x+3)))
+      _ -> pure
     updateWorld :: Float -> World -> IO World
     updateWorld time w = do
       return (w + (realToFrac time) * turnPerSec)
