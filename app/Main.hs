@@ -32,7 +32,7 @@ testGameSim = do
 testAnimate :: Double ->  IO()
 testAnimate turnPerSec = do
   gsp <- randomGameSpecIO
-  ghis <- runGame (p3,p1) gsp gameEnd
+  ghis <- runGame (p2,p1) gsp gameEnd
   gameAnimateIO ("player1","player2") turnPerSec  gsp ghis
 
 type PlayerID = Int 
