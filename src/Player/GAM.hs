@@ -159,13 +159,13 @@ measureTeam  [p1,p2,o1,o2] =
      oppoMax = if oMax == measurePod o1 then o1 else o2
      podMinPos = podPosition podMin
      oppoMaxPos = podPosition oppoMax
-     oppoCkpt = if length (podNextCheckPoints oppoMax) >1 then  head $tail $  podNextCheckPoints oppoMax else zeroVec
+     oppoCkpt = if length (podNextCheckPoints oppoMax) >1 then head $tail $podNextCheckPoints oppoMax else oppoMaxPos
      faceOppoLoss = abs $ normalizeRad (arg (oppoMaxPos-podMinPos) - fromJust (podAngle podMin)) 
-     podMinScore = if (\x->x`dot`x) (oppoMaxPos - oppoCkpt) > (\x->x`dot`x) (podMinPos - oppoCkpt)
-       then 0.3 * (\x->(-(x`dot`x)))(podMinPos - oppoCkpt) 
+     podMinScore =  if (\x->x`dot`x) (oppoMaxPos - oppoCkpt) > (\x->x`dot`x) (podMinPos - oppoCkpt)
+       then  (-0.3) * norm (podMinPos - oppoCkpt) 
        - 300 * faceOppoLoss
-       else 0.3 * (\x->(-(x`dot`x)))(podMinPos - oppoMaxPos) 
-       - 300 * faceOppoLoss
+       else  (-0.3) * norm (podMinPos - oppoMaxPos) 
+       - 300 * faceOppoLoss 
  in
    pMax - oMax 
    - (if (podThrust (podMovement p1) == Boost) then boostPenalty else 0)
