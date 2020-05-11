@@ -28,6 +28,7 @@ dependencies:
 - timeit
 - array
 - directory
+- parallel
 
 library:
   source-dirs: src
