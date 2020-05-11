@@ -45,7 +45,7 @@ podMinCollisionImpact = 120
 
 -- | enumerate distinct list  of unordered pair  
 distinctPairs :: [a] -> [(a,a)]
-distinctPairs xs = concat $ map (\n-> zip (repeat (xs!!n)) (drop (n+1) xs)) [0..(length xs-1)]
+distinctPairs xs = concat $ map (\n-> zip (repeat (xs!!n)) (drop (n+1) xs)) [0..(length xs-2)]
 {-
 -- | randomly permute an array
 randomPerm :: [a] -> IO [a]
