@@ -20,7 +20,7 @@ import System.Random
 import System.Timeout
 import System.CPUTime
 import Debug.Trace
-import Control.Parallel.Strategies
+-- import Control.Parallel.Strategies
 
 
 {- --- Just for Look up ~~
@@ -40,11 +40,11 @@ data GAMeta = GAMeta{seed::Bool,
 -------- Parameters
 defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial Population?
                        angRes=True, --- do we divide random generated angle range (-18,18) into 3 or 5 part  
-                       geneLength=5,
+                       geneLength=6,
                        popSize=16,
-                       pSwap =0.3,
-                       pMutate=1,
-                       pCross=1, 
+                       pSwap =0.1,
+                       pMutate=0.8,
+                       pCross=0.8, 
                        select=defaultSelect, 
                        crossover=defaultCross, 
                        mutation = defaultMutate
@@ -65,22 +65,7 @@ type  Gene = [Step]
 -- | A population is a list of (Gene for Pod1 , Gene for Pod2 ) sorted by fitness (the head is the best individual)  
 type Population = [(Gene,Gene)]
 
--- | PodScore is used to calculate fitness 
--- | The higher the score , the closer the Destination
--- | Int is the length of the up comming checkpoints
--- | double is the distance to the next checkpoint
-data PodScore =  PodScore (Int,Double) deriving Eq
-instance Ord PodScore where
-  compare ps1 ps2 =
-    compare  (measurePodScore  ps1)
-             $ measurePodScore ps2
 
--- | The Score of a simulation result of a pair of Genes
--- | Contains the PodScore of player's best Pod and opponent's best Pod  
-data  TeamScore = TeamScore{selfBest::PodScore , oppoBest::PodScore} deriving Eq
-instance Ord TeamScore where
-  compare ts1 ts2
-    = compare  (measureTeamScore 1 ts1) $ measureTeamScore 1 ts2
 
 -------------CrossOver 
 
@@ -168,34 +153,30 @@ simTeam geneLen n (player ,opponent) psNow =
 -- | Calculate the fitness of a (Gene,Gene) for (pod1,pod2)
 measureTeam :: [PodState] -> Double 
 measureTeam  [p1,p2,o1,o2] =
- let pMax = max (getPodScore p1) (getPodScore p2)
-     oMax = max (getPodScore o1) (getPodScore o2)
-     podMin = if getPodScore p1 == pMax then p2 else p1
-     oppoMax = if oMax == getPodScore o1 then o1 else o2
- in  (measureTeamScore teamscoreMeasureSelfOppoRate $ TeamScore pMax oMax)  
-     - if (podThrust (podMovement p1) == Boost) then boostPenalty else 0
-     - if (podThrust (podMovement p2) == Boost) then boostPenalty else 0
-     - if podNextCheckPoints oppoMax /= [] && isJust (podAngle podMin) then
-         100 * norm ((podPosition podMin + (350 `scalarMul` unitVec (fromJust $ podAngle podMin)))
-                     - head (podNextCheckPoints oppoMax)) else 0
-                                                                       
--- | turn TeamScore into Double for compare
--- | the higher the score , the better the team
-measureTeamScore :: Double -> TeamScore -> Double
-measureTeamScore selfOppoRate TeamScore{selfBest=s,oppoBest = o} =
-    selfOppoRate * measurePodScore s -  measurePodScore o  
- 
--- | turn PodScore into Double for compare
-measurePodScore ::  PodScore -> Double
-measurePodScore (PodScore (i,d))=
-  ( negate $ fromIntegral ( podScoreCkptWeight * i)) - d
--- | Evalutating the score of a single  PodState
-
-getPodScore :: PodState -> PodScore
-getPodScore PodState{podPosition=pos,podAngle = (Just ang),podNextCheckPoints = ckpts} =
+ let pMax = max (measurePod p1) (measurePod p2)
+     oMax = max (measurePod o1) (measurePod o2)
+     podMin = if measurePod p1 == pMax then  p2 else  p1
+     oppoMax = if oMax == measurePod o1 then o1 else o2
+     podMinPos = podPosition podMin
+     oppoMaxPos = podPosition oppoMax
+     oppoCkpt = if length (podNextCheckPoints oppoMax) >1 then  head $tail $  podNextCheckPoints oppoMax else zeroVec
+     faceOppoLoss = abs $ normalizeRad (arg (oppoMaxPos-podMinPos) - fromJust (podAngle podMin)) 
+     podMinScore = if (\x->x`dot`x) (oppoMaxPos - oppoCkpt) > (\x->x`dot`x) (podMinPos - oppoCkpt)
+       then 0.3 * (\x->(-(x`dot`x)))(podMinPos - oppoCkpt) 
+       - 300 * faceOppoLoss
+       else 0.3 * (\x->(-(x`dot`x)))(podMinPos - oppoMaxPos) 
+       - 300 * faceOppoLoss
+ in
+   pMax - oMax 
+   - (if (podThrust (podMovement p1) == Boost) then boostPenalty else 0)
+   - (if (podThrust (podMovement p2) == Boost) then boostPenalty else 0)
+   + podMinScore                                                                  
+                                                                     
+measurePod ::  PodState -> Double
+measurePod PodState{podPosition=pos,podAngle = (Just ang),podNextCheckPoints = ckpts} =
   let len = length ckpts
       dist = if len > 0 then norm ((pos+(250`scalarMul`unitVec ang)) -head ckpts) else 0
-  in PodScore (len ,dist)
+  in  ( negate $ fromIntegral ( podScoreCkptWeight * len)) - dist
 
 -------------Define Player
 
@@ -251,7 +232,7 @@ nextGen player@(GAMeta seed angRes geneLength popSize pSwap pMutate pCross selec
   let [p1,p2] = take 2 ps
   matingPool <- select popSize ps 
   childrens  <- crossoverAndMutate  matingPool
-  let fits =  parMap rpar (fitness geneLength podStates) (p1:p2:childrens)
+  -- let fits =  parMap rpar (fitness geneLength podStates) (p1:p2:childrens)
   return $ take popSize $ sortOn (negate.fitness geneLength podStates) (p1:p2:childrens)
     where
       crossoverAndMutate :: Population -> IO Population -- length population should be even 
