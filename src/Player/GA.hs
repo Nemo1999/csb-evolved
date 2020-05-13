@@ -16,10 +16,12 @@ import GameSim
 import Util
 import Data.List
 import Data.Maybe
+import Data.Ratio
 
 import System.Random
 import System.Timeout
 import System.CPUTime
+import Data.Time.Clock
 import Debug.Trace
   
 -------- Parameters
@@ -30,7 +32,7 @@ pMutate = 0.8 :: Double
 boostPenalty = 10000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
-maxTime = 71000000000 :: Integer -- maximum time before returning the final answer 
+maxTime = 71 % 1000 :: Rational -- maximum time before returning the final answer 
 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
@@ -173,7 +175,7 @@ data GASimple = GASimple
 instance PlayerIO GASimple where
   playerInitIO _ = return GASimple
   playerRunIO _ PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
-    t0 <- getCPUTime
+    t0 <- getCurrentTime
     let defaultSeed = (defaultGene p1 ,defaultGene p2)
 
     --popRand <- randomPop geneLength (popSize)
@@ -187,10 +189,10 @@ instance PlayerIO GASimple where
     where
       decodeGene :: (PodState,PodState) -> (Gene,Gene) -> [PodMovement]
       decodeGene (ps1,ps2) (g1,g2) = [decodeStep ps1 $ head g1 , decodeStep ps2 $ head g2]
-      evolve :: Integer -> [PodState]-> Population -> Int -> IO Population 
+      evolve :: UTCTime -> [PodState]-> Population -> Int -> IO Population 
       evolve t0 ps g0 gCnt= do
-        t1 <- getCPUTime
-        if (t1-t0)>maxTime then return $
+        t1 <- getCurrentTime
+        if toRational (t1 `diffUTCTime` t0)>maxTime then return $
           trace (show gCnt )-- ++" "++show (head g0))
                                                 $ g0 else do
           mg1 <-(nextGen geneLength ps g0) -- timeout 10 ....

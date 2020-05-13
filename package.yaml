@@ -29,7 +29,7 @@ dependencies:
 - array
 - directory
 - parallel
-
+- time
 library:
   source-dirs: src
 
