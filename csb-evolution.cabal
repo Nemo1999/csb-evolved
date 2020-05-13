@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 053ac5e3eb43391f141925ca40ae468aba35b25f6180aff981b450a0f736752a
+-- hash: f37d23528dc5e4661797639273427c16bdfd4e413a52e0c9617aa9c451749be3
 
 name:           csb-evolution
 version:        0.1.0.0
@@ -33,8 +33,11 @@ library
       Interact
       Player
       Player.GA
+      Player.GAM
       Player.Instances
       Util
+      Warrier.IO
+      Warrier.Make
       Warrier.Weapons
   other-modules:
       Paths_csb_evolution
@@ -43,8 +46,10 @@ library
   build-depends:
       array
     , base >=4.7 && <5
+    , directory
     , gloss >=1.13
     , ilist
+    , parallel
     , random
     , timeit
     , vector
@@ -61,8 +66,10 @@ executable csb-evolution-exe
       array
     , base >=4.7 && <5
     , csb-evolution
+    , directory
     , gloss >=1.13
     , ilist
+    , parallel
     , random
     , timeit
     , vector
@@ -80,8 +87,10 @@ test-suite csb-evolution-test
       array
     , base >=4.7 && <5
     , csb-evolution
+    , directory
     , gloss >=1.13
     , ilist
+    , parallel
     , random
     , timeit
     , vector

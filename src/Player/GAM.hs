@@ -53,7 +53,7 @@ defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial 
 boostPenalty = 8000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
-maxTime = 71000000000 :: Integer -- maximum time before returning the final answer 
+maxTime = 70000000000 :: Integer -- maximum time before returning the final answer 
 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
@@ -157,20 +157,19 @@ measureTeam  [p1,p2,o1,o2] =
      oMax = max (measurePod o1) (measurePod o2)
      podMin = if measurePod p1 == pMax then  p2 else  p1
      oppoMax = if oMax == measurePod o1 then o1 else o2
+     
      podMinPos = podPosition podMin
      oppoMaxPos = podPosition oppoMax
      oppoCkpt2 = if length (podNextCheckPoints oppoMax) >1 then head$tail$podNextCheckPoints oppoMax else oppoMaxPos
      oppoCkpt1 = if length (podNextCheckPoints oppoMax) >0 then head$podNextCheckPoints oppoMax else oppoMaxPos
-     faceOppoLoss = abs $ normalizeRad (arg (oppoMaxPos-podMinPos) - fromJust (podAngle podMin)) 
+     faceOppoLoss = abs $ normalizeRad (arg (oppoMaxPos-podMinPos) - fromJust (podAngle podMin))
      podMinScore 
-       | (\x->x`dot`x) (podMinPos -oppoCkpt1) < 100000 ||  (\x->x`dot`x) (podMinPos -oppoCkpt2) < 100000
-       = (-500) * faceOppoLoss
-       | norm (oppoMaxPos - oppoCkpt1) > norm (podMinPos - oppoCkpt1) + 4000
+       | (\x->x`dot`x) (podMinPos -oppoCkpt1) < 400000 ||  (\x->x`dot`x) (podMinPos -oppoCkpt2) < 400000
+       = (-300) * faceOppoLoss 
+       | norm (oppoMaxPos - oppoCkpt1) > norm (podMinPos - oppoCkpt1) + 2000
        = (-0.3) * norm (podMinPos - oppoCkpt1) 
-       | norm (oppoMaxPos - oppoCkpt2) > norm (podMinPos - oppoCkpt2) + 4000
-       = (-0.3) * norm (podMinPos - oppoCkpt2)  
-       | otherwise
-       =  (-0.3) * norm (podMinPos - oppoMaxPos) 
+       | norm (oppoMaxPos - oppoCkpt2) > norm (podMinPos - oppoCkpt2) || True  
+       = (-0.3) * norm (podMinPos - oppoCkpt2)+(-300) * faceOppoLoss  
  in
    pMax - oMax 
    - (if (podThrust (podMovement p1) == Boost) then boostPenalty else 0)
@@ -216,7 +215,7 @@ instance PlayerIO GAMeta where
       evolve :: GAMeta -> Integer -> [PodState]-> Population -> Int -> IO Population 
       evolve player t0 ps g0 gCnt= do
         t1 <- getCPUTime
-        if (t1-t0)>maxTime then return $
+        if (t1-t0)>=maxTime then return $
           trace (show gCnt )-- ++" "++show (head g0))
                                                 $ g0 else do
           mg1 <-(nextGen player  ps g0) -- timeout 10 ....

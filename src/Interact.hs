@@ -24,8 +24,6 @@ import qualified Util as U
 scaleFactor :: Float
 scaleFactor = 0.1
 
--- Time = Double defined in GameSim
-type World  = Time
 
 vec2Point :: Vec2 -> Point
 vec2Point (Vec2 !x !y) = (realToFrac x  * scaleFactor , realToFrac y * scaleFactor)
@@ -87,7 +85,28 @@ makePicture (name1,name2) (GameSpec _ ckpts) ps =
             in  Pictures $ [square,text,winnerSign]
 
 
+data RealWorld = RealWorld{
+                           history::GameHistory,
+                           currentT::Time 
+                          }
 
+realTimeAnimateIO ::
+  (PlayerIO p1, PlayerIO p2) => (String,String)
+  -> (p1,p2)
+  -> GameSpec
+  -> Double
+  -> IO GameHistory
+realTimeAnimateIO (name1,name2) (p1,p2)  gameSpec  turnPerSec =do
+  let
+    window = InWindow "pod-race simulation" (1600, 900) (0,0)
+    initWorld =RealWorld [] 0
+    draw :: World -> IO Picture
+    draw RealWorld gs t = do
+      let 
+
+
+-- Time = Double defined in GameSim
+type World  = Time
 
 gameAnimateIO :: (String,String) -> Double -> GameSpec -> GameHistory -> IO() 
 gameAnimateIO (name1,name2)  turnPerSec  gameSpec gs =

@@ -131,7 +131,7 @@ driftPod (!dt) pod =
       reletivePos  = position - ckpt
       speed = podSpeed pod
       position' =  position + (dt `scalarMul` speed)
-      radius = U.checkPointRadius-5
+      radius = U.checkPointRadius-30
       reachTime = collideTime reletivePos speed radius
       ckpts'
         | ckpts == []  = []

@@ -58,9 +58,9 @@ main = do
     player <- playerInitIO $ defaultGAMeta --WrapIO $  ElementaryPlayer ()
     let playerIn = PlayerIn [pod1,pod2] [opp1,opp2]
     ([move1,move2] , player' )  <- playerRunIO player playerIn
-    let (pod1' ,pod2')= (pod1{podMovement = move1} ,pod2{podMovement=move2})
-    let [podStart1,podStart2] = map updateShieldThrust [pod1',pod2']
     putMovement move1
     putMovement move2
+    let (pod1' ,pod2')= (pod1{podMovement = move1} ,pod2{podMovement=move2})
+    let [podStart1,podStart2] = map updateShieldThrust [pod1',pod2']
     -- game loop
     gameCycles ckpts [podStart1,podStart2,opp1,opp2] player'
