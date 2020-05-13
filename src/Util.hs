@@ -12,8 +12,12 @@ module Util
     , gameWorldSize
     , randomPerm
     , radToDeg
+    , getMinRepLen
     )
 where
+
+import Data.List
+
 import Data.Vec2
 import System.Random
 import Control.Monad
@@ -88,3 +92,14 @@ randomPerm xs = do
 
 normalizeDeg :: Double -> Double
 normalizeDeg x = x - ((fromIntegral.round) (x/360) * 360)  
+
+isRepOf :: (Eq a) => [a] -> [a] -> Bool
+isRepOf _ [] = True
+isRepOf needle haystack
+  | p1 == needle = isRepOf needle p2
+  | otherwise = False
+  where (p1, p2) = splitAt (length needle) haystack
+
+getMinRepLen :: (Eq a) => [a] -> Int
+getMinRepLen xs = n
+  where Just n = find (\n -> isRepOf (take n xs) xs) [1..]

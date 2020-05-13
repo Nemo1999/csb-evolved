@@ -30,6 +30,7 @@ dependencies:
 - directory
 - parallel
 - time
+- process
 library:
   source-dirs: src
 
