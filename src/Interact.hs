@@ -84,12 +84,12 @@ makePicture (name1,name2) (GameSpec _ ckpts) ps =
                   else Color (dim  $ dim orange)$ Text "          "
             in  Pictures $ [square,text,winnerSign]
 
-
+{-
 data RealWorld = RealWorld{
                            history::GameHistory,
                            currentT::Time 
                           }
-{-
+
 realTimeAnimateIO ::
   (PlayerIO p1, PlayerIO p2) => (String,String)
   -> (p1,p2)

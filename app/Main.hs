@@ -14,10 +14,12 @@ import GameSim
 import Player.Instances
 import Player.GA
 import Player.GAM
+import Player.Process
 import Data.Maybe
 import System.Environment
 import System.Exit
 import Data.Char
+
 
 (p1,name1) = (defaultGAMeta,"Boss1")
 (p2,name2) = (GASimple , "Boss2")
@@ -37,6 +39,13 @@ testAnimate turnPerSec = do
 
 type PlayerID = Int 
 data PlayerMode = Default PlayerID String  | IOMode String | Executable FilePath String  deriving (Show,Read)
+makePlayer :: (PlayerIO a )=>PlayerMode -> (a,String)
+makePlayer Default n name = case n of
+  1 -> (p1,name)
+  2 -> (p2,name)
+  3 -> (p3,name)
+makePlayer IOMode name = error "IOMode not supported" 
+makePlayer Executable filepath name = (newProcess filePath, name)
 
 data GameConfig = GameConfig{
   player1 :: PlayerMode,
@@ -89,7 +98,7 @@ printUsage = putStrLn $ unlines
   ,"<player arg>:"
   ,"  <ID ::Int>                   default players"
   ,"  <Path :: FilePath>           executable file"
-  ,"  \"io\"                     play interactively with standard in/out"]
+  ,"  \"io\"                         play interactively with standard in/out"]
 
 
 main :: IO ()
@@ -101,10 +110,17 @@ main = do
       SaveType (name1,name2) gameSpec gameHist <-read<$>readFile path
       gameAnimateIO (name1,name2) 4.5 gameSpec gameHist
       exitWith ExitSuccess
-    Nothing   -> return ()
-  
-  testAnimate 4.5
-  
+    Nothing   -> do
+      let (p1,name1) = makePlayer $ player1 config
+      let (p2,name2) = makePlayer $ player2 config
+      gsp <- randomGameSpecIO
+      ghis <- runGame (p2,p1) gsp gameEnd
+      if isJust $ saveGameHistory config then
+        writeFile (fromJust $ saveGameHistory config) (show $ SaveType (name1,name2) gsp ghis)
+        else pure ()
+      if showAnimatetion config then
+        gameAnimateIO (name1,name2) 6 gsp ghis
+        else pure ()
   
       
 
