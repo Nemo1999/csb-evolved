@@ -89,7 +89,7 @@ data RealWorld = RealWorld{
                            history::GameHistory,
                            currentT::Time 
                           }
-
+{-
 realTimeAnimateIO ::
   (PlayerIO p1, PlayerIO p2) => (String,String)
   -> (p1,p2)
@@ -104,7 +104,7 @@ realTimeAnimateIO (name1,name2) (p1,p2)  gameSpec  turnPerSec =do
     draw RealWorld gs t = do
       let 
 
-
+-}
 -- Time = Double defined in GameSim
 type World  = Time
 

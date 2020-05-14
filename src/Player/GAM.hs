@@ -1,6 +1,8 @@
 {-# OPTIONS_GHC -O2  #-}
+{-# OPTIONS_GHC -threaded #-}
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE PatternGuards #-}
+
 -- {-# LANGUAGE TypeSynonymInstances #-}
 module Player.GAM
 (
@@ -8,6 +10,7 @@ module Player.GAM
   defaultGAMeta
 )
 where
+import Data.Ratio
 import Player
 import Data.Vec2
 import GameSim
@@ -15,10 +18,11 @@ import GameSim
 import Util
 import Data.List
 import Data.Maybe
-
+import Control.Parallel
+import Control.Parallel.Strategies hiding (dot)
 import System.Random
 import System.Timeout
-import System.CPUTime
+import Data.Time.Clock
 import Debug.Trace
 -- import Control.Parallel.Strategies
 
@@ -41,7 +45,7 @@ data GAMeta = GAMeta{seed::Bool,
 defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial Population?
                        angRes=True, --- do we divide random generated angle range (-18,18) into 3 or 5 part  
                        geneLength=6,
-                       popSize=16,
+                       popSize=100,
                        pSwap =0.1,
                        pMutate=0.8,
                        pCross=0.8, 
@@ -53,8 +57,7 @@ defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial 
 boostPenalty = 8000 :: Double
 podScoreCkptWeight = 16000 :: Int
 teamscoreMeasureSelfOppoRate = 1
-maxTime = 70000000000 :: Integer -- maximum time before returning the final answer 
-
+maxTime = 73 % 1000 :: Rational -- maximum time before returning the final answer 
 --------- Types
 -- | In each step the pod turns between [-18,+18] degrees 
 type DeltaAngle = Angle
@@ -201,7 +204,7 @@ data GAMeta = GAMeta{seed::Bool,
 instance PlayerIO GAMeta where
   playerInitIO  = return 
   playerRunIO player@(GAMeta seed angRes  geneLength popSize _ _ _ _ _ _) PlayerIn{selfPod=[p1,p2],oppoPod=[o1,o2]} = do
-    t0 <- getCPUTime
+    t0 <- getCurrentTime
     let defaultSeed = (defaultGene geneLength p1 ,defaultGene geneLength p2)
         
     let randSize = if seed then (popSize-2) else popSize
@@ -212,10 +215,10 @@ instance PlayerIO GAMeta where
     where
       decodeGene :: (PodState,PodState) -> (Gene,Gene) -> [PodMovement]
       decodeGene (ps1,ps2) (g1,g2) = [decodeStep ps1 $ head g1 , decodeStep ps2 $ head g2]
-      evolve :: GAMeta -> Integer -> [PodState]-> Population -> Int -> IO Population 
+      evolve :: GAMeta -> UTCTime -> [PodState]-> Population -> Int -> IO Population 
       evolve player t0 ps g0 gCnt= do
-        t1 <- getCPUTime
-        if (t1-t0)>=maxTime then return $
+        t1 <- getCurrentTime
+        if toRational (t1 `diffUTCTime` t0)>maxTime then return $
           trace (show gCnt )-- ++" "++show (head g0))
                                                 $ g0 else do
           mg1 <-(nextGen player  ps g0) -- timeout 10 ....
@@ -236,7 +239,7 @@ nextGen player@(GAMeta seed angRes geneLength popSize pSwap pMutate pCross selec
   let [p1,p2] = take 2 ps
   matingPool <- select popSize ps 
   childrens  <- crossoverAndMutate  matingPool
-  -- let fits =  parMap rpar (fitness geneLength podStates) (p1:p2:childrens)
+  let fits =  parMap rpar (fitness geneLength podStates) (p1:p2:childrens)
   return $ take popSize $ sortOn (negate.fitness geneLength podStates) (p1:p2:childrens)
     where
       crossoverAndMutate :: Population -> IO Population -- length population should be even 
