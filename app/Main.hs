@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -O2  #-}
 {-# LANGUAGE PatternGuards #-}
+{-# LANGUAGE  ExistentialQuantification #-}
 module Main
 
 where
@@ -37,15 +38,23 @@ testAnimate turnPerSec = do
   ghis <- runGame (p2,p1) gsp gameEnd
   gameAnimateIO ("player1","player2") turnPerSec  gsp ghis
 
+data PlayerIOObj = forall a. (PlayerIO a) => PlayerIOObj a
+
+instance PlayerIO PlayerIOObj where
+  playerInitIO (PlayerIOObj p) =
+    fmap PlayerIOObj $ playerInitIO p
+  playerRunIO (PlayerIOObj p) pIn =
+    fmap (\(o,p)->(o,PlayerIOObj p)) (playerRunIO p pIn)
+
 type PlayerID = Int 
 data PlayerMode = Default PlayerID String  | IOMode String | Executable FilePath String  deriving (Show,Read)
-makePlayer :: (PlayerIO a )=>PlayerMode -> (a,String)
-makePlayer Default n name = case n of
-  1 -> (p1,name)
-  2 -> (p2,name)
-  3 -> (p3,name)
-makePlayer IOMode name = error "IOMode not supported" 
-makePlayer Executable filepath name = (newProcess filePath, name)
+makePlayer :: PlayerMode -> (PlayerIOObj,String)
+makePlayer (Default n name) = case n of
+  1 -> (PlayerIOObj p1,name)
+  2 -> (PlayerIOObj p2,name)
+  3 -> (PlayerIOObj p3,name)
+makePlayer (IOMode name) = error "IOMode not supported" 
+makePlayer (Executable filepath name) = (PlayerIOObj $ newProcess filepath, name)
 
 data GameConfig = GameConfig{
   player1 :: PlayerMode,
@@ -114,7 +123,7 @@ main = do
       let (p1,name1) = makePlayer $ player1 config
       let (p2,name2) = makePlayer $ player2 config
       gsp <- randomGameSpecIO
-      ghis <- runGame (p2,p1) gsp gameEnd
+      ghis <- runGame (p1,p2) gsp gameEnd
       if isJust $ saveGameHistory config then
         writeFile (fromJust $ saveGameHistory config) (show $ SaveType (name1,name2) gsp ghis)
         else pure ()
