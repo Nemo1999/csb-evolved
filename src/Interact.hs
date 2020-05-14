@@ -127,7 +127,6 @@ gameAnimateIO (name1,name2)  turnPerSec  gameSpec gs =
     updateWorld time w = do
       let newW =  (w + (realToFrac time) * turnPerSec)
       if newW >= fromIntegral (length gs) then do
-        print $ winner (head gs)
         exitWith ExitSuccess
         else return newW
   in playIO window black 10 initWorld draw eventHandler updateWorld 
