@@ -2,7 +2,8 @@
 {-# OPTIONS_GHC -O2  #-}
 module Interact
   (
-    gameAnimateIO  
+    gameAnimateIO
+  ,winner
   )
 where
 import GameRule
@@ -125,10 +126,17 @@ gameAnimateIO (name1,name2)  turnPerSec  gameSpec gs =
     updateWorld :: Float -> World -> IO World
     updateWorld time w = do
       let newW =  (w + (realToFrac time) * turnPerSec)
-      if newW >= fromIntegral (length gs) then exitWith ExitSuccess else return newW
+      if newW >= fromIntegral (length gs) then do
+        print $ winner (head gs)
+        exitWith ExitSuccess
+        else return newW
   in playIO window black 10 initWorld draw eventHandler updateWorld 
-    
 
+winner :: [PodState] -> Int
+winner ps =
+  let [s11,s12,s21,s22] = map (measurePodScore. getPodScore) ps
+  in if max s11 s12 > max s21 s22 then 1 else 2
+  
 -- default gameSpec (not used yet)
 
 defaultGS1 = GameSpec 3 [Vec2 10545.0 6005.0,Vec2 3559.0 5204.0,Vec2 13574.0 7618.0,Vec2 12476.0 1344.0]
