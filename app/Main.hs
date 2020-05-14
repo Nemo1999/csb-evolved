@@ -124,12 +124,13 @@ main = do
       let (p2,name2) = makePlayer $ player2 config
       gsp <- randomGameSpecIO
       ghis <- runGame (p1,p2) gsp gameEnd
+      
       if isJust $ saveGameHistory config then
         writeFile (fromJust $ saveGameHistory config) (show $ SaveType (name1,name2) gsp ghis)
         else pure ()
       if showAnimatetion config then
         gameAnimateIO (name1,name2) 6 gsp ghis
-        else pure ()
+        else print $ winner (head ghis)
   
       
 
