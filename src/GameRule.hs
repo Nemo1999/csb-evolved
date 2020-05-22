@@ -120,7 +120,7 @@ simulate ::
 
 simulate p1 p2 gss@(g:gs) stopRule = 
   if (length gss > maxSimTurn) || stopRule gss
-    then return gss else do
+    then playerFinalizeIO p1 >> playerFinalizeIO p2 >> return gss else do
     let g0 = map speedDecay $ movePods 1 g
     --seq g0 $ putStrLn "moved"
     (p1',p2',g1) <- playerDrivePod p1 p2 g0

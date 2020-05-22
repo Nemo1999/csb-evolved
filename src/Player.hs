@@ -4,7 +4,7 @@ module Player
       PlayerIn(..)
       ,PlayerOut(..)
       ,Player(playerInit,playerRun)
-      ,PlayerIO(playerInitIO,playerRunIO)
+      ,PlayerIO(playerInitIO,playerRunIO,playerFinalizeIO)
       ,WrapIO(..)
       ,wrapAngle
     )
@@ -27,6 +27,8 @@ class Player p where
 class PlayerIO p where
     playerInitIO :: p -> IO p
     playerRunIO  :: p -> PlayerIn -> IO (PlayerOut , p)
+    playerFinalizeIO :: p -> IO ()
+    playerFinalizeIO _ = return ()
 
 
 newtype WrapIO p = WrapIO p
