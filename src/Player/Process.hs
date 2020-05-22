@@ -103,5 +103,10 @@ instance PlayerIO Process where
     playerRunIO CleanedUpProcess _ =
         return (replicate 2 dummyOut, CleanedUpProcess)
 
+    playerFinalizeIO (UninitialisedProcess _) = return ()
+    playerFinalizeIO (InitialisedProcess _ stdinHdl stdoutHdl procHdl) =
+        cleanupProcess (Just stdinHdl, Just stdoutHdl, Nothing, procHdl)
+    playerFinalizeIO CleanedUpProcess = return ()
+
 dummyOut :: PodMovement
 dummyOut = PodMovement { podTarget = Vec2 0 0, podThrust = Normal 0 }
