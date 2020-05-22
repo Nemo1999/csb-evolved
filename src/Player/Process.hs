@@ -43,6 +43,8 @@ instance PlayerIO Process where
                           , use_process_jobs   = False
                           }
 
+        hSetBuffering stdinHdl NoBuffering
+
         let checkpointCount =
                 getMinRepLen $ podNextCheckPoints (head (selfPod playerIn))
             checkpoints =
@@ -71,7 +73,6 @@ instance PlayerIO Process where
         = do
             forM_ (selfPod playerIn) putPodState
             forM_ (oppoPod playerIn) putPodState
-            hFlush stdinHdl
 
             outs <- replicateM 2 getPodMovement
 
