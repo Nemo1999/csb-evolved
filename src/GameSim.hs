@@ -91,8 +91,8 @@ thrustPod ps@(PodState position speed (Just angle) boostAvail shieldState (PodMo
          idle = isJust shieldState'         
          accMag = if idle then 0 else
            case thrust of
-             Normal n -> fromIntegral $ U.clamp 0 n 100 
-             Boost    -> if boostAvail then U.boostAccel else 100
+             Normal n -> fromIntegral $ U.clamp 0 n 200 
+             Boost    -> if boostAvail then U.boostAccel else 200
          acc  = accMag  `scalarMul` (unitVec angle)
          speed'= if idle then speed else speed + acc
          boostAvail' = boostAvail && (thrust /= Boost)

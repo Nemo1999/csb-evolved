@@ -64,7 +64,7 @@ data GameConfig = GameConfig{
   playGameHistory :: Maybe FilePath
                         } deriving (Show ,Read)
 
-defaultGameConfig = GameConfig (Default 3 name3) (Default 3 name3) True Nothing Nothing
+defaultGameConfig = GameConfig (Default 1 name1) (Default 2 name2) True Nothing Nothing
 
 data SaveType = SaveType (String ,String) GameSpec GameHistory deriving (Show,Read)
 

@@ -45,7 +45,7 @@ data GAMeta = GAMeta{seed::Bool,
 defaultGAMeta = GAMeta{seed=False, --- do we put artifitial seed in the initial Population?
                        angRes=True, --- do we divide random generated angle range (-18,18) into 3 or 5 part  
                        geneLength=6,
-                       popSize=100,
+                       popSize=50,
                        pSwap =0.1,
                        pMutate=0.8,
                        pCross=0.8, 
@@ -82,7 +82,14 @@ defaultCross  geneLength pCross  g1 g2 = do
     let g2' = take crossPoint g2 ++ drop crossPoint g1
     return (midValues k g1' g2',midValues k g2' g1')
     where
-      midValues k  = zipWith (\(ang1,th1) (ang2,th2)->(ang1*k + ang2*(1-k),th1))
+      midValues :: Double -> [Step] -> [Step] -> [Step]
+      midValues k  = zipWith (\(ang1, th1) (ang2,th2)->case () of
+                                 _
+                                   | Normal t1 <- th1,Normal t2 <- th2
+                                     -> (ang1*k + ang2*(1-k),Normal $ round $ (fromIntegral t1*k)+fromIntegral t2*(1-k))
+                                   | otherwise
+                                     -> (ang1*k + ang2*(1-k),th1)
+                             )
 
 -------------Selection
 defaultSelect :: Int -> Population -> IO Population
@@ -103,13 +110,14 @@ randomStep angleRes = do
   let res = if angleRes then 1 else 2
   i <- randomRIO ((-res),res) ::IO Int
   let delAngle = (18/fromIntegral res)*(fromIntegral i)
-  n        <- randomRIO (0,49) :: IO Double                
+  n        <- randomRIO (0,59) :: IO Double                
   let thrust = case n of                                
-        _ | 0<=n  && n<10 -> Normal 0                   
-          | 10<=n && n<20 -> Normal 50                 
+        _ | 0<=n  && n<10 -> Normal 0
+          | 10<=n && n<20 -> Normal 50
           | 20<=n && n<30 -> Normal 100                 
-          | 30<=n && n<40 -> Boost                      
-          | 35<=n && n<50 -> Shield                     
+          | 30<=n && n<40 -> Normal 200                 
+          | 40<=n && n<50 -> Boost                      
+          | 50<=n && n<60 -> Shield            
   return (delAngle,thrust)
 
 --------------- Mutation
@@ -160,21 +168,28 @@ measureTeam  [p1,p2,o1,o2] =
      oMax = max (measurePod o1) (measurePod o2)
      podMin = if measurePod p1 == pMax then  p2 else  p1
      oppoMax = if oMax == measurePod o1 then o1 else o2
-     
+     podMax = if measurePod p1 == pMax then  p1 else  p2
+     podMaxPos = podPosition podMax
      podMinPos = podPosition podMin
      oppoMaxPos = podPosition oppoMax
      oppoCkpt2 = if length (podNextCheckPoints oppoMax) >1 then head$tail$podNextCheckPoints oppoMax else oppoMaxPos
      oppoCkpt1 = if length (podNextCheckPoints oppoMax) >0 then head$podNextCheckPoints oppoMax else oppoMaxPos
+     waitPoint1 = ((200 `scalarMul` normalize (oppoMaxPos - oppoCkpt1)) + oppoCkpt1)
+     waitPoint2 = ((200 `scalarMul` normalize (oppoCkpt1 - oppoCkpt2)) + oppoCkpt2)
      faceOppoLoss = abs $ normalizeRad (arg (oppoMaxPos-podMinPos) - fromJust (podAngle podMin))
-     podMinScore 
-       | (\x->x`dot`x) (podMinPos -oppoCkpt1) < 400000 ||  (\x->x`dot`x) (podMinPos -oppoCkpt2) < 400000
-       = (-300) * faceOppoLoss 
-       | norm (oppoMaxPos - oppoCkpt1) > norm (podMinPos - oppoCkpt1) + 2000
-       = (-0.3) * norm (podMinPos - oppoCkpt1) 
-       | norm (oppoMaxPos - oppoCkpt2) > norm (podMinPos - oppoCkpt2) || True  
-       = (-0.3) * norm (podMinPos - oppoCkpt2)+(-300) * faceOppoLoss  
+     podMinScore
+       | pMax - oMax  > 700
+       = (-0.4)* norm (podMinPos - podMaxPos)
+       | norm (podMinPos - waitPoint1) < 400
+       = (-500) * faceOppoLoss 
+       |  norm (podMinPos -waitPoint2) < 400
+       = (-500) * faceOppoLoss
+       | norm (oppoMaxPos - waitPoint1) > norm (podMinPos - waitPoint1) + 1500
+       = (-0.4) * norm (podMinPos - waitPoint1) 
+       | otherwise
+       = (-0.4) * norm (podMinPos - waitPoint2)   
  in
-   pMax - oMax 
+   (1.5*pMax) - (1.5*oMax) 
    - (if (podThrust (podMovement p1) == Boost) then boostPenalty else 0)
    - (if (podThrust (podMovement p2) == Boost) then boostPenalty else 0)
    + podMinScore                                                                  

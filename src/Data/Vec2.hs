@@ -19,6 +19,7 @@ module Data.Vec2
     ,zeroVec
     , randomVec
     ,roundVec
+    ,normalize
     )
 where
 import System.Random
@@ -101,3 +102,5 @@ randomVec p1@(Vec2 !x1 !y1) p2@(Vec2 !x2 !y2)
 roundVec  :: Vec2 -> Vec2
 roundVec (Vec2 !x !y) = Vec2 (fromIntegral $ round x) (fromIntegral $ round y)  
   
+normalize :: Vec2 -> Vec2
+normalize v = v `scalarDiv` norm v
