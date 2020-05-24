@@ -15,16 +15,18 @@ import GameSim
 import Player.Instances
 import Player.GA
 import Player.GAM
+import Player.GAGuess
 import Player.Process
 import Data.Maybe
 import System.Environment
 import System.Exit
 import Data.Char
 
-
+(p0,name0) = (defaultGAGuess, "Boss0")
 (p1,name1) = (defaultGAMeta,"Boss1")
 (p2,name2) = (GASimple , "Boss2")
 (p3,name3) = (WrapIO (ElementaryPlayer ()),"Boss3")
+
 
 testGameSim :: IO GameHistory
 testGameSim = do
@@ -35,7 +37,7 @@ testGameSim = do
 testAnimate :: Double ->  IO()
 testAnimate turnPerSec = do
   gsp <- randomGameSpecIO
-  ghis <- runGame (p2,p1) gsp gameEnd
+  ghis <- runGame (p0,p1) gsp gameEnd
   gameAnimateIO ("player1","player2") turnPerSec  gsp ghis
 
 data PlayerIOObj = forall a. (PlayerIO a) => PlayerIOObj a
@@ -50,6 +52,7 @@ type PlayerID = Int
 data PlayerMode = Default PlayerID String  | IOMode String | Executable FilePath String  deriving (Show,Read)
 makePlayer :: PlayerMode -> (PlayerIOObj,String)
 makePlayer (Default n name) = case n of
+  0 -> (PlayerIOObj p0,name)
   1 -> (PlayerIOObj p1,name)
   2 -> (PlayerIOObj p2,name)
   3 -> (PlayerIOObj p3,name)
@@ -64,7 +67,7 @@ data GameConfig = GameConfig{
   playGameHistory :: Maybe FilePath
                         } deriving (Show ,Read)
 
-defaultGameConfig = GameConfig (Default 1 name1) (Default 2 name2) True Nothing Nothing
+defaultGameConfig = GameConfig (Default 1 name1) (Default 0 name0) True Nothing Nothing
 
 data SaveType = SaveType (String ,String) GameSpec GameHistory deriving (Show,Read)
 

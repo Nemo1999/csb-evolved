@@ -18,7 +18,8 @@ makeWarrier srcPath = do
             , "Player.hs"
             , "Player/Instances.hs"
             --, "Player/GA.hs"
-            , "Player/GAM.hs"
+            --, "Player/GAM.hs"
+            , "Player/GAGuess.hs"
             , "Util.hs"
             ]
 

@@ -55,7 +55,7 @@ main = do
     opp1  <- readPod cInfo
     opp2  <- readPod cInfo
     
-    player <- playerInitIO $ defaultGAMeta --WrapIO $  ElementaryPlayer ()
+    player <- playerInitIO $ defaultGAGuess --WrapIO $  ElementaryPlayer ()
     let playerIn = PlayerIn [pod1,pod2] [opp1,opp2]
     ([move1,move2] , player' )  <- playerRunIO player playerIn
     putMovement move1

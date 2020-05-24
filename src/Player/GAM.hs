@@ -185,13 +185,13 @@ measureTeam  [p1,p2,o1,o2] =
        |  norm (podMinPos -waitPoint2) < 400
        = (-500) * faceOppoLoss
        | norm (oppoMaxPos - waitPoint1) > norm (podMinPos - waitPoint1) + 1500
-       = (-0.4) * norm (podMinPos - waitPoint1) 
+       = (-0.4) * norm (podMinPos - waitPoint1) + (-100) * faceOppoLoss 
        | otherwise
-       = (-0.4) * norm (podMinPos - waitPoint2)   
+       = (-0.4) * norm (podMinPos - waitPoint2) + (-100) * faceOppoLoss
  in
    (1.5*pMax) - (1.5*oMax) 
-   - (if (podThrust (podMovement p1) == Boost) then boostPenalty else 0)
-   - (if (podThrust (podMovement p2) == Boost) then boostPenalty else 0)
+   - (if ( (podBoostAvail p1) == False) then boostPenalty else 0)
+   - (if ((podBoostAvail p2) == False) then boostPenalty else 0)
    + podMinScore                                                                  
                                                                      
 measurePod ::  PodState -> Double
@@ -282,7 +282,7 @@ encode PodState{podPosition=pos,podAngle=ang} PodMovement{podTarget=target,podTh
     in (turnAng,thrust)
 
 defaultGene :: Int -> PodState-> Gene
-defaultGene geneL  ps =
+defaultGene geneL  ps =  
   let 
       iterFunc = (\x ->  (speedDecay $driftPod 1$ thrustPod $ rotatePod $ defaultDriver x ))
       defaultDriverHistory = iterate iterFunc ps
