@@ -833,7 +833,7 @@ defaultGAGuess = GAGuess{oppoSeed=False,
                          geneLength=6,
                          oppoPopSize=30,
                          selfPopSize=60,
-                         pSwap =0.07,
+                         pSwap =0.3,
                          pMutate=0.8,
                          pCross=0.9, 
                          select=defaultSelect, 
@@ -1169,3 +1169,4 @@ isRepOf needle haystack
 getMinRepLen :: (Eq a) => [a] -> Int
 getMinRepLen xs = n
   where Just n = find (\n -> isRepOf (take n xs) xs) [1..]
+
