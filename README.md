@@ -1,6 +1,6 @@
 # csb-evolution
 
-* This is a [Coding-Strike-Back ](https://www.codingame.com/multiplayer/bot-programming/coders-strike-back/) Simulator (Golden League & Legend League) 
+* This is a [Mad Pod Racing](https://www.codingame.com/multiplayer/bot-programming/mad-pod-racing) (previously known as Coders Strike Back) Simulator (Golden League & Legend League)
 * It also contains an advanced GA player that is currently ranked 70~80 at Legend League
 
 ---
