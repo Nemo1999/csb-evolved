@@ -97,7 +97,7 @@ parseSrcLine ln
 
 removeAllSubStr :: [String] -> String -> String
 removeAllSubStr _ [] = []
-removeAllSubStr needles haystack @ (h : hs) =
+removeAllSubStr needles haystack@(h : hs) =
     case find (\n -> isPrefixOf n haystack) needles of
         Just needle -> removeAllSubStr needles $ drop (length needle) haystack
         Nothing     -> h : removeAllSubStr needles hs
